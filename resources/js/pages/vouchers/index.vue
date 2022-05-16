@@ -10,7 +10,7 @@
                 <div class="form-group" >
                     <label   >{{$lang['order by'] }}</label>
                     <select class="custom-select" v-model="filterBy">
-                        <option value="name">الاسم </option>
+                        <option :value="'name_'+$lang.currentLang">{{$lang['name']}} </option>
                         <option value="id">{{$lang['created at'] }}</option>
                     </select>
                 </div>
@@ -36,8 +36,8 @@
                         <th >{{$lang.code}}</th>
                         <th >{{$lang['start at']}}</th>
                         <th >{{$lang['end at']}}</th>
-                        <th >الحد الأقصى </th>
-                        <th>التفعيل</th>
+                        <th >{{$lang['max dudction']}} </th>
+                        <th >{{$lang['activation']}}</th>
                         <th >#</th>
                     </tr>
                 </thead>
@@ -59,7 +59,7 @@
                         <td>
                             <button class="btn btn-danger" @click="deleteRecord(index)"><i class="fas fa-trash "></i></button>
                             <button class="btn btn-info" @click="update(index)"><i class="fas fa-edit"></i></button>
-                            <!-- <button class="btn btn-secondary" @click="show(index)"><i class="fas fa-eye "></i></button> -->
+                            <button class="btn btn-secondary" @click="show(index)"><i class="fas fa-eye "></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -131,7 +131,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم -  أكواد الخصم`,
+            title: `${this.$lang['app name']} -   ${this.$lang.vouchers} `,
         }
     },
     watch :{

@@ -4,16 +4,29 @@
             <div class="col">
                 <div class="card ">
                     <div class="card-body">
-                        <h5 class="card-title">
-                            الاسم  :
-                            <router-link :to="{name: 'usersShow',params:{id:record.users_id}}">
-                                {{record.name}}
-                            </router-link>
-                        </h5>
-                        <h5 class="card-title">
-                            الرسالة
-                            : <span class="d-block">{{ record.message }} </span>
-                        </h5>
+                            <div class="row">
+                                <div class="col-md-3 ">
+                                    <label><h5 >{{$lang.name }} : </h5></label>
+                                </div>
+                                <div class="col-md-3">
+                                    <b>
+                                        <router-link :to="{name: 'usersShow',params:{id:record.users_id}}">
+                                            {{record.name}}
+                                        </router-link>
+                                    </b>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-3 ">
+                                    <label><h5 >{{$lang.message }} : </h5></label>
+                                </div>
+                                <div class="col-md-6">
+                                    <b>
+                                        {{record.message}}
+                                    </b>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -25,7 +38,9 @@ export default {
     components: {},
     data() {
         return {
-            record: {},
+            record: {
+                message:''
+            },
             slide: 0,
             sliding: null,
             visible: false
@@ -41,19 +56,9 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم -  ${this.record.message}`
+                title: `${this.$lang['app name']} -  ${this.record.message} `,
         };
     }
 };
 </script>
-<style scoped>
-.example-slide {
-    align-items: center;
-    background-color: #666;
-    color: #999;
-    display: flex;
-    font-size: 1.5rem;
-    justify-content: center;
-    min-height: 10rem;
-}
-</style>
+

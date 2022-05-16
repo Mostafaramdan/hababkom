@@ -137,7 +137,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `${this.$lang['app name']} -  ${this.$lang.offers} `,
+                title: `${this.$lang['app name']} -  ${this.$lang.offers} `,
         }
     },
     watch :{

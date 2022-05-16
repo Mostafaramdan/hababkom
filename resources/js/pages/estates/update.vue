@@ -184,7 +184,7 @@ export default {
             this.images.push(response.data.image)
         },
         async beforeRemove (index, done, fileList) {
-            if (confirm("هل تريد مسح الصورة")) {
+            if (confirm(this.$lang['Are you sure to delete this item'])) {
                 let response=  await this.axios({
                 method: 'DELETE',
                 url: `/api/image/${this.images[index].id}`,

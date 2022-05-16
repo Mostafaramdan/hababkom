@@ -5,8 +5,42 @@
             <div class="col">
                 <div class="card " >
                     <div class="card-body">
-                        <h5 class="card-title">الكود : {{ record.code }}</h5>
-                        <h5 class="card-title">الخصم :   {{ record.discount }}% </h5>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['code']}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> {{record.code}}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['discount']}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> %{{record.discount}}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['start at']}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> {{record.start_at}}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['end at']}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> {{record.end_at}}</b>
+                            </div>
+                        </div>
+                        <hr>
                     </div>
                 </div>
             </div>
@@ -41,7 +75,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم - كود خصم `,
+            title: `${this.$lang['app name']} -   ${this.record.code} `,
         }
     }
 }

@@ -2,57 +2,57 @@
     <div class="m-3" >
     <form  @submit.prevent="onSubmit" class="border border-5 border-primary rounded form">
         <h3>
-         اضافة مسؤول جديد
+         {{$lang['create new admin']}}
         </h3>
         <hr>
         <div class="form-check ">
-            <label  > أدخل الإسم  </label>
-            <input type="text" v-model="record.name" :class="['form-control' ,{'is-valid':validateName },{'is-invalid':!validateName}]"  >
+            <label  > {{$lang['enter the name']}}  </label>
+            <input type="text" v-model="record.name" :class="['form-control' ,{'is-valid':validateName },{'is-invalid':record.name&&!validateName}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال الإسم بشكل صحيح</span>
+                <span>{{$lang['the name must be entered correctly']}}</span>
             </div>
         </div>
          <div class="form-check ">
-            <label  > أدخل  البريد االلكتروني  </label>
-            <input type="text" v-model="record.email" :class="['form-control' ,{'is-valid':validateEmail },{'is-invalid':!validateEmail}]"  >
+            <label  > {{$lang['enter the email']}}  </label>
+            <input type="text" v-model="record.email" :class="['form-control' ,{'is-valid':validateEmail },{'is-invalid':record.email&&!validateEmail}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال  البريد االلكتروني بشكل صحيح</span>
+                <span>{{$lang['the email must be entered correctly']}}</span>
             </div>
         </div>
         <div class="form-check ">
-            <label  > أدخل التليفون  </label>
-            <input type="number" v-model="record.phone" :class="['form-control' ,{'is-valid':validatePhone },{'is-invalid':!validatePhone}]"  >
+            <label  > {{$lang['enter the phone']}}  </label>
+            <input type="number" v-model="record.phone" :class="['form-control' ,{'is-valid':validatePhone },{'is-invalid':record.phone&&!validatePhone}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال التليفون  بشكل صحيح</span>
+                <span>{{$lang['the phone must be entered correctly']}}</span>
             </div>
         </div>
         <div class="form-check ">
-            <label  > ادخال الرقم السري  </label>
-            <input type="password" v-model="record.password" :class="['form-control' ,{'is-valid':validatePassword },{'is-invalid':!validatePassword}]"  >
+            <label  > {{$lang['enter the password']}}  </label>
+            <input type="password" v-model="record.password" :class="['form-control' ,{'is-valid':validatePassword },{'is-invalid':record.password&&!validatePassword}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال الرقم السري بشكل صحيح</span>
+                <span>{{$lang['the phone must be entered correctly']}}</span>
             </div>
         </div>
         <div class="form-check ">
-            <label  > اعد ادخال الرقم السري  </label>
-            <input type="password" v-model="passwordConfirmed" :class="['form-control' ,{'is-valid':validatePassword && passwordConfirmed == record.password },{'is-invalid':!validatePassword || passwordConfirmed !== record.password}]"  >
+            <label  > {{$lang['re-enter the password']}}  </label>
+            <input type="password" v-model="passwordConfirmed" :class="['form-control' ,{'is-valid':record.password&&record.password == passwordConfirmed },{'is-invalid':record.password&&record.password != passwordConfirmed }]"  >
             <div class="valid-feedback" v-if="passwordConfirmed == record.password">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback" v-if="passwordConfirmed !== record.password">
-                <span>الرقم السري غير متطابق</span>
+                <span>{{$lang['Password does not match']}}</span>
             </div>
         </div>
 
@@ -82,7 +82,7 @@
             record:{
                 name:'',
                 email:'',
-                phone:123,
+                phone:'',
                 password:'',
             },
         }
@@ -95,9 +95,9 @@
             if(response.data.status==200)
                 this.$swal(this.$lang["Added successfully"], "", "success")
             if(response.data.status==403)
-                this.$swal("هذا  البريد االلكتروني موجود مسبقا ", "", "error")
+                this.$swal(this.$lang['This email already exists'], "", "error")
             if(response.data.status==404)
-                this.$swal("هذا التليفون موجود مسبقا ", "", "error")
+                this.$swal(this.$lang['This phone already exists'], "", "error")
 
 
         },
@@ -132,7 +132,7 @@
     },
         metaInfo() {
         return {
-            title: `${this.$lang['app name']} - ${this.$lang['create']} `,
+            title: `${this.$lang['app name']} - ${this.$lang['create new admin']} `,
         }
     }
 

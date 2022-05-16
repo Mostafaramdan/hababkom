@@ -2,27 +2,27 @@
     <div class="m-3" >
     <form @submit.prevent="onSubmit" class="border border-5 border-primary rounded ">
         <h3>
-           أنشئ   دولة جديدة
+           {{$lang['update the notification']}}
         </h3>
         <hr>
         <div class="form-check ">
-            <label  > أدخل المحتوي بالعربي  </label>
+            <label  >{{$lang['Enter the content in Arabic']}}  </label>
             <input type="text" v-model="record.content_ar" :class="['form-control' ,{'is-valid':validateContent_ar },{'is-invalid':record.content_ar&&!validateContent_ar}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال المحتوي بالعربي بشكل صحيح</span>
+                <span>{{$lang['The Arabic content must be entered correctly']}}</span>
             </div>
         </div>
          <div class="form-check ">
-            <label  > أدخل عدد المحتوي بالانجليزي  </label>
+            <label  >{{$lang['Enter the content in English']}}  </label>
             <input type="text" v-model="record.content_en" :class="['form-control' ,{'is-valid':validateContent_en },{'is-invalid':record.content_en&&!validateContent_en}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال عدد المحتوي بالانجليزي بشكل صحيح</span>
+                <span>{{$lang['The English content must be entered correctly']}}</span>
             </div>
         </div>
 
@@ -60,7 +60,7 @@
             this.loading=true;
             let response = await this.Api('PUT',`notifications/${this.record.id}`,this.record);
             this.loading=false;
-                this.$swal("تم التعديل بنجاح", "", "success")
+             this.$swal(this.$lang["updated successfully"], "", "success")
         }
     },
     computed: {
@@ -83,7 +83,7 @@
     },
         metaInfo() {
         return {
-            title: `حبابكم - إرسال إشعار جديد `,
+            title: `${this.$lang['app name']} - ${this.$lang['update the notification']} `,
         }
     }
 

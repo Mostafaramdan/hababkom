@@ -2,27 +2,27 @@
     <div class="m-3" >
     <form @submit.prevent="onSubmit" class="border border-5 border-primary rounded ">
         <h3>
-           تعديل  مرفق
+           {{$lang['update an attachment']}}
         </h3>
         <hr>
-        <div class="form-check ">
-            <label  > {{$lang['enter the name'] }} بالعربي  </label>
-            <input type="text" v-model="record.name_ar" :class="['form-control' ,{'is-valid':validateName_ar },{'is-invalid':!validateName_ar}]"  >
+       <div class="form-check ">
+            <label  > {{$lang['enter the Arabic name'] }}   </label>
+            <input type="text" v-model="record.name_ar" :class="['form-control' ,{'is-valid':validateName_ar },{'is-invalid':record.name_ar&&!validateName_ar}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال الاسم بالعربي بشكل صحيح</span>
+                <span>{{$lang['The Arabic name must be entered in correctly'] }}</span>
             </div>
         </div>
          <div class="form-check ">
-            <label  > أدخل عدد الاسم بالانجليزي  </label>
-            <input type="text" v-model="record.name_en" :class="['form-control' ,{'is-valid':validateName_en },{'is-invalid':!validateName_en}]"  >
+            <label  > {{$lang['enter the English name'] }}  </label>
+            <input type="text" v-model="record.name_en" :class="['form-control' ,{'is-valid':validateName_en },{'is-invalid':record.name_en&&!validateName_en}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال عدد الاسم بالانجليزي بشكل صحيح</span>
+                <span>{{$lang['The English name must be entered in correctly'] }}</span>
             </div>
         </div>
 
@@ -83,7 +83,7 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
             this.images.push(response.data.image)
         },
         async beforeRemove (index, done, fileList) {
-            if (confirm("هل تريد مسح الصورة")) {
+            if (confirm(this.$lang['Are you sure to delete this item'])) {
                 let response=  await this.axios({
                 method: 'DELETE',
                 url: `/api/image/${this.images[index].id}`,
@@ -109,7 +109,7 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
             this.record.images= JSON.stringify( this.images.map(a => a.id));
             let response = await this.Api('PUT',`attachments/${this.record.id}`,this.record);
             this.loading=false;
-                this.$swal("تم التعديل بنجاح", "", "success")
+             this.$swal(this.$lang["updated successfully"], "", "success")
         }
     },
     computed: {
@@ -131,7 +131,7 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
     },
     metaInfo() {
         return {
-            title: `حبابكم -  تعديل مرفق  `,
+            title: `${this.$lang['app name']} - ${this.$lang['update an attachment']} `,
         }
     }
 

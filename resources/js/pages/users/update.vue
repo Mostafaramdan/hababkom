@@ -2,58 +2,57 @@
     <div class="m-3" >
     <form @submit.prevent="onSubmit" class="border border-5 border-primary rounded ">
         <h3>
-           تعديل
+           {{$lang['update user']}}
         </h3>
         <hr>
         <div class="form-check ">
-            <label  > {{$lang['enter the name'] }}  </label>
+            <label  > {{$lang['enter the name']}}  </label>
             <input type="text" v-model="record.name" :class="['form-control' ,{'is-valid':validateName },{'is-invalid':record.name&&!validateName}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال الاسم بشكل صحيح</span>
+                <span>{{$lang['the name must be entered correctly']}}</span>
             </div>
         </div>
-        <div class="form-check ">
-            <label  > أدخل رقم التليفون  </label>
-            <input type="number" v-model="record.phone" :class="['form-control' ,{'is-valid':record.phone.length>5 },{'is-invalid':record.phone&&record.phone.length<6}]"  >
-            <div class="valid-feedback">
-                     صحيح
-            </div>
-            <div class="invalid-feedback">
-                <span>يجب إدخال رقم التليفون بشكل صحيح</span>
-            </div>
-        </div>
-        <div class="form-check ">
-            <label  > أدخل الايميل  </label>
-            <input type="text" v-model="record.email" :class="['form-control' ,{'is-valid':record.email.length>7 && record.email.includes('@')},{'is-invalid':record.email&&(record.email.length<8 || !record.email.includes('@'))}]"  >
-            <div class="valid-feedback">
-                     صحيح
-            </div>
-            <div class="invalid-feedback">
-                <span>يجب إدخال الايميل بشكل صحيح</span>
-            </div>
-        </div>
-        <div class="form-check ">
-            <label  > أدخل كلمة المرور  </label>
-            <input type="password" v-model="record.password" :class="['form-control' ,{'is-valid':record.password.length>5 },{'is-invalid':record.password&&record.password.length<6}]"  >
-            <div class="valid-feedback">
-                     صحيح
-            </div>
-            <div class="invalid-feedback">
-                <span>يجب إدخال كلمة المرور بشكل صحيح</span>
-            </div>
-        </div>
-
          <div class="form-check ">
-            <label  > أدخل كلمة المرور  </label>
-            <input type="password" v-model="record.password_confirm" :class="['form-control' ,{'is-valid':record.password&&record.password == record.password_confirm },{'is-invalid':record.password&&record.password != record.password_confirm }]"  >
+            <label  > {{$lang['enter the email']}}  </label>
+            <input type="text" v-model="record.email" :class="['form-control' ,{'is-valid':validateEmail },{'is-invalid':record.email&&!validateEmail}]"  >
             <div class="valid-feedback">
-                صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>كلمة المرور غير متطابق</span>
+                <span>{{$lang['the email must be entered correctly']}}</span>
+            </div>
+        </div>
+        <div class="form-check ">
+            <label  > {{$lang['enter the phone']}}  </label>
+            <input type="number" v-model="record.phone" :class="['form-control' ,{'is-valid':validatePhone },{'is-invalid':record.phone&&!validatePhone}]"  >
+            <div class="valid-feedback">
+                {{$lang.correct}}
+            </div>
+            <div class="invalid-feedback">
+                <span>{{$lang['the phone must be entered correctly']}}</span>
+            </div>
+        </div>
+        <div class="form-check ">
+            <label  > {{$lang['enter the password']}}  </label>
+            <input type="password" v-model="record.password" :class="['form-control' ,{'is-valid':validatePassword },{'is-invalid':record.password&&!validatePassword}]"  >
+            <div class="valid-feedback">
+                {{$lang.correct}}
+            </div>
+            <div class="invalid-feedback">
+                <span>{{$lang['the phone must be entered correctly']}}</span>
+            </div>
+        </div>
+        <div class="form-check ">
+            <label  > {{$lang['re-enter the password']}}  </label>
+            <input type="password" v-model="passwordConfirmed" :class="['form-control' ,{'is-valid':record.password&&record.password == passwordConfirmed },{'is-invalid':record.password&&record.password != passwordConfirmed }]"  >
+            <div class="valid-feedback" v-if="passwordConfirmed == record.password">
+                {{$lang.correct}}
+            </div>
+            <div class="invalid-feedback" v-if="passwordConfirmed !== record.password">
+                <span>{{$lang['Password does not match']}}</span>
             </div>
         </div>
         <div id="my-strictly-unique-vue-upload-multiple-image" style="display: flex; justify-content: center;">
@@ -96,6 +95,7 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
         return {
             loading : false,
             images:[],
+            passwordConfirmed:"",
             record:{
                 name:'',
                 email:'',
@@ -115,7 +115,7 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
             this.images.push(response.data.image)
         },
         async beforeRemove (index, done, fileList) {
-            if (confirm("هل تريد مسح الصورة")) {
+            if (confirm(this.$lang['Are you sure to delete this item'])) {
                 let response=  await this.axios({
                 method: 'DELETE',
                 url: `/api/image/${this.images[index].id}`,
@@ -141,20 +141,26 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
             let response = await this.Api('PUT',`users/${this.record.id}`,this.record);
             this.loading=false;
             if(response.status==200)
-             this.$swal("تم التعديل بنجاح", "", "success")
+             this.$swal(this.$lang["updated successfully"], "", "success")
 
         },
     },
     computed: {
-        validateName(){
-            return this.record.name.length > 3
+         validateName(){
+            return this.record.name.length > 3 > 0
+        },
+        validateEmail(){
+            return this.record.email.length > 3 && this.record.email.includes('@')
+        },
+        validatePhone(){
+            return this.record.phone.length > 3
+
+        },
+        validatePassword(){
+            return this.record.password.length > 3
         },
         allValidation(){
-            return this.validateName && this.record.email.length>7 &&
-            this.record.phone.length>5 && this.record.email.length>7 &&
-            this.record.email.includes('@')&&
-            this.record.password && this.record.password == this.record.password_confirm
-            !this.loading
+            return this.validateName && this.validateEmail  && this.validatePhone && this.validatePassword  &&  !this.loading
         }
     },
     async mounted(){
@@ -166,7 +172,7 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
     },
     metaInfo() {
         return {
-            title: `حبابكم -  تعديل `,
+            title: `${this.$lang['app name']} - ${this.$lang['update user']} `,
         }
     }
 

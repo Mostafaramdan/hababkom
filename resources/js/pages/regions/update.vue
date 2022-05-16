@@ -61,7 +61,7 @@
             this.loading=true;
             let response = await this.Api('PUT',`regions/${this.record.id}`,this.record);
             this.loading=false;
-                this.$swal("تم التعديل بنجاح", "", "success")
+             this.$swal(this.$lang["updated successfully"], "", "success")
         }
     },
     computed: {

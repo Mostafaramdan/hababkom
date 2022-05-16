@@ -10,7 +10,7 @@
                 <div class="form-group" >
                     <label   >{{$lang['order by'] }}</label>
                     <select class="custom-select" v-model="filterBy">
-                        <option value="name">الاسم </option>
+                        <option value="name">{{$lang['name']}} </option>
                         <option value="id">{{$lang['created at'] }}</option>
                     </select>
                 </div>
@@ -24,7 +24,7 @@
             </div>
         </b-modal>
         <button class="btn btn-primary m-2 " @click="create">
-             إضافة مسؤول جديد
+             {{$lang['create new admin']}}
             <i class="fas fa-plus"></i>
         </button>
         <div class="table-responsive">
@@ -32,11 +32,11 @@
                 <thead >
                     <tr >
                         <th >#</th>
-                        <th >الاسم</th>
-                        <th >الايميل </th>
-                        <th > تليفون </th>
-                        <th>التفعيل</th>
-                        <th>الصلاحيات</th>
+                        <th >{{$lang.name}}</th>
+                        <th >{{$lang.email}}</th>
+                        <th >{{$lang.phone}}</th>
+                        <th >{{$lang.activation}}</th>
+                        <th >{{$lang.permissions}}</th>
                         <th >#</th>
                     </tr>
                 </thead>

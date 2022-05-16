@@ -32,9 +32,9 @@
                 <thead >
                     <tr >
                         <th >#</th>
-                        <th >الاسم</th>
-                        <th >تليفون</th>
-                        <th >ايميل</th>
+                        <th >{{$lang.name}}</th>
+                        <th >{{$lang.email}}</th>
+                        <th >{{$lang.phone}}</th>
                         <th >#</th>
                     </tr>
                 </thead>
@@ -114,7 +114,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم - المستخدمين`,
+            title: `${this.$lang['app name']} -   ${this.$lang.users} `,
         }
     },
     watch :{

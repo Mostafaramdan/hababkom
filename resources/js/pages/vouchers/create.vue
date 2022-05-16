@@ -2,47 +2,47 @@
     <div class="m-3" >
     <form  @submit.prevent="onSubmit" class="border border-5 border-primary rounded form">
         <h3>
-           أنشئ  كود خصم جديد
+          {{$lang['Create a new discount code'] }}
         </h3>
         <hr>
         <div class="form-check ">
-            <label  >  أدخل الخصم % </label>
-            <input type="number" min='1' max='99' v-model="record.discount" :class="['form-control' ,{'is-valid':validateDiscount },{'is-invalid':!validateDiscount}]"  >
+            <label  >  {{$lang['Enter discount %']}} </label>
+            <input type="number" min='1' max='99' v-model="record.discount" :class="['form-control' ,{'is-valid':record.discount&&validateDiscount },{'is-invalid':!validateDiscount}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال الخصم بشكل صحيح</span>
+                <span>{{$lang['The discount must be entered correctly']}}</span>
             </div>
         </div>
          <div class="form-check ">
-            <label  > أدخل عدد تاريخ البداية  </label>
-            <input type="date" v-model="record.start_at" :class="['form-control' ,{'is-valid':validateStart_at },{'is-invalid':!validateStart_at}]"  >
+            <label  > {{$lang['start at']}}  </label>
+            <input type="date" v-model="record.start_at" :class="['form-control' ,{'is-valid':validateStart_at },{'is-invalid':record.start_at&&!validateStart_at}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال  تاريخ البداية بشكل صحيح</span>
+                <span>{{$lang['The start date must be entered correctly']}}</span>
             </div>
         </div>
         <div class="form-check ">
-            <label  > أدخل عدد تاريخ النهاية  </label>
-            <input type="date" v-model="record.end_at" :class="['form-control' ,{'is-valid':validateEnd_at },{'is-invalid':!validateEnd_at}]"  >
+            <label  > {{$lang['end at']}}  </label>
+            <input type="date" v-model="record.end_at" :class="['form-control' ,{'is-valid':validateEnd_at },{'is-invalid':record.end_at&&!validateEnd_at}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال  تاريخ النهاية بشكل صحيح</span>
+                <span>{{$lang['The end date must be entered correctly']}}</span>
             </div>
         </div>
         <div class="form-check ">
-            <label  > ادخال عدد مرات الاستخدام  </label>
-            <input type="number" min='1' v-model="record.max_dudction" :class="['form-control' ,{'is-valid':validateMax_dudction },{'is-invalid':!validateMax_dudction}]"  >
+            <label  > {{$lang['Enter the number of times you use it']}}  </label>
+            <input type="number" min='1' v-model="record.max_dudction" :class="['form-control' ,{'is-valid':validateMax_dudction },{'is-invalid':record.max_dudction&&!validateMax_dudction}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال عدد مرات الاستخدام بشكل صحيح</span>
+                <span>{{$lang['The number of times of use must be entered correctly']}} </span>
             </div>
         </div>
         <div class="row">
@@ -55,22 +55,22 @@
         </div>
         <hr>
         <div class="form-check ">
-            <label  >   اختر المدن   </label>
+            <label  > {{$lang['Choose cities']}}   </label>
             <tree-select v-model="record.regions_ids"
                         :multiple="true"
                         :options="cities"
-                        placeholder='اختر المدن '
+                        :placeholder="$lang['Choose cities']"
                         label='name_ar' >
             </tree-select>
 
         </div>
         <hr>
         <div class="form-check ">
-            <label  >   اختر المدن   </label>
+            <label  > {{$lang['Choose hotels']}}   </label>
             <tree-select v-model="record.estates_ids"
                         :multiple="true"
                         :options="estates"
-                        placeholder='اختر الفنادق '
+                        :placeholder="$lang['Choose hotels']"
                         label='name_ar' >
             </tree-select>
         </div>
@@ -129,7 +129,7 @@
             this.record.regions_ids= JSON.stringify( this.record.regions_ids);
             let response = await this.Api('POST','vouchers',this.record);
             if(response.data.status== 409){
-                this.$swal("هذا الكود موجود مسبقاّ , برجاء إدخال كود مختلف  ", "", "error")
+                this.$swal(this.$lang["This code already exists, please enter a different code"], "", "error")
             }else{
                 this.$swal(this.$lang["Added successfully"], "", "success");
                 this.$router.push( {name:'vouchers',});
@@ -182,7 +182,7 @@
     },
         metaInfo() {
         return {
-            title: `حبابكم -  أنشئ  كود خصم جديدة `,
+            title: `${this.$lang['app name']} - ${this.$lang['Create a new discount code']} `,
         }
     }
 

@@ -31,9 +31,9 @@
                 <thead >
                     <tr >
                         <th >#</th>
-                        <th >{{$lang['Arabic contnent']}} </th>
-                        <th >{{$lang['English contnent']}} </th>
-                        <th >تاريخ الانشاء  </th>
+                        <th >{{$lang['Arabic content']}} </th>
+                        <th >{{$lang['English content']}} </th>
+                        <th >{{$lang['created at']}}  </th>
                         <th >#</th>
                     </tr>
                 </thead>

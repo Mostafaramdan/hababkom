@@ -213,8 +213,8 @@
     "Booking details":"تفاصيل الحجز",
     "open ?":"مفتوحة ?",
     "message":"رسالة",
-    "Arabic contnent":"المحتوى العربي",
-    "English contnent":"المحتوى باللغة الإنجليزية",
+    "Arabic content":"المحتوى العربي",
+    "English content":"المحتوى باللغة الإنجليزية",
     "Send new notification":"إرسال إشعار جديد",
     "Enter the content in Arabic":"أدخل المحتوى باللغة العربية",
     "Enter the content in English":"أدخل المحتوى باللغة الإنجليزية",
@@ -230,12 +230,14 @@
     "privacy in Arabic":"الخصوصية باللغة العربية",
     "privacy in English":"الخصوصية باللغة الإنجليزية",
     "Edit app settings":"تحرير إعدادات التطبيق",
+    "permissions":"الصلاحيات",
     "the privacy policy in Arabic":"سياسة الخصوصية باللغة العربية",
     "the privacy policy in English":"سياسة الخصوصية باللغة الإنجليزية",
     "Edit Permissions":"تعديل الصلاحيات",
     "enter the name":"ادخل الاسم",
     "Password does not match":"كلمة المرور غير متطابقة",
     "create new user":"إنشاء مستخدم جديد",
+    "update user":"تعديل مستخدم",
     "Enter the attachments":"ادخل المرافق",
     "owner_email":"البريد الالكتروني الخاص بالمالك",
     "manager_name":"اسم المدير",
@@ -254,5 +256,6 @@
     "update an admin": "تحديث مسؤول",
     "updated successfully":"تم التعديل بنجاح",
     "enter email or phone":"ادخل البريد الالكتروني او رقم التليفون",
-    "password is incorrect":"الرقم السري غير صحيح"
+    "password is incorrect":"الرقم السري غير صحيح",
+    "message sent successfully":"تم إرسال الرسالة بنجاح"
 }

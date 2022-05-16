@@ -4,12 +4,24 @@
             <div class="col">
                 <div class="card ">
                     <div class="card-body">
-                        <h5 class="card-title">
-                            المحتوي بالعربي : {{ record.content_ar }}
-                        </h5>
-                        <h5 class="card-title">
-                            المحتوي بالانجليزي : {{ record.content_en }}
-                        </h5>
+                         <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['Arabic content'] }} : </h5></label>
+                            </div>
+                            <div class="col-md-3">
+                                <b> {{record.content_ar}}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['Arabic content'] }} : </h5></label>
+                            </div>
+                            <div class="col-md-3">
+                                <b> {{record.content_en}}</b>
+                            </div>
+                        </div>
+                        <hr>
                     </div>
                 </div>
             </div>
@@ -45,19 +57,9 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم - وحدة سكنية`
+            title: `${this.$lang['app name']} -  ${this.record['content_'+this.$lang.currentLang]} `,
         };
     }
 };
 </script>
-<style scoped>
-.example-slide {
-    align-items: center;
-    background-color: #666;
-    color: #999;
-    display: flex;
-    font-size: 1.5rem;
-    justify-content: center;
-    min-height: 10rem;
-}
-</style>
+

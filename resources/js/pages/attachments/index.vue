@@ -10,7 +10,7 @@
                 <div class="form-group" >
                     <label   >{{$lang['order by'] }}</label>
                     <select class="custom-select" v-model="filterBy">
-                        <option value="name">الإسم </option>
+                        <option :value="'name_'+$lang.currentLang">{{$lang['name']}} </option>
                         <option value="id">{{$lang['created at'] }}</option>
                     </select>
                 </div>
@@ -24,7 +24,7 @@
             </div>
         </b-modal>
         <button class="btn btn-primary m-2 " @click="create">
-             {{$lang.create}}
+             {{$lang['create new attachment']}}
             <i class="fas fa-plus"></i>
         </button>
         <div class="table-responsive">
@@ -32,9 +32,9 @@
                 <thead >
                     <tr >
                         <th >#</th>
-                        <th >الإسم بالعربي </th>
-                        <th >الإسم بالانجليزي </th>
-                        <th>التفعيل</th>
+                        <th >{{$lang['Arabic name']}} </th>
+                        <th >{{$lang['English name']}} </th>
+                        <th >{{$lang.activation}} </th>
                         <th >#</th>
                     </tr>
                 </thead>
@@ -123,7 +123,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم - المرافق `,
+            title: `${this.$lang['app name']} - ${this.$lang.attachments} `,
         }
     },
     watch :{

@@ -6,28 +6,28 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-3 ">
-                                <label><h5 >الاسم : </h5></label>
+                                <label><h5 >{{$lang['name']}} : </h5></label>
                             </div>
-                            <div class="col-md-3">
-                                <b> {{ record.name }}</b>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-3 ">
-                                <label><h5 >البريد الالكتروني : </h5></label>
-                            </div>
-                            <div class="col-md-3">
-                                <b> {{ record.email }}</b>
+                            <div class="col-md-6">
+                                <b> {{record.name}}</b>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-md-3 ">
-                                <label><h5 >التليفون : </h5></label>
+                                <label><h5 >{{$lang['email']}} : </h5></label>
                             </div>
-                            <div class="col-md-3">
-                                <b> {{ record.phone }}</b>
+                            <div class="col-md-6">
+                                <b> {{record.email}}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['phone']}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> {{record.phone}}</b>
                             </div>
                         </div>
                         <hr>
@@ -102,7 +102,7 @@ export default {
             let response = await this.Api('GET','sms',{phone:this.record.phone,message:this.sms} );
             this.loading=false;
             if(response.data.status == 200){
-                this.$swal("تم إرسال الرسالة بنجاح", "", "success");
+                this.$swal(this.$lang["message sent successfully"], "", "success");
             }
         },
         async send_mail() {
@@ -110,7 +110,7 @@ export default {
             let response = await this.Api('GET','sendMail',{email:this.record.email,message:this.mail} );
             this.loading=false;
             if(response.data.status == 200){
-                this.$swal("تم إرسال الرسالة بنجاح", "", "success");
+                this.$swal(this.$lang["message sent successfully"], "", "success");
             }
         }
     },

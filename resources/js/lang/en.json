@@ -48,7 +48,7 @@
     "the email must be entered correctly":"The Email Must Be Entered Correctly",
     "enter the phone":"Enter The Phone",
     "the phone must be entered correctly":"The Phone Must Be Entered Correctly",
-    "enter the password":"Enter tHe Password",
+    "enter the password":"Enter the Password",
     "the password must be entered correctly":"The Password Must Be Entered Correctly",
     "re-enter the password":"Re-Enter The Password",
     "Password does not match":"Password Does Not Match",
@@ -85,7 +85,10 @@
     "vouchers":"Vouchers",
     "currencies":"Currencies",
     "offers":"Offers",
+    "Create a new discount code":"Create a new discount code",
+
     "update offer":"update offer",
+    "permissions":"permissions",
     "orders":"Orders",
     "contacts":"Contacts",
     "notifications":"Notifications",
@@ -213,8 +216,8 @@
     "Create a new city/region":"Create a new City/Region",
     "open ?":"Open ?",
     "message":"Message",
-    "Arabic contnent":"Arabic Contnent",
-    "English contnent":"English Contnent",
+    "Arabic content":"Arabic content",
+    "English content":"English content",
     "Send new notification":"Send New Notification",
     "Enter the content in Arabic":"Enter The Content in Arabic",
     "Enter the content in English":"Enter The Content in English",
@@ -236,6 +239,7 @@
     "enter the name":"Enter the Name",
     "the name must be entered correctly":"The Name Must be entered correctly",
     "create new user":"Create New User",
+    "update user":"update user",
     "Enter the attachments":"Enter the Attachments",
     "owner_name":"Owner Name",
     "owner_phone":"Owner Phone",
@@ -260,5 +264,7 @@
     "update an apartments complex":"update an apartments complex",
     "apartments_complexes":"apartments complexes",
     "open the apartments":"open the apartments",
-    "Enter the apartments count":"Enter the apartments count"
+    "Enter the apartments count":"Enter the apartments count",
+    "message sent successfully":"message sent successfully"
+
 }

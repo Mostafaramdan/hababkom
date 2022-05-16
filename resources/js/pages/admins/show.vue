@@ -1,14 +1,36 @@
 <template >
     <div>
-
         <div class="row row-cols-1 row-cols-md-1 ">
             <div class="col">
                 <div class="card " >
                     <div class="card-body">
                         <button class="btn btn-info" @click="update()"><i class="fas fa-edit"></i></button>
-                        <h5 class="card-title">{{$lang.name}}   : {{ record.name }}</h5>
-                        <h5 class="card-title">{{$lang.email}}  : {{ record.email }}</h5>
-                        <h5 class="card-title">{{$lang.phone}} : {{ record.phone }}</h5>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['name']}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> {{record.name}}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['email']}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> {{record.email}}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['phone']}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> {{record.phone}}</b>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,14 +73,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-    .example-slide {
-        align-items: center;
-        background-color: #666;
-        color: #999;
-        display: flex;
-        font-size: 1.5rem;
-        justify-content: center;
-        min-height: 10rem;
-    }
-</style>

@@ -28,7 +28,7 @@
                     <tr >
                         <th >#</th>
                         <th ><i class="fas fa-user"></i></th>
-                        <th>مفتوحة ؟ </th>
+                        <th>{{$lang['open ?']}} </th>
                         <th >#</th>
                     </tr>
                 </thead>
@@ -120,7 +120,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم - الشكاوي والاقتراحات `,
+                title: `${this.$lang['app name']} -  ${this.$lang.contacts} `,
         }
     },
     watch :{

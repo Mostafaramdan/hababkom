@@ -4,12 +4,24 @@
             <div class="col">
                 <div class="card ">
                     <div class="card-body">
-                        <h5 class="card-title">
-                            الاسم بالعربي : {{ record.name_ar }}
-                        </h5>
-                        <h5 class="card-title">
-                            الاسم بالانجليزي : {{ record.name_en }}
-                        </h5>
+                         <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['Arabic name'] }} : </h5></label>
+                            </div>
+                            <div class="col-md-3">
+                                <b> {{record.content_ar}}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['Arabic name'] }} : </h5></label>
+                            </div>
+                            <div class="col-md-3">
+                                <b> {{record.content_en}}</b>
+                            </div>
+                        </div>
+                        <hr>
                     </div>
                 </div>
             </div>
@@ -45,7 +57,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم - وحدة سكنية`
+            title: `${this.$lang['app name']} -  ${this.record['name_'+this.$lang.currentLang]} `,
         };
     }
 };

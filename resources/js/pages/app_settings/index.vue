@@ -4,15 +4,81 @@
             <div class="col">
                 <div class="card " >
                     <div class="card-body">
-                        <h5 class="card-title"> تعديل :
-                            <button class="btn btn-info" @click="update(record.id)"><i class="fas fa-edit"></i></button> </h5>
-                        <h5 class="card-title">عنا بالعربي : <span class="text-primary"> {{ record.aboutUs_ar }}  </span> </h5>
-                        <h5 class="card-title">عنا بالانجليزي :  <span class="text-primary"> {{ record.aboutUs_en }}  </span></h5>
-                        <h5 class="card-title">سياسة الخصوصية بالعربي :  <span class="text-primary"> {{ record.policyTerms_ar }}  </span></h5>
-                        <h5 class="card-title">سياسة الخصوصية بالانجليزي :  <span class="text-primary"> {{ record.policyTerms_en }}  </span></h5>
-                        <h5 class="card-title"> شروط االستخدام بالعربي :  <span class="text-primary"> {{ record.privacy_ar }}  </span></h5>
-                        <h5 class="card-title"> شروط االستخدام بالانجليزي :  <span class="text-primary"> {{ record.privacy_en }}  </span></h5>
-                        <h5 class="card-title">  الرسوم :  <span class="text-primary"> {{ record.fees }}  </span></h5>
+                        <h5 class="card-title"> {{$lang.update}} :
+                            <button class="btn btn-info" @click="update(record.id)"><i class="fas fa-edit"></i></button>
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['about us in Arabic']}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> {{record.aboutUs_ar}}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['about us in English']}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> {{record.aboutUs_en}}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['policy terms in Arabic']}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> {{record.policyTerms_ar}}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['policy terms in English']}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> {{record.policyTerms_en}}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['the privacy policy in Arabic']}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> {{record.privacy_ar}}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['the privacy policy in English']}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> {{record.privacy_en}}</b>
+                            </div>
+                        </div>
+                        <hr>
+                         <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang.fees}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> {{record.fees}}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <hr>
+                         <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['Final price rate']}} : </h5></label>
+                            </div>
+                            <div class="col-md-6">
+                                <b> {{record.final_price_equation}}</b>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -47,7 +113,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم -  اعدادات التطبيق `,
+            title: `${this.$lang['app name']} - ${this.$lang.app_settings} `,
         }
     },
 }
