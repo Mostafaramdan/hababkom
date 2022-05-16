@@ -5,7 +5,9 @@ namespace App\Http\Controllers\dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-
+use App\Models\app_settings;
+use App\Models\admins;
+use App\Models\owners;
 
 class dashboard extends Controller
 {
@@ -15,9 +17,11 @@ class dashboard extends Controller
     public function index(Request $request)
     {
         $records= $this->model::query();
-        if($request->search){
-            // $records->where()
-        }
+        if($request->search)
+            foreach($this->search as $search)
+                $records = $records->orWhere($search,'LIKE','%'.$request->search.'%');     
+        if($request->id)
+            $records = $records->where('id',$request->id);     
         $itemPerPage= $request->itemPerPage??self::$itemPerPage;
         $totalPages= ceil($records->count()/$itemPerPage);
         $records= $records->forPage($request->page,$itemPerPage)->get();
@@ -29,40 +33,18 @@ class dashboard extends Controller
     }
 
 
-    public function store(Request $request)
-    {
-        $request= $request->all();
-        $columns =  \Schema::getColumnListing((new $this->model)->getTable() ) ;
-        foreach($request as $k=>$v){
-            $filtered = Arr::where($columns, function ($value, $key) use ($k){
-                return $k == $value;
-            });
-            if(count($filtered) == 0){
-                $request = Arr::except($request, $k);
-            }
-        }
-        $this->model::create($request);
-        return response()->json(['status'=>200]);
-    }
-
     public function show( $id)
     {
         return response()->json(['status'=>200, 'record'=>$this->model::findOrFail($id)]);
     }
-
+    public function store(Request $request)
+    {
+        $this->model::create($this->filterRequest($request));
+        return response()->json(['status'=>200]);
+    }
     public function update(Request $request, $id)
     {
-        $request= $request->all();
-        $columns =  \Schema::getColumnListing((new $this->model)->getTable() ) ;
-        foreach($request as $k=>$v){
-            $filtered = Arr::where($columns, function ($value, $key) use ($k){
-                return $k == $value;
-            });
-            if(count($filtered) == 0){
-                $request = Arr::except($request, $k);
-            }
-        }
-        $record= $this->model::where('id',$id)->update( $request);
+        $record= $this->model::where('id',$id)->update( $this->filterRequest($request));
         return response()->json(['status'=>200]);
     }
 
@@ -97,13 +79,7 @@ class dashboard extends Controller
     }
     public static function permissions($id)
     {
-        $admin = \App\Models\admins::find($id);
-        if( $admin->estates_id)
-            $permissions = config('dashboard.permissionsEstate');
-        elseif( $admin->apartments_id)
-             $permissions = config('dashboard.permissionsApartment');
-        else $permissions = config('dashboard.permissions');
-        return response()->json(['status'=>200,'permissions'=>$permissions]);
+        return response()->json(['status'=>200,'permissions'=>config('dashboard.permissions')]);
     }
 
     public static function getAllRecords(Request $request)
@@ -112,11 +88,15 @@ class dashboard extends Controller
         $records = $model::all();
         return response()->json(['status'=>200,'records'=>$records]);
     }
-    public static function filterRequest($request)
+    public  function filterRequest($request)
     {
         $request= $request->all();
         $columns =  \Schema::getColumnListing((new $this->model)->getTable() ) ;
         foreach($request as $k=>$v){
+            if($v && $k =='password')
+                $request['password']=\Hash::make($v);
+            if($v === null)
+                $request = Arr::except($request, $k);
             $filtered = Arr::where($columns, function ($value, $key) use ($k){
                 return $k == $value;
             });
@@ -125,5 +105,28 @@ class dashboard extends Controller
             }
         }
         return $request;
+    }
+    public static function getFinal_price_equation ()
+    {
+        return response()->json(['record'=>app_settings::first()]);
+    }
+    public function checkUniqueAccount($request)
+    {
+        $count = admins::where('email',$request->owner_email)
+                        ->orWhere('phone',$request->owner_phone)
+                        ->orWhere('phone',$request->manager_phone)
+                        ->when($request->id,function($q) use ($request){
+                            return $q->where('id','!=',$request->id);
+                        })
+                        ->count();
+        $count += owners::where('owner_email',$request->owner_email)
+                        ->orWhere('owner_phone',$request->owner_phone)
+                        ->orWhere('manager_phone',$request->manager_phone)
+                        ->when($request->id,function($q) use ($request){
+                            return $q->where('id','!=',$request->id);
+                        })
+                        ->count();
+       return $count;
+
     }
 }

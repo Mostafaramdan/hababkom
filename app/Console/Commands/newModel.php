@@ -24,7 +24,7 @@ class newModel extends Command
         $modelName=$this->argument('modelName');
         $folderPath="app/Models/";
         if (!file_exists( $folderPath)) 
-                    mkdir( $folderPath, 0777, true);
+            mkdir( $folderPath, 0777, true);
 
 
         //create Controller

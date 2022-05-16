@@ -6,15 +6,20 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Apis\Helper\helper ;
 use App\Models\admins;
+use App\Models\owners;
 use App\Models\tokens;
 
 class login extends Controller
 {
     public function login(Request $request)
     {
-        $admin = admins::where('email',$request->username)
+        $admin = admins::withoutGlobalScopes()->where('email',$request->username)
                        ->orWhere('phone',$request->username)
                        ->first();
+        if(!$admin)
+            $admin = owners::where('owner_phone',$request->username)
+                    ->orWhere('owner_email',$request->username)
+                    ->first();
         if(!$admin){
             return [
                 'status'=> 232,

@@ -13,63 +13,63 @@ return [
         'status_bar' => 'black',
         'icons' => [
             '72x72' => [
-                'path' => '/images/icons/icon-72x72.png',
+                'path' => '/logo.svg',
                 'purpose' => 'any'
             ],
             '96x96' => [
-                'path' => '/images/icons/icon-96x96.png',
+                'path' => '/logo.svg',
                 'purpose' => 'any'
             ],
             '128x128' => [
-                'path' => '/images/icons/icon-128x128.png',
+                'path' => '/logo.svg',
                 'purpose' => 'any'
             ],
             '144x144' => [
-                'path' => '/images/icons/icon-144x144.png',
+                'path' => '/logo.svg',
                 'purpose' => 'any'
             ],
             '152x152' => [
-                'path' => '/images/icons/icon-152x152.png',
+                'path' => '/logo.svg',
                 'purpose' => 'any'
             ],
             '192x192' => [
-                'path' => '/images/icons/icon-192x192.png',
+                'path' => '/logo.svg',
                 'purpose' => 'any'
             ],
             '384x384' => [
-                'path' => '/images/icons/icon-384x384.png',
+                'path' => '/logo.svg',
                 'purpose' => 'any'
             ],
             '512x512' => [
-                'path' => '/images/icons/icon-512x512.png',
+                'path' => '/logo.svg',
                 'purpose' => 'any'
             ],
         ],
         'splash' => [
-            '640x1136' => '/images/icons/splash-640x1136.png',
-            '750x1334' => '/images/icons/splash-750x1334.png',
-            '828x1792' => '/images/icons/splash-828x1792.png',
-            '1125x2436' => '/images/icons/splash-1125x2436.png',
-            '1242x2208' => '/images/icons/splash-1242x2208.png',
-            '1242x2688' => '/images/icons/splash-1242x2688.png',
-            '1536x2048' => '/images/icons/splash-1536x2048.png',
-            '1668x2224' => '/images/icons/splash-1668x2224.png',
-            '1668x2388' => '/images/icons/splash-1668x2388.png',
-            '2048x2732' => '/images/icons/splash-2048x2732.png',
+            '640x1136' => '/logo.svg',
+            '750x1334' => '/logo.svg',
+            '828x1792' => '/logo.svg',
+            '1125x2436' => '/logo.svg',
+            '1242x2208' => '/logo.svg',
+            '1242x2688' => '/logo.svg',
+            '1536x2048' => '/logo.svg',
+            '1668x2224' => '/logo.svg',
+            '1668x2388' => '/logo.svg',
+            '2048x2732' => '/logo.svg',
         ],
         'shortcuts' => [
             [
                 'name' => 'حبابكم -لوحة التحكم',
-                'description' => 'حبابكم -لوحة التحكم Description',
+                'description' => 'حبابكم -لوحة التحكم ',
                 'url' => '/users',
                 'icons' => [
-                    "src" => "/images/icons/icon-72x72.png",
+                    "src" => "/logo.svg",
                     "purpose" => "any"
                 ]
             ],
             [
                 'name' => 'حبابكم -لوحة التحكم',
-                'description' => 'حبابكم -لوحة التحكم Description',
+                'description' => 'حبابكم -لوحة التحكم ',
                 'url' => '/users'
             ]
         ],

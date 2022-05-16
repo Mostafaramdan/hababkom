@@ -16,9 +16,13 @@ class apartments extends dashboard
     public function index(Request $request)
     {
         $records= $this->model::query()->with(['category']);
-        if(self::$admin->apartments_id){
-            $records->where('id',self::$admin->apartments_id);
+        if(self::$admin->apartments_complexes_id){
+            $records->where('id',self::$admin->apartments_complexes_id);
         }
+        if($request->apartments_complexes_id){
+            $records->where('apartments_complexes_id',$request->apartments_complexes_id);
+        }
+
         if($request->search){
             $records->where('discount','like','%'.$request->search.'%')
             ->orWhere('name_ar','like','%'.$request->search.'%')
@@ -41,44 +45,19 @@ class apartments extends dashboard
     }
     public function store(Request $request)
     {
-        $map_link = explode(',',explode('@',$request->map_link)[1] ) ;
-        $location = locations::create(['latitude'=>$map_link[0],'longitude'=>$map_link[1]]);
-        $request->offsetSet('locations_id',$location->id);
-        $this->model::create([
-            'rooms'=>$request->rooms,
-            'kitchens'=>$request->kitchens,
-            'toilets'=>$request->toilets,
-            'attachments'=>$request->attachments,
-            'map_link'=>$request->map_link,
-            'name_ar'=>$request->name_ar,
-            'name_en'=>$request->name_en,
-            'description_ar'=>$request->description_ar,
-            'locations_id'=>$request->locations_id,
-            'regions_id'=>$request->regions_id,
-            'images'=>$request->images,
-            'price'=>$request->price,
-            'final_price'=>$request->final_price
-        ]);
+        for($i = 0; $i < $request->N_Rooms; $i++)
+            $this->model::create($this->filterRequest($request));
+            
         return response()->json(['status'=>200]);
     }
     public function update(Request $request, $id)
     {
-        if($request->map_link && explode('@',$request->map_link)[1]??false ){
-            $map_link = explode(',',explode('@',$request->map_link)[1] ) ;
-            $location = locations::createUpdate(['latitude'=>$map_link[0],'longitude'=>$map_link[1]]);
-            $request->offsetSet('locations_id',$location->id);
-        }
         $record= $this->model::where('id',$id)->update([
             'rooms'=>$request->rooms,
             'kitchens'=>$request->kitchens,
             'toilets'=>$request->toilets,
             'attachments'=>$request->attachments,
             'map_link'=>$request->map_link,
-            'name_ar'=>$request->name_ar,
-            'name_en'=>$request->name_en,
-            'description_ar'=>$request->description_ar,
-            'locations_id'=>$request->locations_id,
-            'regions_id'=>$request->regions_id,
             'images'=>$request->images,
             'price'=>$request->price,
             'final_price'=>$request->final_price

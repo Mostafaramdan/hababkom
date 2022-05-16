@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\sessions;
 use App\Models\users;
 use App\Models\tokens;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\sendMail;
 
 /**
  *
@@ -37,13 +39,22 @@ class registerController extends index
             $record->getTable().'_id'=>$record->id,
             'created_at'=>date('Y-m-d H:i:s')
         ]);
-        self::$account['apiToken'] = $token ->apiToken;
+        $record['apiToken'] = $token ->apiToken;
         $session = sessions::createUpdate([
                 $record->getTable().'_id' =>$record->id,
-                // 'code'=>helper::RandomXDigits(5)
-                'code'=>12345
+                'code'=>helper::RandomXDigits(5)
+                // 'code'=>12345
             ]);
-        helper::sendSms( $record->phone, $session->code );
+        $lang= self::$lang??'ar'; 
+        if($lang=='ar'){
+            $code= 'عزيزي مستخدم حبابكم، رمز التحقق هو ' .$session->code;
+        }else{
+            $code= 'Dear Hababcom user, the verification code is ' .$session->code;
+        }
+        helper::sendSms( $record->phone, urlencode($code) );
+        if(self::$request->email)
+            Mail::to(self::$request->email)->send(new sendMail($code,$code));
+
         return [
             'status'=>200,
             'message'=>self::$messages['register']["200"],

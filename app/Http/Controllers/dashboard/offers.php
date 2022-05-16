@@ -19,9 +19,17 @@ class offers extends dashboard
                 $query->where('estates_id',self::$admin->estates_id);
             });
         }
+        if(self::$admin->apartments_id ){
+            $records->whereHas('apartment',function($q) {
+                return $q->where('apartments_id',self::$admin->apartments_id);
+            });
+    }
 
         if($request->housing_units_id){
             $records->where('housing_units_id',$request->housing_units_id);
+        }
+        if($request->apartments_id){
+            $records->where('apartments_id',$request->apartments_id);
         }
         if($request->search){
             $records->where('discount','like','%'.$request->search.'%')

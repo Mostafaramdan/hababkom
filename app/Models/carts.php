@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class carts extends Model
 {
+
     public $timestamps = false , $with=['housing_unit','apartment'];
-    protected $appends=['adult_nums','children_nums'],$guarded=[];
+    protected $guarded=[];
 
 
     public function housing_unit()
@@ -23,12 +24,5 @@ class carts extends Model
     {
         return $this->belongsTo(orders::class,'orders_id');
     }
-    function GetAdultNumsAttribute()
-    {
-        // return $this->housing_unit->
-    }
-    function GetChildrenNumsAttribute()
-    {
-
-    }
+    
 }

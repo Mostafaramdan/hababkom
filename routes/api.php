@@ -19,6 +19,7 @@ use App\Http\Controllers\Apis\Controllers\testApi\testApiController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::apiResource('/image',App\Http\Controllers\dashboard\uploadImage::class);
 
 Route::ANY('/register',[index::class, 'index']);
 Route::ANY('/forgetPassword',[index::class, 'index']);
@@ -59,9 +60,6 @@ Route::ANY('/loginBySocialToken',[index::class, 'index']);
 Route::ANY('/registerBySocialToken',[index::class, 'index']);
 Route::ANY('/getCountries',[index::class, 'index']);
 Route::ANY('/getApartment',[index::class, 'index']);
-
-
-Route::apiResource('/image',App\Http\Controllers\dashboard\uploadImage::class);
-
-
-route::post('aaa','index@index');
+Route::ANY('/getmeasurementUnits',[index::class, 'index']);
+Route::ANY('/changeMeasurementUnit',[index::class, 'index']);
+Route::ANY('/cancelOrder',[index::class, 'index']);

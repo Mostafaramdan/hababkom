@@ -7,6 +7,7 @@ use App\Http\Controllers\Apis\Helper\helper;
 use App\Http\Controllers\Apis\Controllers\index;
 use App\Http\Controllers\Apis\Resources\objects;
 use App\Models\users;
+use App\Models\tokens;
 
 class registerBySocialTokenController extends index
 {
@@ -27,6 +28,13 @@ class registerBySocialTokenController extends index
         // set user vertifred
         $record->is_verified=1;
         $record->save();
+        $token = tokens::create([
+            'apiToken'=>helper::UniqueRandomXChar(69,'apiToken'),
+            $record->getTable().'_id'=>$record->id,
+            'created_at'=>date('Y-m-d H:i:s')
+        ]);
+        $record['apiToken'] = $token->apiToken;
+
         return [
             "status"=>200,
             'account'=>objects::account( $record)

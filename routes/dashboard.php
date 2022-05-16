@@ -27,5 +27,11 @@ Route::apiResource('notifications',notifications::class);
 Route::apiResource('statistics',statistics::class);
 Route::apiResource('estates',estates::class);
 Route::apiResource('apartments',apartments::class);
+Route::apiResource('apartments_complexes',apartments_complexes::class);
+Route::apiResource('owners',owners::class);
+Route::get('/getOwner/{id}/{records_id}',[App\Http\Controllers\dashboard\owners::class, 'getOwner']);
 
 Route::get('/getAllAttachments',[App\Http\Controllers\dashboard\attachments::class, 'getAll']);
+Route::get('/permissions',[App\Http\Controllers\dashboard\dashboard::class, 'permissions']);
+Route::post('/permissions/{admin}',[App\Http\Controllers\dashboard\dashboard::class, 'setPermissions']);
+Route::get('/getFinal_price_equation',[App\Http\Controllers\dashboard\dashboard::class, 'getFinal_price_equation']);

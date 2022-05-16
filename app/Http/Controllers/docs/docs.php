@@ -7,7 +7,7 @@ foreach($myfiles as $file){
 }
 return
 [
-    'name'=>'hababkom',
+    'name'=>'Hababcom',
     'description'=>'this appliction is similar to booking.com',
     'baseUrl'=>Request()->root().'api/',
     'apis'=>$apis

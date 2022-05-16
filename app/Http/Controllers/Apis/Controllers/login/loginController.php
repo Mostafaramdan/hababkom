@@ -13,11 +13,12 @@ class loginController extends index
 {
     public static function api()
     {
-        //
         $token = helper::login(self::$account,self::$request->password);
         if( helper::login(self::$account,self::$request->password)){
             if(self::$request->has('lang'))
                 self::$account->lang=self::$request->lang;
+                self::$account->fireBaseToken=self::$request->fireBaseToken;
+                
                 self::$account->save();
                 self::$account['apiToken'] = $token;
 

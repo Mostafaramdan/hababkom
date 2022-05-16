@@ -26,14 +26,14 @@ export default {
             }else{
                 let response=  await this.axios({
                     method: method,
-                    url: this.baseUrlDashboard+url,data,
+                    url: this.baseUrlDashboard+url,
                     headers: {
                         'Authorization': `${this.$store.getters.getUser.apiToken}`,
                         "Content-Type": "application/json",
                         "Access-Control-Allow-Origin": "*"
                     },
-                    params: data,
-                    data
+                    params:method=='GET'?data:{},
+                    data,
                 })
                 .catch(function (error) {
                     console.log(error);

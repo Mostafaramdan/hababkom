@@ -34,8 +34,17 @@ class housing_units extends dashboard
             "status"=>$records->count()?200:204,
             "totalPages"=>$totalPages,
             "records"=>$records,
+            'count'=>$this->model::where('estates_id',$request->estates_id)->count()
         ]);
     }
+    public function store(Request $request)
+    {
+        for($i = 0; $i < $request->N_Rooms; $i++)
+            $this->model::create($this->filterRequest($request));
+            
+        return response()->json(['status'=>200]);
+    }
+
     public function show( $id)
     {
         return response()->json(['status'=>200, 'record'=>$this->model::with('main_img')->findOrFail($id)]);

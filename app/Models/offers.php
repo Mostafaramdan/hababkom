@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class offers extends Model
 {
     use HasFactory;
-    protected  $fillable=['discount','code','start_at','end_at','housing_units_id'
-                ,'name_ar','name_en','description_ar','description_en']
+    protected  $guarded=[]
                 ;
     public $timestamps=false;
     protected $appends=['images'];

@@ -3,14 +3,16 @@
         <div class="container-fluid">
             <a class="navbar-brand" >
                 <b-button v-b-toggle.sidebar-right variant="info" pill active v-show="checkAuth">
-                    القائمة
+                    {{$lang["menu"]}}
                 <i class="fas fa-bars"></i>
                 </b-button>
             </a>
-            <b-dropdown  text="خيارات" class="m-md-2" v-if="checkAuth">
-                <b-dropdown-item>الاعدادات</b-dropdown-item>
+            <b-dropdown  :text="$lang.options" class="m-md-2" v-if="checkAuth">
+                <b-dropdown-item>{{$lang.options}}</b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
-                <b-dropdown-item @click="logout">تسجيل الخروج</b-dropdown-item>
+                <b-dropdown-item @click="changeLang($lang['oppositeChangeLang'])">{{$lang['oppositeLang']}}</b-dropdown-item>
+                <b-dropdown-divider></b-dropdown-divider>
+                <b-dropdown-item @click="logout"> {{$lang.logout}}</b-dropdown-item>
             </b-dropdown>
 
         </div>

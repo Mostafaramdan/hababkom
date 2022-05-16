@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class notifications extends Model
 {
-    protected $table = 'notifications', $fillable = ['content_ar','content_en','type','created_at'];
+    protected $table = 'notifications', $guarded = [];
     public $timestamps=false;
 
     public function notify(){
-        return $this->hasMany('\App\Models\notify','notifications_id');
+        return $this->hasMany(notify::class,'notifications_id');
     }
 }

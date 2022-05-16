@@ -20,7 +20,7 @@ class searchRules extends index
             'price.end'             =>'required_with:price',
             'rooms'                 =>'array',
             'rooms.*.adultNums'     =>'required_with:rooms',
-            'rooms.*.childrenNums'  =>'required_with:rooms',
+            // 'rooms.*.childrenNums'  =>'required_with:rooms',
             'attachmentIds'         =>'array',
             'attachmentIds.*'       =>'int|exists:attachments,id',
             'arrivalDate'           =>'required_with:departureDate',

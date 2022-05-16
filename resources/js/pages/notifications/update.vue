@@ -7,7 +7,7 @@
         <hr>
         <div class="form-check ">
             <label  > أدخل المحتوي بالعربي  </label>
-            <input type="text" v-model="record.content_ar" :class="['form-control' ,{'is-valid':validateContent_ar },{'is-invalid':!validateContent_ar}]"  >
+            <input type="text" v-model="record.content_ar" :class="['form-control' ,{'is-valid':validateContent_ar },{'is-invalid':record.content_ar&&!validateContent_ar}]"  >
             <div class="valid-feedback">
                      صحيح
             </div>
@@ -17,7 +17,7 @@
         </div>
          <div class="form-check ">
             <label  > أدخل عدد المحتوي بالانجليزي  </label>
-            <input type="text" v-model="record.content_en" :class="['form-control' ,{'is-valid':validateContent_en },{'is-invalid':!validateContent_en}]"  >
+            <input type="text" v-model="record.content_en" :class="['form-control' ,{'is-valid':validateContent_en },{'is-invalid':record.content_en&&!validateContent_en}]"  >
             <div class="valid-feedback">
                      صحيح
             </div>
@@ -30,7 +30,7 @@
         <button type="submit" class="btn btn-primary btn-lg mt-2" :disabled="allValidation == false ">
             <span v-if="loading">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                جاري التحميل ...
+                {{ $lang["loading..."] }}
             </span>
             <span v-else>
                  حفظ

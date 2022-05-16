@@ -12,10 +12,14 @@ class tokens extends Model
     public $timestamps= false ;
     function admin ()
     {
-        return $this->belongsTo(admins::class,'admins_id');
+        return $this->belongsTo(admins::class,'admins_id')->withoutGlobalScopes();;
     }
     function user ()
     {
         return $this->belongsTo(users::class,'users_id');
+    }
+    function owner ()
+    {
+        return $this->belongsTo(owners::class,'owners_id');
     }
 }

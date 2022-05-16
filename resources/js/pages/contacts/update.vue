@@ -6,7 +6,7 @@
         </h3>
         <hr>
         <div class="form-check ">
-            <label  > أدخل الاسم بالعربي  </label>
+            <label  > {{$lang['enter the name'] }} بالعربي  </label>
             <input type="text" v-model="record.name_ar" :class="['form-control' ,{'is-valid':validateName_ar },{'is-invalid':!validateName_ar}]"  >
             <div class="valid-feedback">
                      صحيح
@@ -30,7 +30,7 @@
         <button type="submit" class="btn btn-primary btn-lg mt-2" :disabled="allValidation == false ">
             <span v-if="loading">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                جاري التحميل ...
+                {{ $lang["loading..."] }}
             </span>
             <span v-else>
                  حفظ

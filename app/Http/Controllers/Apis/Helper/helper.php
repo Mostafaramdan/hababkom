@@ -7,7 +7,7 @@ use App\Http\Controllers\Apis\Controllers\index;
 use App\Models\admins;
 use App\Models\app_settings;
 use App\Models\notifications;
-use App\Models\notify_users as notify;
+use App\Models\notify;
 use App\Models\sessions;
 use Illuminate\Support\Str;
 
@@ -18,7 +18,8 @@ use DB;
 
 class helper extends generalHelp
 {
-	public static function validateAccount(){
+	public static function validateAccount()
+	{		
 		if(self::$account == null ){
 			if(self::$request->has('phone')){
 				$code=415;
@@ -36,7 +37,7 @@ class helper extends generalHelp
 				$code= 418;
 			}elseif(self::$account->is_active == 0){
 				$code=402;
-			}elseif(self::$account->is_verified == 0){
+			}elseif(self::$account->is_verified == 0 && request()->route()->uri()!='api/forgetPassword' ){
 				$code=419;
 		   }else{
 			   return null;
@@ -50,22 +51,21 @@ class helper extends generalHelp
 
 	public static function newNotify($targets,$message_ar,$message_en,$orderId=null,$type=null,$productId=null,$categoryId=null,$notificationId=null){
 		if(!$notificationId){
-			$notification   =   notifications::createUpdate([
+			$notification   =   notifications::updateOrCreate(['id'=>$notificationId??null],[
 									'content_ar'=>$message_ar,
 									'content_en'=>$message_en,
 									'type'    =>$type,
 									'orders_id'    =>$orderId,
-									'products_id'    =>$productId,
-									'categories_id'    =>$categoryId
+									'created_at'=>strtotime(now())
 									]);
 		}
+		notify::where('notifications_id',$notification->id)->delete();
 		foreach($targets as $user){
-			$notify =   notify::createUpdate([
+			$notify =   notify::create([
 							'notifications_id'=>$notificationId??$notification->id,
 							$user->getTable()."_id" =>$user->users_id??$user->id,
-							'orders_id' =>$orderId,
 							'is_seen'         =>0,
-							'type'            =>$type
+							'created_at'   =>now()
 						]);
 			self::sendFCM( $notify ,'user');
 		}
@@ -74,16 +74,11 @@ class helper extends generalHelp
 
 	public static function sendSms($phone,$code)
     {
-		$url = 'https://www.experttexting.com/ExptRestApi/sms/json/Message/Send?username=abubakar177&api_key=anczut3t3eczpgj&api_secret=uaopvznumfovs86&from=DEFAULT&to='.Str::replaceFirst('00','+', $phone).'&text='.$code.'&type=text';
-		self::get_web_page($url);
-	}
-	public static function getbalance()
-    {
-        $app_settings= app_settings::first();
-        $userNameSms= $app_settings->userNameSms;
-        $passwordSms= $app_settings->passwordSmss;
-        $url="https://www.safa-sms.com/api/getbalance.php?username=".$userNameSms."&password=".$passwordSms;
-		return self::get_web_page($url)['content'];
+
+		$url = 'https://www.experttexting.com/ExptRestApi/sms/json/Message/Send?username=abubakar177&api_key=anczut3t3eczpgj&api_secret=uaopvznumfovs86&from=DEFAULT&to='.Str::replaceFirst('00','', $phone).'&text='.$code.'&type=unicode&encode=utf8';
+		// $url = 'https://www.experttexting.com/ExptRestApi/sms/json/Message/Send?username=abubakar177&api_key=anczut3t3eczpgj&api_secret=uaopvznumfovs86&from=DEFAULT&to=201114228487&text=hi mostafa&type=text&encode=utf8';
+		// file_get_contents($url);
+		$response =self::get_web_page($url)['content'] ;
 	}
 	public static function get_web_page( $url, $cookiesIn = '' )
 	{
@@ -121,7 +116,7 @@ class helper extends generalHelp
         $header['headers']  = $header_content;
         $header['content'] = $body_content;
 		$header['cookies'] = $cookiesOut;
-		// return $header;		
+		return $header;		
 	}
 	public static function translateStatus($status)
     {

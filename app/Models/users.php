@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Controllers\Apis\Helper\helper ;
 
-class users extends GeneralModel
+class users extends Model
 {
     public $timestamps = false;
-    protected $table= 'users', $appends=["session" ];
+    protected $table= 'users', $appends=["session" ],$guarded=[];
 
     public static function createUpdate($params)
     {
@@ -45,6 +45,10 @@ class users extends GeneralModel
     public function sessions(){
         return $this->hasMany(sessions::class,'users_id');
     }
+    public function measurement_unit(){
+        return $this->belongsTo(measurement_units::class,'measurement_units_id');
+    }
+
     function GetSessionAttribute(){
         return count($this->sessions)>0 ? $this->sessions->first():null;
     }

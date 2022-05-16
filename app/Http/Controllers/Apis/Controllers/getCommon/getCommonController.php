@@ -13,7 +13,13 @@ class getCommonController extends index
     public static function api()
     {
         $type = 'App\Models\\'.self::$request->type.'s';
-        $records=  helper::get( $type::where('is_active',1));
+        $type = 'App\Models\\'.self::$request->type.'s';
+        if(self::$request->type== 'apartment'){
+            $groupBy='apartments_complexes_id';
+        }else{
+            $groupBy='estates_id';
+        }
+        $records=  helper::get( $type::where('is_active',1)->groupBy($groupBy));
         return [
             "status"=>$records[2],
             "totalPages"=>$records[1],

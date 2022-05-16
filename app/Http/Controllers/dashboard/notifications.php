@@ -4,6 +4,8 @@ namespace App\Http\Controllers\dashboard;
 
 use Illuminate\Http\Request;
 use App\Models\notifications as model;
+use App\Models\users;
+use App\Http\Controllers\Apis\Helper\helper;
 
 class notifications extends dashboard
 {
@@ -31,5 +33,18 @@ class notifications extends dashboard
             "records"=>$records,
             "request"=>$request->all(),
         ]);
+    }
+
+    public function aa()
+    {
+        helper::newNotify([self::$account], $message_ar,$message_en,$order->id);
+
+    }
+    public function store(Request $request)
+    {
+        // $this->model::create($this->filterRequest($request));
+        helper::newNotify(users::whereNotNull('fireBaseToken')->get(), $request->content_ar,$request->content_en,null,'dashboard');
+
+        return response()->json(['status'=>200]);
     }
 }

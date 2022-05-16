@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.82.0">
-    <title>docs Api - hababkom</title>
+    <title>docs Api - Hababcom</title>
     <meta name="theme-color" content="#7952b3">
     <style>
       .bd-placeholder-img {
@@ -32,7 +32,7 @@
             <div class="d-flex flex-column p-3 text-white bg-dark" style="width: 280px;min-height: 100%;position: fixed;height: 100%;overflow: auto;">
                 <a href="#home" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                     <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-                    <span class="fs-4">docs Api - hababkom</span>
+                    <span class="fs-4">docs Api - Hababcom</span>
                 </a>
                 <hr>
                 <ul class="nav nav-pills flex-column mb-auto">

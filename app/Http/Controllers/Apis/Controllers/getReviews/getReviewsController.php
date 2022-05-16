@@ -12,7 +12,10 @@ class getReviewsController extends index
 {
     public static function api()
     {
-        $records=  reviews::where('estates_id',self::$request->estateId)->get();
+        if(self::$request->estateId)
+            $records=  reviews::where('estates_id',self::$request->estateId)->get();
+        else
+            $records=  reviews::where('apartments_complex_id',self::$request->apartmentComplexId)->get();
         return [
             "status"=>$records->forPage(self::$request->page+1,self::$itemPerPage)->count()?200:204,
             "totalPages"=>ceil($records->count()/self::$itemPerPage),

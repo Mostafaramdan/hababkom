@@ -4,14 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Builder;
 
 class estates extends Model
 {
     use HasFactory;
-    protected $appends=['images','admin'],$with=['city'];
-    protected  $fillable=['regions_id','street','attachments','map_link','categories_id','notes','locations_id','name_ar','name_en','description_ar','description_en','payment','images'];
+    protected $appends=['images','average_rate','main_image'],$with=['city'];
+
+    protected  $guarded=[];
     public $timestamps=false;
 
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope('id', function (Builder $builder) {
+            $builder->when(Controller::$admin &&  Controller::$admin->getTable() ==='owners',function($q){
+            return  $q->where('id',Controller::$admin->estates_id);
+        });
+
+        });
+    }
     public function scopeAdmin($query, $estates_id)
     {
         if(!$estates_id)
@@ -33,14 +46,19 @@ class estates extends Model
     {
         return images::find(json_decode($this->attributes['images'],true));
     }
+    function GetMainImageAttribute()
+    {
+        return images::find(json_decode($this->attributes['main_image'],true));
+    }
     public function reviews()
     {
         return $this->hasMany(reviews::class,'estates_id');
     }
-     function GetAdminAttribute()
+    public function getAverageRateAttribute()
     {
-        return admins::where('estates_id',$this->id)->first();
+        return $this->attributes['average_rate'] = $this->reviews->avg('rate');
     }
+
     public function images()
     {
         return $this->hasMany(images::class,'housing_units_id');

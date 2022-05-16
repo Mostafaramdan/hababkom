@@ -1,35 +1,34 @@
 <template >
     <div>
         <div class="input-group mb-3">
-            <input type="search" class="form-control" v-model.trim="search" list="wizards-list" placeholder=" ابحث من هنا " aria-label="Example text with button addon" aria-describedby="button-addon1">
-            <button v-b-modal.new-swap-shift-modal class="btn  btn-outline-primary" type="button" id="button-addon1"><i class='fas fa-filter'></i> فلترة </button>
+            <input type="search" class="form-control" v-model.trim="search" list="wizards-list" :placeholder="$lang['search from somthing']" aria-label="Example text with button addon" aria-describedby="button-addon1">
+            <button v-b-modal.new-swap-shift-modal class="btn  btn-outline-primary" type="button" id="button-addon1"><i class='fas fa-filter'></i> {{ $lang['filter'] }} </button>
         </div>
 
-        <b-modal id="new-swap-shift-modal" @ok="$router.push({  query: { ...$route.query,...features(),page:1 }})" hide-header-close title="فلترة النتائج" ok-hide='true' ok-title = "فلترة"  cancel-title = "إلفاء">
+        <b-modal id="new-swap-shift-modal" @ok="$router.push({  query: { ...$route.query,...features(),page:1 }})" hide-header-close :title=" $lang['filter results'] " ok-hide='true' :ok-title = "$lang.filter"  :cancel-title = "$lang.cancel">
             <div class="d-block text-center">
                 <div class="form-group" >
-                    <label   >ترتيب علي حسب</label>
+                    <label> {{ $lang['order by'] }} </label>
                     <select class="custom-select" v-model="filterBy">
-                        <option value="name_ar">الإسم </option>
-                        <option value="id">التاريخ</option>
+                        <option value="id">{{$lang['created at'] }}</option>
                     </select>
                 </div>
                 <div class="form-group" >
-                    <label   >نوع الترتيب  </label>
+                    <label   >{{$lang['order type'] }} </label>
                     <select class="custom-select" v-model="filterType">
-                        <option value="ASC">تصاعدي </option>
-                        <option value="DESC">تنازلي</option>
+                        <option value="ASC">{{$lang['ascending'] }} </option>
+                        <option value="DESC">{{$lang['descending'] }}</option>
                     </select>
                 </div>
                 <div class="form-group" >
-                    <label > نوع الحجز </label>
+                    <label > {{$lang['Booking type']}} </label>
                     <select class="custom-select" v-model="status">
-                        <option value="">الكل </option>
-                        <option value="waiting">غير مؤكد </option>
-                        <option value="coming">مؤكد</option>
-                        <option value="finished">سابق</option>
-                        <option value="cancelled">ملغي</option>
-                        <option value="refused">مرفوض  </option>
+                        <option value="">{{$lang.all}} </option>
+                        <option value="waiting">{{$lang['unconfirmed orders']}}</option>
+                        <option value="coming">{{$lang['confirmed orders']}}</option>
+                        <option value="finished">{{$lang['finished orders']}}</option>
+                        <option value="cancelled">{{$lang['cancelled orders']}}</option>
+                        <option value="refused">{{$lang['rejected orders']}}  </option>
 
                     </select>
                 </div>
@@ -39,22 +38,31 @@
             <table class="table table-striped table-dark table-bordered table-hover  mb-2"  >
                 <thead >
                     <tr >
-                        <th >#</th>
-                        <th >الحالة </th>
-                        <th >السعر </th>
-                        <th >الاجمالي</th>
+                        <th >{{$lang.code}}</th>
                         <th ><i class="fas fa-user"></i></th>
+                        <th >{{$lang.status}} </th>
+                        <th >{{$lang.price}} </th>
+                        <th >{{$lang.total}}</th>
+                        <th>{{$lang.city }}</th>
+                        <th>{{$lang.hotel }}</th>
+                        <th>{{$lang.apartment }}</th>
                         <th ><i class="fas fa-clock"></i></th>
                         <th >#</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(record,index) in records" :key="index">
-                        <td>{{record.id}}</td>
-                        <td>{{record.status_ar}}</td>
-                        <td>%{{record.price}}</td>
-                        <td>{{record.total}}</td>
+                        <td>{{ record.code }}</td>
                         <td><router-link :to="{name:'usersShow',params:{id:record.users_id}}">{{record.user.name}}</router-link></td>
+                        <td>{{$lang[record.status] }}</td>
+                        <td>{{record.price}}</td>
+                        <td >{{record.total}}</td>
+                        <td>{{record.total}}</td>
+
+                        <td>{{record.city_of_hotel['name_'+$lang['currentLang']] }}</td>
+                        <td v-if="record.type=='hotel'">{{record.hotel_name['name_'+$lang['currentLang']] }}</td>
+                        <td v-if="record.type!='hotel'">{{record.hotel_name['name_'+$lang['currentLang']] }}</td>
+
                         <td>{{record.created_at}}</td>
                         <td>
                             <button class="btn btn-danger" @click="deleteRecord(index)"><i class="fas fa-trash "></i></button>
@@ -111,7 +119,7 @@ export default {
         },
          async deleteRecord(index){
 
-            if(confirm('هل انت متأكد من مسح هذا العنصر')){
+            if(confirm(this.$lang['Are you sure to delete this item'])){
                 await this.Api('DELETE',`orders/${this.records[index].id}`);
                 this.records.splice(index,1);
             }
@@ -132,7 +140,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم -  الحجوزات `,
+            title: `${this.$lang['app name']} -  ${this.$lang.orders} `,
         }
     },
     watch :{

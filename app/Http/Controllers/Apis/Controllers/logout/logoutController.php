@@ -8,6 +8,7 @@ use App\Http\Controllers\Apis\Helper\helper ;
 use App\Http\Controllers\Apis\Controllers\index;
 use App\Http\Controllers\Apis\Resources\objects;
 use App\Models\users;
+use App\Models\tokens;
 
 class logoutController extends index
 {
@@ -16,6 +17,7 @@ class logoutController extends index
         self::$account->fireBaseToken=NULL;
         self::$account->apiToken=NULL;
         self::$account->save();
+        tokens::where('apiToken',self::$request->apiToken)->delete();
         return [
             "status"=>200,
         ];

@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class regions extends Model
 {
     use HasFactory;
-    protected  $fillable=['name_ar','name_en','regions_id','countries_id']
+    protected  $with=['region'],$fillable=['name_ar','name_en','regions_id','countries_id']
     ;
     public $timestamps=false;
 
     public function regions(){
         return $this->hasMany(regions::class);
+    }
+    public function region(){
+        return $this->belongsTo(regions::class,'regions_id');
     }
     public static function allActive()
     {

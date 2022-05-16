@@ -12,9 +12,9 @@ class apartments extends Model
     protected $table = 'apartments';
     public function scopeAdmin($query, $admin)
     {
-        if(!$admin->apartments_id)
+        if(!$admin->apartments_complexes_id)
             return $query;
-            return  $query->where('id',$admin->apartments_id);
+            return  $query->where('id',$admin->apartments_complexes_id);
     }
 
     public function scopeRange($query, $request)
@@ -31,9 +31,14 @@ class apartments extends Model
     {
         return images::find(json_decode($this->attributes['images'],true));
     }
+    public function apartments_complex()
+    {
+        return $this->belongsTo(apartments_complexes::class,'apartments_complexes_id');
+    }
+
     public function reviews()
     {
-        return $this->hasMany(reviews::class,'estates_id');
+        return $this->hasMany(reviews::class,'apartments_id');
     }
     public function offer()
     {

@@ -187,8 +187,8 @@ class generalHelp extends index
 		$account->save();
 	}
 
-	public static function updatePassword(){
-
+	public static function updatePassword()
+	{
 		if (Hash::check(self::$request->oldPassword ,self::$account->password ) == false) {
 			return false;
 		}else{
@@ -198,8 +198,8 @@ class generalHelp extends index
 		}
 	}
 
-	public static function setAccountByession(){
-
+	public static function setAccountByession()
+	{
 		$key=self::$request->has('phone')?'tmp_phone':'tmp_email';
 		$value=self::$request->has('phone')?self::$request->phone:self::$request->email;
 		$seeions = $session=sessions::where($key,self::$request->phone)->first();
@@ -221,6 +221,20 @@ class generalHelp extends index
 		$code=null;
 		if ($validator->fails()) {
 			$code = $validator->errors()->first();
+		}
+
+		$validator = Validator::make($Request, $Rules, $messagesLang);
+		if ($validator->fails()) {
+			$message = $validator->errors()->first();
+		}
+		if($code!=null)
+			return ['status'=>(int)$code,'message'=>$message];
+	}
+
+	public static function validateDash ($Request, $Rules, $Messages){
+		$validator = Validator::make($Request, $Rules, $Messages);
+		if ($validator->fails()) {
+			$code = $validator->errors();
 		}
 
 		$validator = Validator::make($Request, $Rules, $messagesLang);
@@ -265,33 +279,22 @@ class generalHelp extends index
 
 	public static function sendFCM($pushNotify,$target) {
 		$url = 'https://fcm.googleapis.com/fcm/send';
-		$offers_id=null;
-		$products_id=null;
-		if( $pushNotify->notifications->products_id){
-			if( $pushNotify->notifications->product->in_offer_now){
-				$offers_id = $pushNotify->notifications->products_id;
-			}else{
-				$products_id= $pushNotify->notifications->products_id;
-			}
-		}
+		
 		$fields = [
 			"to" => $pushNotify->$target->fireBaseToken,
 			"notification" => [
-				"title" =>"Igreen",
-				"body" => $pushNotify->notifications['content_'.$pushNotify->$target->lang],
+				"title" =>"Hababcom",
+				"body" => $pushNotify->notification['content_'.$pushNotify->$target->lang],
 				"icon" => "myicon",
 				"sound" => "notify.mp3"
 			],
 			"data"=>[
-				"productId" =>  $products_id,
-				"offerId" => $offers_id,
-				"categoryId" =>  $pushNotify->notifications->categories_id,
-				"orderId" =>  $pushNotify->notifications->orders_id,
-				"type" => $pushNotify->notifications->type,
+				"orders_id" =>  $pushNotify->notification->orders_id,
 			],
 		];
 		$fields = json_encode ( $fields );
-		$key = 'AAAALLByHOc:APA91bGsTfep_Wsdt4VAFXeO38EF1RJuyGYoGJadlwycy1WG6V8EmMgLxIMNInZTHlCq8bbdsjsdHhKBBm2FXmzO8LTYkG05g9a47B6o9oAy4EIWnHYwOyWLYrAg2z_S5h1QTcUlWirU';
+		// $key = 'AAAAVwS7fSg:APA91bFJYQk8d0kICYXR6DvVO-SEUixwtfnXE58mbVeBDcp0UTld7njDTOt9Yyc3ldF1HzGzjWU89MyGp96TzrW8bowANubd6v87ejyeTpEsaFtpALAzCOSGqf04wrLJonrBbatM_6M9';
+		$key = 'AAAAHy8tKgQ:APA91bGnFzdgmfd7r69WVbD-rdQDCiCaYde6fqXeB1iVYs0HjOT0ZJsRW5iOLcHBoia8L8B2H-WP902OBZDsf4lXwuuZF7Zon2ha0KoYfhVFak_IHpEtJ0kwZFzTpfXvDwUM8bLBvF0h';
 		$headers = [
 			'Authorization: key='.$key,
 			'Content-Type: application/json'
@@ -304,10 +307,6 @@ class generalHelp extends index
 		curl_setopt ( $ch, CURLOPT_POSTFIELDS, $fields );
 		$result = curl_exec ( $ch );
 		curl_close ( $ch );
-		// if( $pushNotify->$target->fireBaseToken== "dHpoIRKR1sQ:APA91bEIFKSSsNmjyBnUijZc5FughaJBTxyFIPbZJnX5Uf0VIpLLg_J8AS4Q7pugN0FCk8OlNArY4bHqlUG0M9w0viFdsAfva7-t3VVsOS2T9Epew9LcI3jujC7Is4tibdil2pa_VP4z" ){
-
-			// dd($result);
-		// }
 	}
 
 	public static function deleteFile($path){

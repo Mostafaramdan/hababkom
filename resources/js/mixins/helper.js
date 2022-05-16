@@ -11,6 +11,10 @@ export default {
     components: {
         pagination
     },
-    method:{
+    methods:{
+        changeLang(lang){
+            this.$setLang(lang);
+            localStorage.setItem('lang',lang);
+        }
     }
 }

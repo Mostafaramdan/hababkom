@@ -4,11 +4,11 @@ namespace App\Models;
 use App\Http\Controllers\Apis\Controllers\index;
 use Illuminate\Database\Eloquent\Model;
 
-class notify extends GeneralModel
+class notify extends Model
 {
     protected   $table = 'notify',
-                $appends=['type','target_user'];
-
+                $appends=['type','target_user'],$guarded=[];
+    public $timestamps=false;
     public static function createUpdate($params){
 
         $record= isset($params['id'])? self::find($params['id']) :new self();

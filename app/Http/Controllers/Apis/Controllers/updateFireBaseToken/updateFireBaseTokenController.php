@@ -18,7 +18,6 @@ class updateFireBaseTokenController extends index
             'id'=>self::$account->id,
             'fireBaseToken'=>self::$request->fireBaseToken
         ]);
-    $message="تم تغيير رقم الجهاز بنجاح";
         return [
             "status"=>200,
             'message'=>self::$messages['updateFireBaseToken']["200"]

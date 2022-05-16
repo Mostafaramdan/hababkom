@@ -2,15 +2,15 @@
     <div class="m-3" >
     <form  @submit.prevent="onSubmit" class="border border-5 border-primary rounded form">
         <h3>
-         تعديل مسؤول
+         {{$lang["update an admin"]}}
         </h3>
         <hr>
         <div class="form-check ">
-            <label  > أدخل الاسم  </label>
+            <label  > {{$lang["enter the name"]}}   </label>
             <input type="text" v-model="record.name" :class="['form-control' ,{'is-valid':validateName },{'is-invalid':!validateName}]"  >
             <div class="valid-feedback">
                      صحيح
-            </div>
+            </div> 
             <div class="invalid-feedback">
                 <span>يجب إدخال الاسم بشكل صحيح</span>
             </div>
@@ -60,7 +60,7 @@
         <button type="submit" class="btn btn-primary btn-lg mt-2" :disabled="allValidation == false ">
             <span v-if="loading">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                جاري التحميل ...
+                {{ $lang["loading..."] }}
             </span>
             <span v-else>
                  حفظ
@@ -95,7 +95,6 @@
                 this.$swal("تم التعديل بنجاح", "", "success")
                 this.loading=false;
             }
-
         },
     },
     computed: {
@@ -120,11 +119,12 @@
         this.$store.state.isLoading = false;
         let response = await this.Api('GET',`admins/${this.$route.params.id}`);
         this.record = response.data.record;
+        this.record.password = '';
 
     },
         metaInfo() {
         return {
-            title: `حبابكم -   تعديل مسؤول  `,
+            title: `${this.$lang['app name']} - ${this.$lang['update an admin']} `,
         }
     }
 

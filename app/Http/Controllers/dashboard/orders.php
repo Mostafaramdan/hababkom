@@ -20,10 +20,20 @@ class orders extends dashboard
                 });
             });
         }
-
+        if(self::$admin->apartments_id){
+            $records->whereHas('carts', function ($query) {
+                $query->whereHas('apartment',function($q) {
+                    return $q->where('apartments_id',self::$admin->apartments_id);
+                });
+            });
+        }
+        if($request->status)
+            $records->where('status',$request->status);
         if($request->search){
             $records->where('id','like','%'.$request->search.'%')
-                    ->orWhere('status','like','%'.$request->search.'%');
+                    ->orWhere('status','like','%'.$request->search.'%')
+                    ->orWhere('id','like','%'.(1*str_replace(date("Y"),'',$request->search)).'%')
+                    ;
         }
         $records->orderBy($request->filterBy??'id',$request->filterType??'DESC'); // filter
         if($request->status){

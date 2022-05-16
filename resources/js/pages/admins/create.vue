@@ -60,7 +60,7 @@
         <button type="submit" class="btn btn-primary btn-lg mt-2" :disabled="allValidation == false ">
             <span v-if="loading">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                جاري التحميل ...
+                {{ $lang["loading..."] }}
             </span>
             <span v-else>
                  حفظ
@@ -93,7 +93,7 @@
             let response = await this.Api('POST','admins',this.record);
             this.loading=false;
             if(response.data.status==200)
-                this.$swal("تم الاضافة بنجاح", "", "success")
+                this.$swal(this.$lang["Added successfully"], "", "success")
             if(response.data.status==403)
                 this.$swal("هذا  البريد االلكتروني موجود مسبقا ", "", "error")
             if(response.data.status==404)
@@ -132,7 +132,7 @@
     },
         metaInfo() {
         return {
-            title: `حبابكم -  أنشئ  مسؤول جديد `,
+            title: `${this.$lang['app name']} - ${this.$lang['create']} `,
         }
     }
 

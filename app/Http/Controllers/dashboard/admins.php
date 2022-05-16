@@ -5,6 +5,7 @@ namespace App\Http\Controllers\dashboard;
 use Illuminate\Http\Request;
 use App\Models\admins as model;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class admins extends dashboard
 
@@ -13,45 +14,46 @@ class admins extends dashboard
     {
         $this->model= model::class;
     }
-    public function index(Request $request)
-    {
-        $records= $this->model::whereNotIn('email',['demo@magdsoft.com','hababkom@magdsoft.com']);
-        if($request->search){
-            $records->where('name','like','%'.$request->search.'%')
-                    ->orWhere('email','like','%'.$request->search.'%')
-                    ->orWhere('phone','like','%'.$request->search.'%')
-                    ;
-        }
-        $records->orderBy($request->filterBy??'id',$request->filterType??'DESC'); // filter
-
-        $itemPerPage= $request->itemPerPage??self::$itemPerPage;
-        $totalPages= ceil($records->count()/$itemPerPage);
-        $records= $records->forPage($request->page,$itemPerPage)->get();
-        return response()->json([
-            "status"=>$records->count()?200:204,
-            "totalPages"=>$totalPages,
-            "records"=>$records,
-        ]);
-    }
+    public $rules =[
+        'title' => 'required|unique:posts|max:255',
+    ];
+    public $search=['name','email','phone'];
     public function store(Request $request)
     {
-        if($this->model::where('email',$request->email)->count()){
-            return response()->json(['status'=>403]);
-        }
-        if($this->model::where('phone',$request->phone)->count()){
-            return response()->json(['status'=>404]);
-        }
-        $this->model::create([
-            'name'=>$request->name,
-            'email'=>$request->email,
-            'estates_id'=>$request->estates_id,
-            'apartments_id'=>$request->apartments_id,
-            'phone'=>$request->phone,
-            'permissions'=>json_encode(config('dashboard.permissions')),
-            'password'=>Hash::make($request->password),
-            'apiToken'=>\App\Http\Controllers\Apis\Helper\helper::UniqueRandomXChar(70,['admins'])
-        ]);
+        $rules =[
+            'phone'   =>'unique:owners,owner_phone|unique:owners,manager_phone|unique:admins,phone',
+            'email'   =>'unique:owners,owner_email|unique:admins,email',
+        ];
+        $messages =[
+            'phone.unique'    =>'This phone already exists',
+            'email.unique'    =>'This email already exists',
+        ];
+        $errors = Validator::make($request->all(), $rules, $messages)->errors();
+        if(count($errors) > 0) return response()->json(['status'=>400,'errors'=>$errors]);
+        
+        $request = $this->filterRequest($request);
+        $request['permissions'] = json_encode(config('dashboard.permissions'));
+        $this->model::create($request);
+
         return response()->json(['status'=>200]);
     }
+    
+    public function update(Request $request, $id)
+    {
+        $rules =[
+            'phone'   =>'unique:owners,owner_phone|unique:owners,manager_phone|unique:admins,phone,'.$id,
+            'email'   =>'unique:owners,owner_email|unique:admins,email,'.$id,
+            
+        ];
+        $messages =[
+            'phone.unique'    =>'This phone already exists',
+            'email.unique'    =>'This email already exists',
+        ];
+        $errors = Validator::make($request->all(), $rules, $messages)->errors();
+        if(count($errors) > 0) return response()->json(['status'=>400,'errors'=>$errors]);
+        $record= $this->model::where('id',$id)->update( $this->filterRequest($request));
+        return response()->json(['status'=>200]);
+    }  
+
 
 }

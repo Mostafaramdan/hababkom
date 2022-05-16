@@ -19,11 +19,11 @@
     </head>
     <body class="text-right" style="background-color:rgb(221, 221, 221);; ">
         <div id="mainapp" >
-                <main-app></main-app>
-            </div>
-    </body>
+            <main-app></main-app>
+        </div>
     <script src="{{asset('javascript/app.js')}}"></script>
     <script >
 
     </script>
+    </body>
 </html>

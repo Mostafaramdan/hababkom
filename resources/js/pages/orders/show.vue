@@ -7,16 +7,35 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-3 ">
-                                <label><h5 >الحالة : </h5></label>
+                                <label><h5 >{{$lang.city }} : </h5></label>
                             </div>
                             <div class="col-md-3">
-                                <b> {{ record.status_ar }}</b>
+                                <b> {{record.city_of_hotel['name_'+$lang['currentLang']] }}</b>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <div class="col-md-3 ">
-                                <label><h5 > الاجمالي  : </h5></label>
+                                <label><h5 >{{$lang.hotel }} : </h5></label>
+                            </div>
+                            <div class="col-md-3">
+                                <b> {{record.hotel_name['name_'+$lang['currentLang']] }}</b>
+
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang.status }} : </h5></label>
+                            </div>
+                            <div class="col-md-3">
+                                <b> {{$lang[record.status] }}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang.total }} : </h5></label>
                             </div>
                             <div class="col-md-3">
                                 <b> {{ record.price }}</b>
@@ -25,7 +44,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3 ">
-                                <label><h5 >الاجمالي بعد الخصم : </h5></label>
+                                <label><h5 >{{$lang['Total after discount']}} : </h5></label>
                             </div>
                             <div class="col-md-3">
                                 <b> {{ record.priceAfterDiscount }}</b>
@@ -34,7 +53,7 @@
                         <hr>
                         <div class="row" v-if='record.voucher'>
                             <div class="col-md-3 ">
-                                <label><h5 >  الخصم : </h5></label>
+                                <label><h5 >  {{$lang['discount']}} : </h5></label>
                             </div>
                             <div class="col-md-3">
                                 <b> <button class="btn btn-secondary" @click="goToVoucher(record.vouchers_id)"> <i class="fas fa-eye "></i> {{record.voucher.discount}} % </button></b>
@@ -43,7 +62,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3 ">
-                                <label><h5 >  تاريخ البداية   : </h5></label>
+                                <label><h5 >  {{$lang['start at']}}   : </h5></label>
                             </div>
                             <div class="col-md-3">
                                 <b> {{ record.start_at }}</b>
@@ -52,7 +71,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3 ">
-                                <label><h5 >  تاريخ النهاية   : </h5></label>
+                                <label><h5 >  {{$lang['end at']}}   : </h5></label>
                             </div>
                             <div class="col-md-3">
                                 <b> {{ record.end_at }}</b>
@@ -61,7 +80,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3 ">
-                                <label><h5 >  تاريخ الحجز   : </h5></label>
+                                <label><h5 >  {{$lang['booking date'] }}  : </h5></label>
                             </div>
                             <div class="col-md-3">
                                 <b> {{ record.created_at }}</b>
@@ -70,7 +89,7 @@
                         <hr>
                         <div class="row" v-if="record.user">
                             <div class="col-md-3 ">
-                                <label><h5 > المستخدم <i class="fas fa-user"></i>       : </h5></label>
+                                <label><h5 > {{$lang.user}} <i class="fas fa-user"></i>       : </h5></label>
                             </div>
                             <div class="col-md-3">
                                 <b><router-link :to="{name:'usersShow',params:{id:record.users_id}}">{{record.user.name}}</router-link></b>
@@ -84,9 +103,9 @@
                     <thead >
                         <tr >
                             <th >#</th>
-                            <th >عدد البالغين </th>
-                            <th >عدد الاطفال </th>
-                            <th >السعر</th>
+                            <th >{{$lang['adult count']}} </th>
+                            <th >{{$lang['children count']}} </th>
+                            <th >{{$lang.price}} </th>
                             <th >#</th>
                         </tr>
                     </thead>

@@ -1,101 +1,101 @@
 <template >
     <div class="row" >
         <div class="col-md-4 m-2">
-            <label for="from" class="form-label"> من : </label>
+            <label for="from" class="form-label"> {{$lang.from}} : </label>
             <input type="date" class="form-control" v-model="from" id="from">
         </div>
         <div class="col-md-4 m-2">
-            <label for="to" class="form-label"> الي : </label>
+            <label for="to" class="form-label">  {{$lang.to}} : </label>
             <input type="date" class="form-control"  v-model="to" id="to">
         </div>
         <div class="col-md-4 m-2">
-            <label for="to" class="form-label"> اختر فترة  : </label>
+            <label for="to" class="form-label">  {{$lang['choose period']}}  : </label>
             <select class="form-control"   v-model="period">
-                <option value="today">اليوم</option>
-                <option value="yesterday">الأمس</option>
-                <option value="thisWeak">هذا الأسبوع</option>
-                <option value="thisMonth">هذا الشهر</option>
-                <option value="lastMonth">الشهر الماضي</option>
-                <option value="all">الكل</option>
+                <option value="today">{{$lang['today']}}</option>
+                <option value="yesterday">{{$lang['yesterday']}}</option>
+                <option value="thisWeak">{{$lang['this weak']}}</option>
+                <option value="thisMonth">{{$lang['this month']}}</option>
+                <option value="lastMonth">{{$lang['last month']}}</option>
+                <option value="all">{{ $lang.all }}</option>
                 </select>
         </div>
         <hr>
         <div class="col-3  text-white bg-primary m-3" style="max-width: 18rem;">
-            <div class="card-text m-2 text-wrap">الطلبات الغير  المؤكدة</div>
+            <div class="card-text m-2 text-wrap">{{$lang['unconfirmed orders']}}</div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.waiting}}</h5>
             </div>
         </div>
 
         <div class="col-3  text-white bg-secondary m-3" style="max-width: 18rem;">
-            <div class="card-text m-2 text-wrap">الطلبات المؤكدة</div>
+            <div class="card-text m-2 text-wrap">{{$lang['confirmed orders']}}</div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.coming}}</h5>
             </div>
         </div>
 
         <div class="col-3  text-white bg-info m-3" style="max-width: 18rem;">
-            <div class="card-text m-2 text-wrap">الطلبات المنتهية</div>
+            <div class="card-text m-2 text-wrap">{{$lang['finished orders']}}</div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.finished}}</h5>
             </div>
         </div>
 
         <div class="col-3  text-white bg-warning  m-3" style="max-width: 18rem;">
-            <div class="card-text m-2 text-wrap">الطلبات الملغية</div>
+            <div class="card-text m-2 text-wrap">{{$lang['cancelled orders']}}</div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.cancelled}}</h5>
             </div>
         </div>
 
         <div class="col-3  text-white bg-danger  m-3" style="max-width: 18rem;">
-            <div class="card-text m-2 text-wrap">الطلبات المرفوضة</div>
+            <div class="card-text m-2 text-wrap">{{$lang['rejected orders']}}</div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.refused}}</h5>
             </div>
         </div>
         <hr>
         <div class="col-3  text-white bg-primary  m-3" style="max-width: 18rem;">
-            <div class="card-text m-2 text-wrap">اجمالي الطلبات </div>
+            <div class="card-text m-2 text-wrap">{{$lang['total orders']}} </div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.orders}}</h5>
             </div>
         </div>
 
         <div class="col-3  text-white bg-dark  m-3" style="max-width: 18rem;">
-            <div class="card-text m-2 text-wrap"> اجمالي المبالغ المدفوعة </div>
+            <div class="card-text m-2 text-wrap"> {{$lang['total amount paid']}} </div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.total}}</h5>
             </div>
         </div>
 
         <div class="col-3  text-white bg-dark  m-3" style="max-width: 18rem;">
-            <div class="card-text m-2 text-wrap">اجمالي فوائد التطبيق </div>
+            <div class="card-text m-2 text-wrap">{{$lang['total benefits of the application']}} </div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.fees}}</h5>
             </div>
         </div>
         <hr>
         <div class="col-3  text-white bg-info m-3" style="max-width: 18rem;">
-            <div class="card-text m-2 text-wrap">اجمالي عدد الوحدات السكنية </div>
+            <div class="card-text m-2 text-wrap">{{$lang['total number of estates']}} </div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.estates}}</h5>
             </div>
         </div>
         <div class="col-3  text-white bg-primary m-3" style="max-width: 18rem;">
-            <div class="card-text m-2 text-wrap">اجمالي عدد  الغرف </div>
+            <div class="card-text m-2 text-wrap">{{$lang['total number of housing units']}} </div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.housing_units}}</h5>
             </div>
         </div>
         <div class="col-3  text-white bg-info m-3" style="max-width: 18rem;">
-            <div class="card-text m-2 text-wrap">اجمالي عدد المستخدمين  </div>
+            <div class="card-text m-2 text-wrap">{{$lang['total number of users']}}  </div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.users}}</h5>
             </div>
         </div>
         <div class="col-3  text-white bg-primary m-3" style="max-width: 18rem;">
-            <div class="card-text m-2 text-wrap">رسائل الدعم الفني </div>
+            <div class="card-text m-2 text-wrap">{{$lang['technical support messages']}} </div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.contacts}}</h5>
             </div>
@@ -158,7 +158,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم -   الاحصائيات `,
+            title: `${this.$lang['app name']} -   ${this.$lang.statistics} `,
         }
     },
 }

@@ -78,7 +78,7 @@
         <button type="submit" class="btn btn-primary btn-lg mt-2" :disabled="allValidation == false ">
             <span v-if="loading">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                جاري التحميل ...
+                {{ $lang["loading..."] }}
             </span>
             <span v-else>
                  حفظ
@@ -131,7 +131,7 @@
             if(response.data.status== 409){
                 this.$swal("هذا الكود موجود مسبقاّ , برجاء إدخال كود مختلف  ", "", "error")
             }else{
-                this.$swal("تم الاضافة بنجاح", "", "success");
+                this.$swal(this.$lang["Added successfully"], "", "success");
                 this.$router.push( {name:'vouchers',});
             }
             this.loading=false;

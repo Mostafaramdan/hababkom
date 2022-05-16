@@ -20,19 +20,19 @@ import dropdown from '@/components/layouts/dropdown.vue';
 import Multiselect from 'vue-multiselect'
 import Treeselect from '@riophae/vue-treeselect'
 
+var Lang = require('vue-lang');
 
-
+var locales = {
+    "en": require("@/lang/en.json"),
+    "ar": require("@/lang/ar.json"),
+  }
+   
+Vue.use(Lang, {lang: localStorage.getItem("lang")??"ar", locales: locales})
 
 Vue.use(VueGoogleMaps, {
     load: {
       key: 'AIzaSyByYh0lGbV5SvW1Q8FhHJCU5jMdktuXI3Y',
       libraries: 'places', // This is required if you use the Autocomplete plugin
-      // OR: libraries: 'places,drawing'
-      // OR: libraries: 'places,drawing,visualization'
-      // (as you require)
-
-      //// If you want to set the version, you can do so:
-      // v: '3.26',
     },
 })
 

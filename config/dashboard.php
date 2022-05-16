@@ -2,7 +2,7 @@
 return [
     "permissions"=> [
         "statistics"=>[
-                'name_ar'=>'الاحصائيات',
+            'name_ar'=>'الاحصائيات',
                 'permissions'=>[                                       "view"=>false]
             ],
         "users"=>[
@@ -14,7 +14,11 @@ return [
                 'permissions'=>['create'=>false,'update'=>false,'delete'=>false, 'view'=>false]
         ],
         "estates"=>[
-            'name_ar'=>'الوحدات السكنية',
+            'name_ar'=>'الفنادق',
+            'permissions'=>['create'=>false,'update'=>false,'delete'=>false, 'view'=>false]
+        ],
+        "apartments_complexes"=>[
+            'name_ar'=>'مجمعات الشقق',
             'permissions'=>['create'=>false,'update'=>false,'delete'=>false, 'view'=>false]
         ],
         "apartments"=>[
@@ -25,7 +29,10 @@ return [
             'name_ar'=>'الحجوزات',
             'permissions'=>['create'=>false,'update'=>false,'delete'=>false, 'view'=>false]
         ],
-
+        "offers"=>[
+            'name_ar'=>'العروض',
+            'permissions'=>['create'=>false,'update'=>false,'delete'=>false, 'view'=>false]
+        ],
         "attachments"=>[
             'name_ar'=>'المرافق',
             'permissions'=>['create'=>false,'update'=>false,'delete'=>false, 'view'=>false]
@@ -65,49 +72,45 @@ return [
     "permissionsApartment"=> [
         "statistics"=>[
             'name_ar'=>'الاحصائيات',
-            'permissions'=>[                                       "view"=>false]
+            'permissions'=>[                                       "view"=>true]
+        ],
+        "offers"=>[
+            'name_ar'=>'العروض',
+            'permissions'=>['create'=>true,'update'=>true,'delete'=>true, 'view'=>true]
+        ],
+        "apartments_complexes"=>[
+            'name_ar'=>'مجمعات الشقق',
+            'permissions'=>['create'=>false,'update'=>true,'delete'=>false, 'view'=>true]
         ],
         "apartments"=>[
             'name_ar'=>'الشقق',
-            'permissions'=>[  'update'=>false,'delete'=>false, 'view'=>false]
+            'permissions'=>['create'=>false,'update'=>true,'delete'=>true, 'view'=>true]
         ],
         "orders"=>[
             'name_ar'=>'الحجوزات',
-            'permissions'=>['create'=>false,'update'=>false,'delete'=>false, 'view'=>false]
-        ],
-        "vouchers"=>[
-            'name_ar'=>'أكواد الخصم',
-            'permissions'=>['create'=>false,'update'=>false,'delete'=>false, 'view'=>false]
-        ],
-        "admins"=>[
-            'name_ar'=>'المسؤولين',
-            'permissions'=>['create'=>false,'update'=>false,'delete'=>false, 'view'=>false]
+            'permissions'=>['create'=>true,'update'=>true,'delete'=>true, 'view'=>true]
         ],
     ],
     "permissionsEstate"=> [
         "statistics"=>[
             'name_ar'=>'الاحصائيات',
-            'permissions'=>[                                       "view"=>false]
+            'permissions'=>[                                       "view"=>true]
+        ],
+        "estates"=>[
+            'name_ar'=>'الفنادق',
+            'permissions'=>['create'=>false,'update'=>true,'delete'=>false, 'view'=>true]
         ],
         "housing_units"=>[
             'name_ar'=>'الغرف',
-            'permissions'=>['create'=>false,'update'=>false,'delete'=>false, 'view'=>false]
+            'permissions'=>['create'=>true,'update'=>true,'delete'=>true, 'view'=>true]
         ],
-        "estates"=>[
-            'name_ar'=>'الوحدات السكنية',
-            'permissions'=>['update'=>false,'delete'=>false, 'view'=>false]
+        "offers"=>[
+            'name_ar'=>'العروض',
+            'permissions'=>['create'=>true,'update'=>true,'delete'=>true, 'view'=>true]
         ],
         "orders"=>[
             'name_ar'=>'الحجوزات',
-            'permissions'=>['create'=>false,'update'=>false,'delete'=>false, 'view'=>false]
-        ],
-        "vouchers"=>[
-            'name_ar'=>'أكواد الخصم',
-            'permissions'=>['create'=>false,'update'=>false,'delete'=>false, 'view'=>false]
-        ],
-        "admins"=>[
-            'name_ar'=>'المسؤولين',
-            'permissions'=>['create'=>false,'update'=>false,'delete'=>false, 'view'=>false]
+            'permissions'=>['create'=>true,'update'=>true,'delete'=>true, 'view'=>true]
         ],
     ],
 ];

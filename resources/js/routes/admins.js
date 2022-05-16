@@ -3,6 +3,8 @@ import create_estate from '@/pages/admins/create_estate';
 import create from '@/pages/admins/create';
 import update from '@/pages/admins/update';
 import show from '@/pages/admins/show';
+import permissions from '@/pages/admins/permissions';
+
 const baseDash= '/dashboard';
 
 export default [
@@ -30,6 +32,11 @@ export default [
         path: `${baseDash}/admins/:id`,
         name: `adminsShow`,
         component: show,
+    },
+    {
+        path: `${baseDash}/admins/permissions/:id`,
+        name: `permissionsShow`,
+        component: permissions,
     }
 ];
 create_estate

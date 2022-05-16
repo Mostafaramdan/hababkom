@@ -32,6 +32,7 @@ class objects extends index
         $object['id'] = $record->id;
         $object['name'] = $record->name;
         $record->currency ? $object['currency'] = self::currency($record->currency) : null ;
+        $record->measurement_unit ? $object['measurementUnit'] = self::measurement_unit($record->measurement_unit) : null ;
         $record->image?$object['image'] =Request()->root().$record->image:$object['image'] =null;
         $object['email'] = $record->email;
         $object['phone'] = $record->phone;
@@ -74,20 +75,21 @@ class objects extends index
     }
     public static function info ($record)
     {
-
         $object = [];
-        $object['aboutUs']=$record['aboutUs_'.self::$lang];
-        $object['policyTerms']=$record['policyTerms_'.self::$lang];
-        $object['privacy']=$record['privacy_'.self::$lang];
-        $object['emails'] = $record->emails;
-        $object['phones'] = $record->phones;
+        $object['aboutUs']=(string)$record['aboutUs_'.self::$lang];
+        $object['policyTerms']=(string)$record['policyTerms_'.self::$lang];
+        $object['privacy']=(string)$record['privacy_'.self::$lang];
+        $object['emails'] = (array)$record->emails;
+        $object['phones'] = (array)$record->phones;
+        $object['finalPriceInSearch'] = (float)$record->finalPriceInSearch;
+        $object['finalDistanceInSearch'] = (float)$record->finalDistanceInSearch;
+
         return $object;
     }
 
 
     public static function category ($record)
     {
-
         $object = [];
         $object['id'] = $record->id;
         $object['name']=$record['name_'.self::$lang];
@@ -97,7 +99,6 @@ class objects extends index
     }
     public static function region ($record)
     {
-
         $object = [];
         $object['id'] = $record->id;
         $object['name'] = $record->{'name_'.self::$lang};
@@ -163,20 +164,39 @@ class objects extends index
         $object['id'] = $record->id;
         $object['name'] = $record->{'name_'.self::$lang};
         $object['description'] = $record->{'description_'.self::$lang};
-        $object['payment'] = $record->payment;
+        $object['payment'] = json_decode($record->payment,true);
         !$record->images? :$object['images'] = self::ArrayOfObjects($record->images,'image');
-        $object['category'] = self::category($record->category);
+        !$record->main_image? :$object['mainImage'] = self::ArrayOfObjects($record->main_image,'image');
+        // $object['category'] = self::category($record->category);
         !$record->city ? :$object['city'] = self::region($record->city);
         $object['location'] = self::location($record->location);
+        $object['attachments'] = self::ArrayOfObjects($record->attachments??[],'attachment');
         $object['reviewsCount'] = (int)$record->reviews->count();
         $reviews_count= $record->reviews->count()??1;
-        $object['totalReview'] = (float) round($record->reviews->sum('rate')/($reviews_count==0?1:$reviews_count),1);
-        $object['attachments'] = self::ArrayOfObjects($record->attachments??[],'attachment');
+
         $object['customersServiceReview'] = (float) round($record->reviews->sum('customersService')/($reviews_count==0?1:$reviews_count),1);
         $object['cardsReview'] = (float) round($record->reviews->sum('cards')/($reviews_count==0?1:$reviews_count),1);
         $object['foodsReview'] = (float) round($record->reviews->sum('foods')/($reviews_count==0?1:$reviews_count),1);
-
-
+        $object['totalReview'] = (float) round($record->reviews->sum('rate')/($reviews_count==0?1:$reviews_count),1);
+        return $object;
+    }
+    public static function apartments_complex ($record)
+    {
+        $object = [];
+        $object['id'] = $record->id;
+        $object['name'] = $record->{'name_'.self::$lang};
+        $object['description'] = $record->{'description_'.self::$lang};
+        $object['payment'] = json_decode($record->payment,true);
+        !$record->images? :$object['images'] = self::ArrayOfObjects($record->images,'image');
+        !$record->city ? :$object['city'] = self::region($record->city);
+        $object['location'] = self::location($record->location);
+        $object['attachments'] = self::ArrayOfObjects($record->attachments??[],'attachment');
+        $object['reviewsCount'] = (int)$record->reviews->count();
+        $reviews_count= $record->reviews->count()??1;
+        $object['customersServiceReview'] = (float) round($record->reviews->sum('customersService')/($reviews_count==0?1:$reviews_count),1);
+        $object['cardsReview'] = (float) round($record->reviews->sum('cards')/($reviews_count==0?1:$reviews_count),1);
+        $object['foodsReview'] = (float) round($record->reviews->sum('foods')/($reviews_count==0?1:$reviews_count),1);
+        $object['totalReview'] = (float) round($record->reviews->sum('rate')/($reviews_count==0?1:$reviews_count),1);
         return $object;
     }
     public static function apartment ($record)
@@ -187,22 +207,20 @@ class objects extends index
         $object['rooms'] = $record->rooms;
         $object['kitchens'] = $record->kitchens;
         $object['toilets'] = $record->toilets;
-        $object['name'] = $record->{'name_'.self::$lang};
-        $object['description'] = $record->{'description_'.self::$lang};
-        $object['payment'] = $record->payment;
+        $object['apartments_complex'] = self::apartments_complex($record->apartments_complex);
+        // $object['name'] = $record->{'name_'.self::$lang};
+        // $object['description'] = $record->{'description_'.self::$lang};
+        // $object['payment'] = $record->payment;
         !$record->images? :$object['images'] = self::ArrayOfObjects($record->images,'image');
-        !$record->category ? :$object['category'] = self::region($record->category);
-        !$record->city ? :$object['city'] = self::region($record->city);
-        $object['location'] = self::location($record->location);
-        $object['reviewsCount'] = (int)$record->reviews->count();
-        $reviews_count= $record->reviews->count()??1;
-        $object['totalReview'] = (float) round($record->reviews->sum('rate')/($reviews_count==0?1:$reviews_count),1);
-        $object['attachments'] = self::ArrayOfObjects($record->attachments??[],'attachment');
-        $object['customersServiceReview'] = (float) round($record->reviews->sum('customersService')/($reviews_count==0?1:$reviews_count),1);
-        $object['cardsReview'] = (float) round($record->reviews->sum('cards')/($reviews_count==0?1:$reviews_count),1);
-        $object['foodsReview'] = (float) round($record->reviews->sum('foods')/($reviews_count==0?1:$reviews_count),1);
-
-
+        // !$record->city ? :$object['city'] = self::region($record->city);
+        // $object['location'] = self::location($record->location);
+        // $object['reviewsCount'] = (int)$record->reviews->count();
+        // $reviews_count= $record->reviews->count()??1;
+        // $object['totalReview'] = (float) round($record->reviews->sum('rate')/($reviews_count==0?1:$reviews_count),1);
+        // $object['attachments'] = self::ArrayOfObjects($record->attachments??[],'attachment');
+        // $object['customersServiceReview'] = (float) round($record->reviews->sum('customersService')/($reviews_count==0?1:$reviews_count),1);
+        // $object['cardsReview'] = (float) round($record->reviews->sum('cards')/($reviews_count==0?1:$reviews_count),1);
+        // $object['foodsReview'] = (float) round($record->reviews->sum('foods')/($reviews_count==0?1:$reviews_count),1);
         return $object;
     }
     public static function estateMin ($record)
@@ -228,12 +246,12 @@ class objects extends index
         $object['name'] = $record->{'name_'.self::$lang};
         $object['description'] = $record->{'description_'.self::$lang};
         $object['discount'] = $record->discount .'%';
-        $object['price'] = ($record->discount /100) * $record->{$offer_type}->price;
-        $object['normalPrice'] = $record->{$offer_type}->final_price;
-        $object['startAt'] = $record->start_at;
-        $object['endAt'] = $record->end_at;
-        $object['housingUnitId'] = $record->housing_units_id;
-        $object['apartmentId'] = $record->apartments_id;
+        $object['price'] = $record->{$offer_type}->final_price - (double) ($record->discount /100) * $record->{$offer_type}->final_price;
+        $object['normalPrice'] = (double) $record->{$offer_type}->final_price;
+        $object['startAt'] = (double) strtotime($record->start_at)*1000;
+        $object['endAt'] = (double) strtotime($record->end_at)*1000;
+        !$record->housing_units_id ?:$object['housingUnitId'] = (int) $record->housing_units_id;
+        !$record->apartments_id ?:$object['apartmentId'] = (int) $record->apartments_id;
         return $object;
     }
     public static function order ($record)
@@ -241,14 +259,20 @@ class objects extends index
         $object = [];
         $object['id'] = (double)$record->id;
         $object['code'] = $record->code;
-        $object['startAt'] = (double)$record->start_at;
-        $object['endAt'] = (double)$record->end_at;
+        $object['start_at'] = (double) strtotime($record->start_at)*1000;
+        $object['end_at'] = (double) strtotime($record->end_at)*1000;
         $object['status'] = $record->status;
         $object['price'] = (double)$record->price;
         $record->voucher ? $object['discount'] = (double)$record->voucher->discount : null ;
         $object['fees'] = $record->fees;
         $object['priceAfterDiscount'] = (double)$record->priceAfterDiscount;
         $object['total'] = (double)$record->total;
+        $carts= $record->carts;
+        $object['roomsNum'] = $carts->count();
+        if($carts->first()->housing_units_id){
+            $object['adultNums'] = $carts->count('adult_nums');
+            $object['childrenNums'] = $carts->count('children_nums');
+        }
         $object['carts']  = self::ArrayOfObjects($record->carts,'cart');
         return $object;
     }
@@ -256,9 +280,17 @@ class objects extends index
     {
         $object = [];
         $object['id'] = (double)$record->id;
-        $object['startAt'] = (double)$record->start_at;
-        $object['endAt'] = (double)$record->end_at;
+        $object['code'] = $record->code;
+        $object['startAt'] = (double) strtotime($record->start_at)*1000;
+        $object['endAt'] = (double) strtotime($record->end_at)*1000;
         $object['status'] = $record->status;
+        $carts= $record->carts;
+        $object['roomsNum'] = $carts->count();
+        if($carts->first()->housing_units_id){
+            $object['adultNums'] = $carts->count('adult_nums');
+            $object['childrenNums'] = $carts->count('children_nums');
+        }
+
         $object['total'] = (double)$record->total;
         $carts = $record->carts;
         $object['carts'] = self::ArrayOfObjects($record->carts,'cart');
@@ -270,7 +302,7 @@ class objects extends index
         $object = [];
         $object['id'] = (double)$record->id;
         $object['price'] = (double)$record->price;
-        !$record->housing_unit ? :$object['housingUnit']  = self::housing_unit($record->housing_unit);
+        !$record->housing_unit ? :$object['housing_unit']  = self::housing_unit($record->housing_unit);
         !$record->apartment ? :$object['apartment']  = self::apartment($record->apartment);
 
         return $object;
@@ -282,6 +314,9 @@ class objects extends index
         $object['id'] = $record->id;
         $object['user'] = self::userMin($record->user);
         $object['rate'] = $record->rate;
+        $object['foods'] = $record->foods;
+        $object['cards'] = $record->cards;
+        $object['customersService'] = $record->customersService;
         $object['comment'] = $record->comment;
         return $object;
     }
@@ -293,6 +328,14 @@ class objects extends index
         $object['code'] = $record->code;
         $object['startAt'] = strtotime( $record->start_at);
         $object['endAt'] = strtotime($record->end_at);
+        return $object;
+    }
+
+    public static function measurement_unit ($record)
+    {
+        $object = [];
+        $object['id'] = $record->id;
+        $object['unit'] = $record->{'unit_'.self::$lang};
         return $object;
     }
 

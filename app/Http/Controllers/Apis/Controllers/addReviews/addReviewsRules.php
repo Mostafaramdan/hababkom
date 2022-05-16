@@ -13,11 +13,11 @@ class addReviewsRules extends index
     {
         $rules=[
             "apiToken"   =>"required|exists:tokens,apiToken",
-            "estateId"     =>"required|exists:estates,id",
+            "orderId"     =>"required|exists:orders,id",
             "rate"      =>"required|numeric|min:0|max:5",
-            "foods"      =>"required|numeric|min:0|max:5",
-            "cards"      =>"required|numeric|min:0|max:5",
-            "customersService"      =>"required|numeric|min:0|max:5",
+            "foods"      =>"numeric|min:0|max:5",
+            "cards"      =>"numeric|min:0|max:5",
+            "customersService"      =>"numeric|min:0|max:5",
             "comment"      =>"required",
         ];
 
@@ -25,13 +25,28 @@ class addReviewsRules extends index
             "apiToken.required"     =>400,
             "apiToken.exists"       =>405,
 
-            "estateId.required" =>400,
-            "estateId.exists"   =>405,
+            "orderId.required" =>400,
+            "orderId.exists"   =>405,
 
             "rate.required"         =>400,
             "rate.numeric"          =>405,
             "rate.min"              =>405,
             "rate.max"              =>405,
+
+            "foods.required"        =>400,
+            "foods.numeric"         =>405,
+            "foods.min"             =>405,
+            "foods.max"             =>405,
+
+            "cards.required"        =>400,
+            "cards.numeric"         =>405,
+            "cards.min"             =>405,
+            "cards.max"             =>405,
+
+            "customersService.required"        =>400,
+            "customersService.numeric"         =>405,
+            "customersService.min"             =>405,
+            "customersService.max"             =>405,
 
             "comment.required"      =>400,
         ];

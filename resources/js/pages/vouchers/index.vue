@@ -1,30 +1,30 @@
 <template >
     <div>
         <div class="input-group mb-3">
-            <input type="search" class="form-control" v-model.trim="search" list="wizards-list" placeholder=" ابحث من هنا " aria-label="Example text with button addon" aria-describedby="button-addon1">
-            <button v-b-modal.new-swap-shift-modal class="btn  btn-outline-primary" type="button" id="button-addon1"><i class='fas fa-filter'></i> فلترة </button>
+            <input type="search" class="form-control" v-model.trim="search" list="wizards-list" :placeholder="$lang['search from somthing']" aria-label="Example text with button addon" aria-describedby="button-addon1">
+            <button v-b-modal.new-swap-shift-modal class="btn  btn-outline-primary" type="button" id="button-addon1"><i class='fas fa-filter'></i> {{ $lang['filter'] }} </button>
         </div>
 
-        <b-modal id="new-swap-shift-modal" @ok="$router.push({  query: { ...$route.query,...features(),page:1 }})" hide-header-close title="فلترة النتائج" ok-hide='true' ok-title = "فلترة"  cancel-title = "إلفاء">
+        <b-modal id="new-swap-shift-modal" @ok="$router.push({  query: { ...$route.query,...features(),page:1 }})" hide-header-close :title=" $lang['filter results'] " ok-hide='true' :ok-title = "$lang.filter"  :cancel-title = "$lang.cancel">
             <div class="d-block text-center">
                 <div class="form-group" >
-                    <label   >ترتيب علي حسب</label>
+                    <label   >{{$lang['order by'] }}</label>
                     <select class="custom-select" v-model="filterBy">
                         <option value="name">الاسم </option>
-                        <option value="id">التاريخ</option>
+                        <option value="id">{{$lang['created at'] }}</option>
                     </select>
                 </div>
                 <div class="form-group" >
-                    <label   >نوع الترتيب  </label>
+                    <label   >{{$lang['order type'] }} </label>
                     <select class="custom-select" v-model="filterType">
-                        <option value="ASC">تصاعدي </option>
-                        <option value="DESC">تنازلي</option>
+                        <option value="ASC">{{$lang['ascending'] }} </option>
+                        <option value="DESC">{{$lang['descending'] }}</option>
                     </select>
                 </div>
             </div>
         </b-modal>
         <button class="btn btn-primary m-2 " @click="create">
-             إضافة
+             {{$lang.create}}
             <i class="fas fa-plus"></i>
         </button>
         <div class="table-responsive">
@@ -111,7 +111,7 @@ export default {
         },
          async deleteRecord(index){
 
-            if(confirm('هل انت متأكد من مسح هذا العنصر')){
+            if(confirm(this.$lang['Are you sure to delete this item'])){
                 await this.Api('DELETE',`vouchers/${this.records[index].id}`);
                 this.records.splice(index,1);
             }

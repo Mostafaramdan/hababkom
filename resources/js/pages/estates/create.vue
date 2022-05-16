@@ -138,7 +138,7 @@
         <button @click="onSubmit" type="submit" class="btn btn-primary btn-lg mt-2" :disabled="allValidation == false ">
             <span v-if="loading">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                جاري التحميل ...
+                {{ $lang["loading..."] }}
             </span>
             <span v-else>
                  حفظ
@@ -246,7 +246,7 @@ export default {
             let response = await this.Api('POST','estates',this.record);
             this.loading=false;
             if(response.data.status==200)
-                this.$swal("تم الاضافة بنجاح", "", "success")
+                this.$swal(this.$lang["Added successfully"], "", "success")
 
         },
 

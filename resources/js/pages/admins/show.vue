@@ -6,9 +6,9 @@
                 <div class="card " >
                     <div class="card-body">
                         <button class="btn btn-info" @click="update()"><i class="fas fa-edit"></i></button>
-                        <h5 class="card-title">الاسم   : {{ record.name }}</h5>
-                        <h5 class="card-title">الايميل  : {{ record.email }}</h5>
-                        <h5 class="card-title">التليفون : {{ record.phone }}</h5>
+                        <h5 class="card-title">{{$lang.name}}   : {{ record.name }}</h5>
+                        <h5 class="card-title">{{$lang.email}}  : {{ record.email }}</h5>
+                        <h5 class="card-title">{{$lang.phone}} : {{ record.phone }}</h5>
                     </div>
                 </div>
             </div>

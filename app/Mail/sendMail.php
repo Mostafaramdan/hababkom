@@ -17,17 +17,19 @@ class sendMail extends Mailable
      * @return void
      */
     public $message;
+    public $subject;
 
-    public function __construct($message)
+    public function __construct($message,$subject)
     {
         $this->message = $message;
+        $this->subject = $subject;
     }
 
     public function build()
     {
         return $this->markdown('mail')
-                    ->subject(config('app.name'))
-                    ->from('moo@magdsoft.info')
-                    ->with(['message' => $this->message, 'subject' => config('app.name') ]);
+                    ->subject($this->subject)
+                    ->from(env('MAIL_USERNAME'))
+                    ->with(['message' => $this->message, 'subject' =>$this->subject ]);
     }
 }

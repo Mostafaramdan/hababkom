@@ -37,6 +37,7 @@ class addVouchersRules extends index
         ];
         $ValidationFunction=self::$request->showAllErrors==1?"showAllErrors":"Validator";
         $Validation = helper::{$ValidationFunction}(self::$request->all(), $rules, $messages,self::$lang=="ar"?$messagesAr:$messagesEn);
+
         if ($Validation !== null) {    return $Validation;    }
 
         return helper::validateAccount()??null;

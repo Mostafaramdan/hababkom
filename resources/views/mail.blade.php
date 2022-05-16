@@ -1,6 +1,6 @@
 @component('mail::message')
 
-# Hababkom
+# Hababcom
 
 @component('mail::table')
 <br>
@@ -12,19 +12,26 @@
 <hr>
 للتواصل
 <br>
- www.Hababkom.com
+    {{url('/contact')}}
 <br>
 <br>
 أو الاتصال مباشرة على ارقمنا
 <br>
-<a href="tel:+201111741826">+201111741826</a>
+@foreach(\App\Models\app_settings::first()->phones as $phone)
+    <a href="tel:{{$phone}}">{{$phone}}</a>
+    <br>
+@endforeach
+
 @component('mail::panel')
 للدعم الفنى
-support@Hababkom.com
+@foreach(\App\Models\app_settings::first()->emails as $email)
+    {{$email}}
+@endforeach
+
 @endcomponent
 @endcomponent
 @component('mail::subcopy')
-    شركة حبابكم - Hababkom
+    شركة حبابكم - Hababcom
 @endcomponent
 Thanks
 @endcomponent

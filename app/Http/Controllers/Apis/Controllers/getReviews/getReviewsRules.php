@@ -15,7 +15,8 @@ class getReviewsRules extends index
 
         $rules=[
             "apiToken"   =>"required|exists:tokens,apiToken",
-            "estateId"     =>"required|exists:estates,id",
+            "estateId"     =>"required_if:apartmentId,|exists:estates,id",
+            "apartmentComplexId"     =>"required_if:estateId,|exists:apartments_complex,id",
             "page"      =>"required|numeric"
         ];
 

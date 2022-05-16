@@ -13,8 +13,6 @@ class vouchers extends dashboard
     }
     public function index(Request $request)
     {
-        if(self::$admin->estates_id )
-            abort(403);
         $records= $this->model::query();
         if($request->search){
             $records->where('discount','like','%'.$request->search.'%')
@@ -32,21 +30,4 @@ class vouchers extends dashboard
             "records"=>$records,
         ]);
     }
-    public function store(Request $request)
-    {
-        // dd($request->all());
-        if($this->model::where('code',$request->code)->count())
-            return response()->json(['status'=>409]);
-        $this->model::create($request->all());
-        return response()->json(['status'=>200]);
-    }
-    public function update(Request $request, $id)
-    {
-        if($this->model::where('id','!=',$id)->where('code',$request->code)->count())
-            return response()->json(['status'=>409]);
-        $record= $this->model::where('id',$id)->update( $request->all());
-        return response()->json(['status'=>200]);
-    }
-
-
 }

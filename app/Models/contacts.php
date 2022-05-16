@@ -26,6 +26,7 @@ class contacts extends GeneralModel
     {
         return $this->belongsTo(users::class,"users_id");
     }
+    
     function GetNameAttribute()
     {
         return $this->user->name;

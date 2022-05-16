@@ -12,25 +12,7 @@ class users extends dashboard
     {
         $this->model= model::class;
     }
-    public function index(Request $request)
-    {
-        if(self::$admin->estates_id )
-            abort(403);
-        $records= $this->model::query();
-        if($request->search){
-            $records->where('name','like','%'.$request->search.'%');
-        }
-        $records->orderBy($request->filterBy??'id',$request->filterType??'DESC'); // filter
-
-        $itemPerPage= $request->itemPerPage??self::$itemPerPage;
-        $totalPages= ceil($records->count()/$itemPerPage);
-        $records= $records->forPage($request->page,$itemPerPage)->get();
-        return response()->json([
-            "status"=>$records->count()?200:204,
-            "totalPages"=>$totalPages,
-            "records"=>$records,
-        ]);
-    }
+    public $search=['name'];
     public static function sms(Request $request)
     {
         helper::sendSms($request->phone,$request->message);
@@ -39,6 +21,24 @@ class users extends dashboard
     public static function sendMail(Request $request)
     {
         app('Mail')::to($request->email)->send(new \App\Mail\sendMail($request->message));
+        return response()->json(['status'=>200]);
+    }
+    public function store(Request $request)
+    {
+        if($this->model::where('email',$request->email)->count()){
+            return response()->json(['status'=>403]);
+        }
+        if($this->model::where('phone',$request->phone)->count()){
+            return response()->json(['status'=>404]);
+        }
+        $this->model::create([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'phone'=>$request->phone,
+            'image'=>$request->image,
+            'created_at'=>date('Y-m-d H:i:s'),
+            'password'=>\Hash::make($request->password),
+        ]);
         return response()->json(['status'=>200]);
     }
 }
