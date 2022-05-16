@@ -5,16 +5,43 @@
             <div class="col">
                 <div class="card " >
                     <div class="card-body">
-                        <h5 class="card-title">الذهاب الي الوحدة السكنية :
-                        <button class="btn btn-primary " @click="goToHousing(record.currencies_id)"><i class="fas  fa-eye"></i></button>                        </h5>
-                        <h5 class="card-title">الإسم بالعربي : {{ record.name_ar }}</h5>
-                        <h5 class="card-title">الإسم بالانجليزي : {{ record.name_en }}</h5>
-                        <h5 class="card-title">الوصف بالعربي : {{ record.description_ar }}</h5>
-                        <h5 class="card-title">الوصف بالانجليزي : {{ record.description_en }}</h5>
-                        <h5 class="card-title">الخصم : {{ record.discount }}</h5>
-                        <h5 class="card-title">تاريخ البداية : {{ record.start_at }}</h5>
-                        <h5 class="card-title">تاريخ النهاية : {{ record.end_at }}</h5>
-                    </div>
+                        
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['Arabic name'] }} : </h5></label>
+                            </div>
+                            <div class="col-md-3">
+                                <b>{{ record.name_ar }}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['English name'] }} : </h5></label>
+                            </div>
+                            <div class="col-md-3">
+                                <b>{{ record.name_en }}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['code'] }} : </h5></label>
+                            </div>
+                            <div class="col-md-3">
+                                <b>{{ record.code }}</b>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3 ">
+                                <label><h5 >{{$lang['the value for $1'] }} : </h5></label>
+                            </div>
+                            <div class="col-md-3">
+                                <b>{{ record.value_in_dollar }}</b>
+                            </div>
+                        </div>
+                    </div> 
                 </div>
             </div>
         </div>
@@ -51,7 +78,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم -  عرض`,
+            title: `${this.$lang['app name']} -  ${this.record['name_'+this.$lang.currentLang]} `,
         }
     }
 }

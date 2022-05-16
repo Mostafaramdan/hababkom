@@ -24,7 +24,7 @@
             </div>
         </b-modal>
         <button class="btn btn-primary m-2 " @click="create" v-if="!$store.getters.getUser.estates_id">
-             إضافة
+             {{$lang.create}}
             <i class="fas fa-plus"></i>
         </button>
         <div class="table-responsive">

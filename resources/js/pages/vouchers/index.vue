@@ -32,10 +32,10 @@
                 <thead >
                     <tr >
                         <th >#</th>
-                        <th >الخصم</th>
-                        <th >الكود </th>
-                        <th > البداية </th>
-                        <th >النهاية </th>
+                        <th >{{$lang.discount}}</th>
+                        <th >{{$lang.code}}</th>
+                        <th >{{$lang['start at']}}</th>
+                        <th >{{$lang['end at']}}</th>
                         <th >الحد الأقصى </th>
                         <th>التفعيل</th>
                         <th >#</th>

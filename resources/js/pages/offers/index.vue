@@ -24,7 +24,7 @@
             </div>
         </b-modal>
         <button class="btn btn-primary m-2 " @click="create" v-show="$route.query.housing_units_id">
-             إضافة
+             {{$lang.create}}
             <i class="fas fa-plus"></i>
         </button>
         <div class="table-responsive">
@@ -32,19 +32,19 @@
                 <thead >
                     <tr >
                         <th >#</th>
-                        <th >الاسم </th>
-                        <th >الغرفة</th>
-                        <th >الخصم</th>
-                        <th > البداية </th>
-                        <th >النهاية </th>
-                        <th>التفعيل</th>
+                        <th >{{$lang.name}} </th>
+                        <th >{{$lang.room}}</th>
+                        <th >{{$lang.discount}}</th>
+                        <th >{{$lang['start at']}}</th>
+                        <th >{{$lang['end at']}}</th>
+                        <th >{{$lang.activation}}</th>
                         <th >#</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(record,index) in records" :key="index">
                         <td>{{record.id}}</td>
-                        <td>{{record.name_ar}}</td>
+                        <td>{{record['name_'+$lang.currentLang]}}</td>
                         <td><button class="btn btn-primary btn-block" @click="goToHousing(index)"><i class="fas  fa-eye"></i></button></td>
                         <td>%{{record.discount}}</td>
                         <td>{{record.start_at}}</td>

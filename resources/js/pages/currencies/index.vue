@@ -10,11 +10,10 @@
                 <div class="form-group" >
                     <label   >{{$lang['order by'] }}</label>
                     <select class="custom-select" v-model="filterBy">
-                        <option value="name_ar">الاسم </option>
+                        <option :value="'name_'+$lang.currentLang">{{$lang['name']}} </option>
                         <option value="id">{{$lang['created at'] }}</option>
                     </select>
                 </div>
-                asdasd
                 <div class="form-group" >
                     <label   >{{$lang['order type'] }} </label>
                     <select class="custom-select" v-model="filterType">
@@ -25,7 +24,7 @@
             </div>
         </b-modal>
         <button class="btn btn-primary m-2 " @click="create" >
-             إضافة
+             {{$lang.create}}
             <i class="fas fa-plus"></i>
         </button>
         <div class="table-responsive">
@@ -33,11 +32,11 @@
                 <thead >
                     <tr >
                         <th >#</th>
-                        <th >الاسم </th>
-                        <th >الاسم </th>
-                        <th >الكود </th>
-                        <th > القيمة مقابل 1 دولار </th>
-                        <th>التفعيل</th>
+                        <th >{{$lang['Arabic name']}} </th>
+                        <th >{{$lang['English name']}} </th>
+                        <th >{{$lang['code']}} </th>
+                        <th >{{$lang['Enter the value for $1']}} </th>
+                        <th >{{$lang.activation}}</th>
                         <th >#</th>
                     </tr>
                 </thead>
@@ -133,7 +132,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم -  العروض `,
+            title: `${this.$lang['app name']} -  ${this.$lang.currencies} `,
         }
     },
     watch :{

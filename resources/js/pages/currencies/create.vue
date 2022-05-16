@@ -2,50 +2,49 @@
     <div class="m-3" >
     <form  @submit.prevent="onSubmit" class="border border-5 border-primary rounded form">
         <h3>
-           أنشئ عملة جديدة
+           {{$lang['Create a new currency']}}
         </h3>
         <hr>
-         <div class="form-check ">
-            <label  > أدخل الإسم بالعربي  </label>
-            <input type="text" v-model="record.name_ar" :class="['form-control' ,{'is-valid':validateName_ar },{'is-invalid':!validateName_ar}]"  >
+        <div class="form-check ">
+            <label  > {{$lang['enter the Arabic name'] }}   </label>
+            <input type="text" v-model="record.name_ar" :class="['form-control' ,{'is-valid':validateName_ar },{'is-invalid':record.name_ar&&!validateName_ar}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال الإسم بالعربي بشكل صحيح</span>
+                <span>{{$lang['The Arabic name must be entered in correctly'] }}</span>
             </div>
         </div>
          <div class="form-check ">
-            <label  > أدخل عدد الإسم بالانجليزي  </label>
-            <input type="text" v-model="record.name_en" :class="['form-control' ,{'is-valid':validateName_en },{'is-invalid':!validateName_en}]"  >
+            <label  > {{$lang['enter the English name'] }}  </label>
+            <input type="text" v-model="record.name_en" :class="['form-control' ,{'is-valid':validateName_en },{'is-invalid':record.name_en&&!validateName_en}]"  >
             <div class="valid-feedback">
-                صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال الإسم بالانجليزي بشكل صحيح</span>
+                <span>{{$lang['The English name must be entered in correctly'] }}</span>
             </div>
         </div>
         <div class="form-check ">
-            <label  > أدخل الكود  </label>
-            <input type="text"  v-model="record.code" :class="['form-control' ,{'is-valid':validateCode },{'is-invalid':!validateCode}]"  >
+            <label  > {{$lang['Enter the code']}}  </label>
+            <input type="text"  v-model="record.code" :class="['form-control' ,{'is-valid':validateCode },{'is-invalid':record.code&&!validateCode}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال الكود بشكل صحيح</span>
+                <span>{{$lang['The code must be entered correctly']}}</span>
             </div>
         </div>
         <div class="form-check ">
-            <label  > أدخل القيمة مقابل 1 دولار  </label>
+            <label  >{{$lang['Enter the value for $1']}}</label>
             <input type="text"  v-model="record.value_in_dollar" :class="['form-control' ,{'is-valid':validateValue_in_dollar },{'is-invalid':!validateValue_in_dollar}]"  >
             <div class="valid-feedback">
-                     صحيح
+                {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال الكود بشكل صحيح</span>
+                <span>{{$lang['The value must be entered correctly']}}</span>
             </div>
         </div>
-
 
         <hr>
         <button type="submit" class="btn btn-primary btn-lg mt-2" :disabled="allValidation == false ">
@@ -54,7 +53,7 @@
                 {{ $lang["loading..."] }}
             </span>
             <span v-else>
-                 حفظ
+                 {{$lang.save}}
             </span>
         </button>
     </form>
@@ -110,7 +109,7 @@
     },
         metaInfo() {
         return {
-            title: `حبابكم -  أنشئ  عملة جديدة `,
+            title: `${this.$lang['app name']} -  ${this.$lang['Create a new currency']} `,
         }
     }
 

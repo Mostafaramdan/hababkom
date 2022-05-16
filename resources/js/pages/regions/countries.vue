@@ -32,10 +32,10 @@
                 <thead >
                     <tr >
                         <th >#</th>
-                        <th >الاسم بالعربي </th>
-                        <th >الاسم بالانجليزي </th>
-                        <th  >المدن</th>
-                        <th>التفعيل</th>
+                        <th >{{$lang['Arabic name']}} </th>
+                        <th >{{$lang['English name']}} </th>
+                        <th  >{{$lang.cities}}</th>
+                        <th >{{$lang['activation']}} </th>
                         <th >#</th>
                     </tr>
                 </thead>
@@ -131,7 +131,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم - الدول `,
+            title: `${this.$lang['app name']} -  ${this.$lang.countries} `,
         }
     },
     watch :{

@@ -135,7 +135,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم -  المسؤولين `,
+            title: `${this.$lang['app name']} -  ${this.$lang.admins} `,
         }
     },
     watch :{

@@ -82,7 +82,7 @@
     },
         metaInfo() {
         return {
-            title: `حبابكم -  أنشئ  محافظة/منطقة جديدة `,
+            title: `${this.$lang['app name']} -  ${this.$lang.districts} `,
         }
     }
 

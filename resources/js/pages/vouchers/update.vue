@@ -81,7 +81,7 @@
                 {{ $lang["loading..."] }}
             </span>
             <span v-else>
-                 حفظ
+                 {{$lang.save}}
             </span>
         </button>
     </form>

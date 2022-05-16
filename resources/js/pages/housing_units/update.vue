@@ -54,8 +54,8 @@
             :data-images="images"
             idUpload="myIdUpload"
             editUpload="myIdEdit"
-            dragText='قم بوضع الصور هنا'
-            dropText='اترك الصور هنا'
+            :dragText="$lang['Put the picture here']"
+            :dropText="$lang['Leave the picture here']"
             :showPrimary='false'
             browseText=' '
             :maxImage='50'
@@ -69,7 +69,7 @@
                 {{ $lang["loading..."] }}
             </span>
             <span v-else>
-                 حفظ
+                 {{$lang.save}}
             </span>
         </button>
     </form>

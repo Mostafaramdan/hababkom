@@ -46,7 +46,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم - وحدة سكنية`,
+            title: `${this.$lang['app name']} -  ${this.record.name} `,
         }
     }
 }
