@@ -10,7 +10,7 @@
                 <div class="form-group" >
                     <label   >{{$lang['order by'] }}</label>
                     <select class="custom-select" v-model="filterBy">
-                        <option value="name_ar">الاسم </option>
+                        <option :value="'name_'+$lang.currentLang">{{$lang['name']}} </option>
                         <option value="id">{{$lang['created at'] }}</option>
                     </select>
                 </div>
@@ -137,7 +137,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم -  العروض `,
+            title: `${this.$lang['app name']} -  ${this.$lang.offers} `,
         }
     },
     watch :{

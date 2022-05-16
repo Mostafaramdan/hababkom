@@ -57,11 +57,9 @@
                         <td>{{$lang[record.status] }}</td>
                         <td>{{record.price}}</td>
                         <td >{{record.total}}</td>
-                        <td>{{record.total}}</td>
-
                         <td>{{record.city_of_hotel['name_'+$lang['currentLang']] }}</td>
-                        <td v-if="record.type=='hotel'">{{record.hotel_name['name_'+$lang['currentLang']] }}</td>
-                        <td v-if="record.type!='hotel'">{{record.hotel_name['name_'+$lang['currentLang']] }}</td>
+                        <td ><span v-if="record.type=='hotel'">{{record.hotel_name['name_'+$lang['currentLang']] }} </span></td>
+                        <td ><span v-if="record.type!='hotel'">{{record.hotel_name['name_'+$lang['currentLang']] }} </span></td>
 
                         <td>{{record.created_at}}</td>
                         <td>

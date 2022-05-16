@@ -32,8 +32,47 @@ class orders extends dashboard
         if($request->search){
             $records->where('id','like','%'.$request->search.'%')
                     ->orWhere('status','like','%'.$request->search.'%')
-                    ->orWhere('id','like','%'.(1*str_replace(date("Y"),'',$request->search)).'%')
+                    ->orWhere('id','like','%'.str_replace('20220','',$request->search).'%')
+                    ->orWhere(function($q) use ($request){
+                        return $q->whereHas("carts",function($q) use ($request){
+                            return $q->where(function($q)  use ($request){
+                                return $q->whereHas("housing_unit",function($q) use ($request){
+                                    return $q->whereHas("estate",function($q) use ($request){
+                                        return $q->where(function($q) use ($request){
+                                            return $q->where("name_ar",'like','%'.$request->search.'%')
+                                                ->orWhere("name_en",'like','%'.$request->search.'%');
+
+                                        })
+                                        ->orWhere(function($q) use ($request){
+                                            return $q->whereHas('city',function($q) use ($request){
+                                                return $q->where("name_ar",'like','%'.$request->search.'%')
+                                                    ->orWhere("name_en",'like','%'.$request->search.'%');
+                                            });
+                                        });
+                                    });
+                                });
+                            })
+                            ->orWhere(function($q) use ($request){
+                                return $q->whereHas("apartment",function($q) use ($request){
+                                    return $q->whereHas("apartments_complex",function($q) use ($request){
+                                        return $q->where(function($q) use ($request){
+                                            return $q->where("name_ar",'like','%'.$request->search.'%')
+                                                ->orWhere("name_en",'like','%'.$request->search.'%');
+
+                                            });
+                                        })
+                                        ->orWhere(function($q) use ($request){
+                                            return $q->whereHas('city',function($q) use ($request){
+                                                return $q->where("name_ar",'like','%'.$request->search.'%')
+                                                    ->orWhere("name_en",'like','%'.$request->search.'%');
+                                            });
+                                        });
+                                });
+                            });
+                        });
+                    })
                     ;
+                    
         }
         $records->orderBy($request->filterBy??'id',$request->filterType??'DESC'); // filter
         if($request->status){
