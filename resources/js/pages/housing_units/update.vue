@@ -15,7 +15,7 @@
                 <span>{{$lang['The price must be entered correctly']}}</span>
             </div>
         </div>
-        <div class="form-check ">
+        <div class="form-check " v-if="$store.state.user.type=='admin'">
             <label  > {{$lang['enter the final price per night (in dollars)']}} </label>
             <input type="number" min="0"  v-model="record.final_price" :class="['form-control' ,{'is-valid':validateFinalPrice },{'is-invalid':record.final_price&&!validateFinalPrice}]"  >
             <div class="valid-feedback">

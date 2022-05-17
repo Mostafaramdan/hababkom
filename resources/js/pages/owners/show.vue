@@ -1,5 +1,5 @@
 <template >
-    <div v-if="authorized.view">
+    <div >
         <div class="row row-cols-1 row-cols-md-1 ">
             <div class="col">
                 <div class="card " >
@@ -10,7 +10,7 @@
                             </div>
                             <div class="col-md-3">
                                 <b> 
-                                    <button class="btn btn-info" @click="update()" v-if="authorized.update"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-info" @click="update()"><i class="fas fa-edit"></i></button>
                                 </b>
                             </div>
                         </div>
@@ -124,6 +124,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div v-else>
+                            <h3>{{$lang.notFound}}</h3>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -152,9 +155,9 @@ export default {
         let response = await this.Api('GET',`getOwner/${this.$route.params.id}/${this.$route.query.records_id}`);
         this.record = response.data.record;
         if(this.$route.query.records_id== 'estates_id'){
-            this.authorized= this.allPermissions.estates.permissions
+            // this.authorized= this.allPermissions.estates.permissions
         }else{
-            this.authorized= this.allPermissions.apartments.permissions
+            // this.authorized= this.allPermissions.apartments.permissions
         }
     },
     metaInfo() {

@@ -15,6 +15,7 @@ import statistics from '@/routes/statistics';
 import estates from '@/routes/estates';
 import apartments_complexes from '@/routes/apartments_complexes';
 import apartments from '@/routes/apartments';
+import owners from '@/routes/owners';
 const baseDash= '/dashboard';
 
 const routes=
@@ -36,6 +37,7 @@ const routes=
     ...estates,
     ...apartments_complexes,
     ...apartments,
+    ...owners,
     {
         path: `${baseDash}/login`,
         name: 'login',
@@ -48,4 +50,6 @@ const routes=
 
 
 ];
+
+
 export default routes;

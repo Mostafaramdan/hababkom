@@ -23,7 +23,7 @@
                 </div>
             </div>
         </b-modal>
-        <button class="btn btn-primary m-2 " @click="create" v-show="$route.query.housing_units_id">
+        <button class="btn btn-primary m-2 " @click="create" v-if="authorized.create"  v-show="$route.query.housing_units_id">
              {{$lang.create}}
             <i class="fas fa-plus"></i>
         </button>
@@ -60,8 +60,8 @@
                         </td>
 
                         <td>
-                            <button class="btn btn-danger" @click="deleteRecord(index)"><i class="fas fa-trash "></i></button>
-                            <button class="btn btn-info" @click="update(index)"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger"  @click="deleteRecord(index)" v-if="authorized.delete" ><i class="fas fa-trash "></i></button>
+                            <button class="btn btn-info" @click="update(index)" v-if="authorized.update" ><i class="fas fa-edit"></i></button>
                             <button class="btn btn-secondary" @click="show(index)"><i class="fas fa-eye "></i></button>
                         </td>
                     </tr>
@@ -137,7 +137,7 @@ export default {
     },
     metaInfo() {
         return {
-                title: `${this.$lang['app name']} -  ${this.$lang.offers} `,
+            title: `${this.$lang['app name']} -  ${this.$lang.offers} `,
         }
     },
     watch :{

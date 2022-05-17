@@ -1,5 +1,5 @@
 <template>
-    <div class="m-3" v-if="authorized.update">
+    <div class="m-3" >
         <form @submit.prevent="onSubmit" class="border border-5 border-primary rounded ">
             <h3>
             {{$lang['manager']}}
@@ -56,7 +56,7 @@
             </div>
             <hr>
             <div class="form-check ">
-                <label  > {{$lang['bank']}}   </label>
+                <label  > {{$lang.bank}}   </label>
                 <input type="text" v-model="record.bank" :class="['form-control']"  >
             </div>
             <hr>
@@ -70,6 +70,17 @@
                 <input type="password" v-model="record.password" :class="['form-control']"  >
             </div>
             <hr>
+            <div class="form-check ">
+                <label  > {{$lang['re-enter the password']}}  </label>
+                <input type="password" v-model="passwordConfirmed" :class="['form-control' ,{'is-valid':record.password&&record.password == passwordConfirmed },{'is-invalid':record.password&&record.password != passwordConfirmed }]"  >
+                <div class="valid-feedback" v-if="passwordConfirmed == record.password">
+                    {{$lang.correct}}
+                </div>
+                <div class="invalid-feedback" v-if="passwordConfirmed !== record.password">
+                    <span>{{$lang['Password does not match']}}</span>
+                </div>
+            </div>
+
             <button type="submit" class="btn btn-primary btn-lg mt-2" :disabled="allValidation == false ">
                 <span v-if="loading">
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -94,6 +105,7 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
         return {
             loading : false,
             images:[],
+            passwordConfirmed:'',
             record:{
                 name_ar:'',
                 name_en:''
@@ -117,7 +129,7 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
                 };
                 alert(errors)
             }else{
-                this.$swal(`${this.$lang['Added successfully']}`, "", "success")
+                this.$swal(`${this.$lang['updated successfully']}`, "", "success")
             }
             this.loading=false;
 
@@ -126,7 +138,7 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
     computed: {
       
     allValidation(){
-        return  !this.loading
+        return this.record.password == this.passwordConfirmed && !this.loading
     }
     },
     async mounted(){
@@ -139,12 +151,8 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
         this.record.permissions = response.data.permissions 
         this.record.password = null ;
 
-        if(this.$route.query.records_id== 'estates_id'){
-            this.authorized= this.allPermissions.estates.permissions
-        }else{
-            this.authorized= this.allPermissions.apartments.permissions
-        }
-
+        this.authorized = (await this.Api('GET',`permissionsByType/${this.$route.query.records_id}`)).data;
+ 
     },
     metaInfo() {
         return {

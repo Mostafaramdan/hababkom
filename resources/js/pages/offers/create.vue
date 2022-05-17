@@ -76,24 +76,13 @@
             </div>
         </div>
         <hr>
-        <div id="my-strictly-unique-vue-upload-multiple-image" style="display: flex; justify-content: center;">
-            <vue-upload-multiple-image
-                @upload-success="uploadImageSuccess"
-                @before-remove="beforeRemove"
-                @edit-image="editImage"
-                :data-images="images"
-                idUpload="myIdUpload"
-                editUpload="myIdEdit"
-                :dragText="$lang['Put the picture here']"
-                :dropText="$lang['Leave the picture here']"
-                :showPrimary='false'
-                browseText=' '
-                :maxImage='1'
-                :maxSizeImage="10"
-            >
-            </vue-upload-multiple-image>
-        </div>
+        <upload-image 
+            :dragText="$lang['Put the picture here']"
+                :id="'images'" :max="1"
+                :images="images">
+        </upload-image>
         <hr>
+
         <button type="submit" class="btn btn-primary btn-lg mt-2" :disabled="allValidation == false ">
             <span v-if="loading">
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -128,38 +117,9 @@
         }
     },
     methods: {
-        async uploadImageSuccess(formData, index, fileList) {
-            let response=  await this.axios({
-                method: 'POST',
-                url: '/api/image',
-                data:{image:fileList[index].path},
-            })
-            this.images.push(response.data.image)
-        },
-        async beforeRemove (index, done, fileList) {
-            if (confirm(this.$lang['Are you sure to delete this item'])) {
-                let response=  await this.axios({
-                method: 'DELETE',
-                url: `/api/image/${this.images[index].id}`,
-            })
-            this.images.splice(index,1)
-            }
-        },
-        async editImage (formData, index, fileList) {
-
-            let image = fileList[index];
-            await setTimeout(function () {
-                let response=     this.axios({
-                    method: 'POST',
-                    url: `/api/image/${fileList[index].id}`,
-                    data:{image:fileList[index].path,_method:'PUT'},
-                }).then((response)=>{
-                    this.images[index]= response.data.image
-                })
-             }.bind(this), 1000)
-        },
         async onSubmit() {
             this.loading=true;
+            this.record.images= JSON.stringify( this.images.map(a => a.id));
             let response = await this.Api('POST','offers',this.record);
             this.loading=false;
             if(response.status==200)
@@ -204,11 +164,10 @@
     mounted(){
         this.$store.state.isLoading = false;
     },
-        metaInfo() {
+    metaInfo() {
         return {
             title: `${this.$lang['app name']} -  ${this.$lang['Create a new offer']} `,
         }
     }
-
   }
 </script>

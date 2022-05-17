@@ -5,9 +5,9 @@ export default {
     data(){
         return {
             itemPerPage: 25,
-            slidbars:[],
             authorized:{},
-            allpermissions: this.$store.state.user.permissions
+            allPermissions: this.$store.state.user.permissions,
+            
         }
     },
     computed:{
@@ -21,17 +21,29 @@ export default {
             this.$setLang(lang);
             localStorage.setItem('lang',lang);
         },
-    },
-    computed:{
         check_authorized(){
             var current = window.location.pathname.split('/')[2]
-            if(current== 'countries' || current == 'cities' || current== 'districts')
+            if(current== 'countries' || current == 'cities' || current== 'districts'){
                 current = 'regions';
-                let allpermissions= this.$store.state.user.permissions
-                if(allpermissions)
-                this.authorized= allpermissions[current].permissions
-
-
+            }
+            if(this.$store.state.user.permissions){
+                if(this.$store.state.user.permissions[current]){
+                    this.authorized=this.$store.state.user.permissions[current].permissions;
+                }else{
+                    this.authorized={
+                        "create":false,"update":true,"delete":false,"view":true
+                    }
+                }
+                this.authorized.type= current;
+            }
+        }
+    },
+    mounted(){
+        this.check_authorized()
+    },
+    watch:{
+        $route:function(){
+            this.check_authorized()
         }
     }
 }

@@ -23,9 +23,7 @@
             </div>
         </b-modal>
         <button class="btn btn-primary m-2 " 
-            @click="create"
-            v-if="$store.state.user.type=='admin'"
-            >
+            @click="create" v-if="authorized.create"   >
              {{$lang['create']}}
             <i class="fas fa-plus"></i>
         </button>
@@ -72,8 +70,8 @@
                         </td>
 
                         <td>
-                            <button class="btn btn-danger" @click="deleteRecord(index)"><i class="fas fa-trash "></i></button>
-                            <button class="btn btn-info" @click="update(index)" ><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger"  @click="deleteRecord(index)" v-if="authorized.delete" ><i class="fas fa-trash "></i></button>
+                            <button class="btn btn-info" @click="update(index)" v-if="authorized.update"  ><i class="fas fa-edit"></i></button>
                             <button class="btn btn-secondary" @click="show(index)"><i class="fas fa-eye "></i></button>
                         </td>
                     </tr>

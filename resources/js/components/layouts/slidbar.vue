@@ -2,8 +2,8 @@
     <div>
         <b-sidebar
             id="sidebar-right"
-            :title="$lang.welocome + $store.getters.getUser.name"
-            right
+            :title="$lang.welocome + user_name"
+            right 
             shadow
             style="width: 100%"
         >
@@ -25,12 +25,17 @@
 export default {
     data() {
         return {
+            user_name:''
         };
     },
     methods:{
     
     },
     mounted(){
+        if(this.$store.getters.getUser.name)
+            this.user_name= this.$store.getters.getUser.name
+        else 
+            this.user_name= this.$store.getters.getUser.owner_name
     }
 };
 </script>

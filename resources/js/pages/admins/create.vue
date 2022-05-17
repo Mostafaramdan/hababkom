@@ -124,7 +124,10 @@
             return this.record.password.length > 3
         },
         allValidation(){
-            return this.validateName && this.validateEmail  && this.validatePhone && this.validatePassword  &&  !this.loading
+            return this.validateName && this.validateEmail  && 
+             this.record.password == this.passwordConfirmed && 
+            this.validatePhone && this.validatePassword  && 
+              !this.loading
         }
     },
     mounted(){

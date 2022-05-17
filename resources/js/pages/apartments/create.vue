@@ -159,6 +159,8 @@ export default {
 
         let response4 = await this.Api('GET','getFinal_price_equation');
         this.final_price_equation = response4.data.record.final_price_equation
+
+        this.record.apartments_complexes_id= this.$store.getters.getUser.apartments_complexes_id
     },
     metaInfo() {
         return {

@@ -23,13 +23,12 @@ import Treeselect from '@riophae/vue-treeselect'
 import VueUploadMultipleImage from 'vue-upload-multiple-image'
 import uploadImage from '@/components/layouts/uploadImage.vue';
 
-var Lang = require('vue-lang');
 
+var Lang = require('vue-lang');
 var locales = {
     "en": require("@/lang/en.json"), 
     "ar": require("@/lang/ar.json"),
   }
-   
 Vue.use(Lang, {lang: localStorage.getItem("lang")??"ar", locales: locales})
 
 Vue.use(VueGoogleMaps, {  
@@ -47,9 +46,10 @@ Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueMeta)
 Vue.use(VueSwal)
+
+
+
 Vue.component('dropdown-menu', dropdown)
-
-
 Vue.component('Multiselect', Multiselect)
 Vue.component( 'tree-select', Treeselect)
 Vue.component( 'vue-upload-multiple-image', VueUploadMultipleImage)
@@ -65,16 +65,40 @@ const router = new VueRouter({
 });
 
 
+
 router.beforeEach((to, from, next) => {
     store.state.isLoading=true
     let isAuthenticated =  store.getters.getUser.apiToken;
     if(to.name  == 'login' && isAuthenticated ){
         next({ name: 'statistics' })
     }
-    if (to.name !== 'login' && !isAuthenticated)
+    else if (to.name !== 'login' && !isAuthenticated){
         next({ name: 'login' })
-    else
-        next(true);
+    }else{
+
+        // typePage=
+        let current= (to.path.split("/dashboard/"))[1].split("/")[0];
+        if(current== 'countries' || current == 'cities' || current== 'districts'){
+            current = 'regions';
+        }
+
+        let permission= (to.path.split("/dashboard/"))[1].split("/")[1] ??'view'
+
+        if (permission && !isNaN(permission))  permission = 'view';
+
+        if(to.name == 'login' || to.name=='permissionsShow' || to.name.includes('owners')){
+            return next(true);
+        }
+        if(!store.state.user.permissions[current]){
+            return next(false);
+        }
+
+        if(store.state.user.permissions[current].permissions[permission]  ){
+            next(true);
+        }
+       
+ 
+    }
 })
 
 Vue.mixin(helper)

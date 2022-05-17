@@ -47,7 +47,7 @@
                             </label>
                         </td>
                         <td>
-                            <button class="btn btn-danger" @click="deleteRecord(index)"><i class="fas fa-trash "></i></button>
+                            <button class="btn btn-danger"  @click="deleteRecord(index)" v-if="authorized.delete" ><i class="fas fa-trash "></i></button>
                             <button class="btn btn-secondary" @click="show(index)"><i class="fas fa-eye "></i></button>
                         </td>
                     </tr>
