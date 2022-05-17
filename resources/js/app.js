@@ -71,7 +71,7 @@ router.beforeEach((to, from, next) => {
     let isAuthenticated =  store.getters.getUser.apiToken;
     if(to.name  == 'login' && isAuthenticated ){
         next({ name: 'statistics' })
-    }
+    } 
     else if (to.name !== 'login' && !isAuthenticated){
         next({ name: 'login' })
     }else{

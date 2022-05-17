@@ -42,8 +42,8 @@
                     <tr v-for="(record,index) in records" :key="index">
                         <td>{{record.id}}</td>
                         <td>{{record.name}}</td>
+                        <td>{{record.email}}</td> 
                         <td>{{record.phone}}</td>
-                        <td>{{record.email}}</td>
                         <td>
                             <button class="btn btn-danger"  @click="deleteRecord(index)" v-if="authorized.delete" ><i class="fas fa-trash "></i></button>
                             <button class="btn btn-info" @click="update(index)" v-if="authorized.update" ><i class="fas fa-edit"></i></button>
