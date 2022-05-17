@@ -1,5 +1,5 @@
 <template>
-    <div class="m-3" v-if="authorized.create">
+    <div class="m-3" >
         <div  @submit.prevent="onSubmit" class="border border-5 border-primary rounded form">
             <h3>
                 {{$lang['Create a new apartment']}}
@@ -11,7 +11,7 @@
             </div>
             <div class="form-check ">
                 <label  > {{$lang['enter the price per night (in dollars)']}}  </label>
-                <input type="number"   @input="computed_final_price" v-model="record.price" :class="['form-control' ]"  >
+                <input type="number"  min="0" @input="computed_final_price" v-model="record.price" :class="['form-control' ]"  >
             </div>
             <div class="form-check " v-if="$store.state.user.type=='admin'">
                 <label  > {{$lang['enter the final price per night (in dollars)']}}   ({{final_price_equation+'%'}})  </label>
@@ -20,16 +20,16 @@
 
             <div class="form-check ">
                 <label  > {{$lang['rooms count']}}  </label>
-                <input type="number"  v-model="record.rooms" :class="['form-control' ]"  >
+                <input type="number" min="1" v-model="record.rooms" :class="['form-control' ]"  >
             </div>
 
             <div class="form-check ">
                 <label  > {{$lang['kitchens count']}}  </label>
-                <input type="number"  v-model="record.kitchens" :class="['form-control' ]"  >
+                <input type="number" min="0" v-model="record.kitchens" :class="['form-control' ]"  >
             </div>
             <div class="form-check ">
                 <label  > {{$lang['toilets count']}}  </label>
-                <input type="number"  v-model="record.toilets" :class="['form-control' ]"  >
+                <input type="number"  min="0" v-model="record.toilets" :class="['form-control' ]"  >
             </div>
             <div class="form-check ">
                 <label  > {{$lang['Enter the attachments']}}  </label>
@@ -40,28 +40,12 @@
                 ></treeselect>
             </div>
             <hr>
-            <!-- <br>
-            <div class="form-check ">
-                <label  > {{$lang['Enter the address from here']}} <a href='https://www.google.com/maps/' target="_blank">  {{$lang['google map']}}</a>  </label>
-                <input type="text" v-model="record.map_link" :class="['form-control' ]"  >
-            </div>
-            <hr> -->
-            <div id="my-strictly-unique-vue-upload-multiple-image" style="display: flex; justify-content: center;">
-                <vue-upload-multiple-image
-                    @upload-success="uploadImageSuccess"
-                    @before-remove="beforeRemove"
-                    @edit-image="editImage"
-                    :data-images="images"
-                    idUpload="myIdUpload"
-                    editUpload="myIdEdit"
-                    :dragText="$lang['Put the picture here']"
-                    :dropText="$lang['Leave the picture here']"
-                    :showPrimary='false'
-                    browseText=' '
-                    :maxImage='50'
-                    :maxSizeImage="10"
-                ></vue-upload-multiple-image>
-            </div>
+            <upload-image 
+                :dragText="$lang['Put the picture here']"
+                :id="'images'" 
+                :max="10"
+                :images="images">
+        </upload-image>
             <hr>
             <button @click="onSubmit" type="submit" class="btn btn-primary btn-lg mt-2" :disabled="allValidation == false ">
                 <span v-if="loading">
@@ -95,8 +79,12 @@ export default {
             images:[],
             passwordConfirmed:'',
             record:{
+                price:0,
+                kitchens:0,
+                toilets:0,
                 notes:'',
                 payment:'',
+                rooms:1,
                 categories_id:'',
                 street:'',
                 regions_id:'',
@@ -112,36 +100,7 @@ export default {
         }
     },
     methods: {
-        async uploadImageSuccess(formData, index, fileList) {
-            let response=  await this.axios({
-                method: 'POST',
-                url: '/api/image',
-                data:{image:fileList[index].path},
-            })
-            this.images.push(response.data.image)
-        },
-        async beforeRemove (index, done, fileList) {
-            if (confirm(`${this.$lang['Are you sure to delete this item']}`)) {
-                let response=  await this.axios({
-                method: 'DELETE',
-                url: `/api/image/${this.images[index].id}`,
-            })
-            this.images.splice(index,1)
-            }
-        },
-        async editImage (formData, index, fileList) {
-
-            let image = fileList[index];
-            await setTimeout(function () {
-                let response=     this.axios({
-                    method: 'POST',
-                    url: `/api/image/${fileList[index].id}`,
-                    data:{image:fileList[index].path,_method:'PUT'},
-                }).then((response)=>{
-                    this.images[index]= response.data.image
-                })
-             }.bind(this), 1000)
-        },
+      
         searchForCity($event){
             var  filter, ul, li, a, i, txtValue;
             filter = $event.target.value.toUpperCase();
@@ -170,8 +129,10 @@ export default {
                 this.record.final_price=this.record.price
             }
             this.loading=false;
-            if(response.data.status==200)
-                this.$swal(`${this.$lang['Added successfully']}`, "", "success")
+            if(response.data.status==200){
+                this.$swal(`${this.$lang['Added successfully']}`, "", "success");
+                this.$router.push( {name:'apartments',query:{apartments_complexes_id:this.record.apartments_complexes_id}});
+            }   
 
         },
         computed_final_price($e){
@@ -181,25 +142,8 @@ export default {
         },
     },
     computed: {
-        validateName_ar(){
-            return this.record.name_ar.length > 0
-        },
-        validateName_en(){
-            return this.record.name_en.length > 0
-        },
-         validateDescription_ar(){
-            return this.record.description_ar.length > 0
-        },
-         validatePayment(){
-            return this.record.payment.length > 0
-        },
-        validateDescription_en(){
-            return this.record.description_en.length > 0
-        },
-        
         allValidation(){
-            return  this.record.rooms &&  this.record.kitchens   && 
-            this.record.toilets  &&  !this.loading
+            return  this.record.rooms && this.record.price &&  !this.loading
         }
     },
     async mounted(){
@@ -215,7 +159,6 @@ export default {
 
         let response4 = await this.Api('GET','getFinal_price_equation');
         this.final_price_equation = response4.data.record.final_price_equation
-
     },
     metaInfo() {
         return {

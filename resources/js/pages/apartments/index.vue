@@ -1,5 +1,5 @@
 <template >
-    <div v-if="authorized.view">
+    <div >
         <div class="input-group mb-3">
             <input type="search" class="form-control" v-model.trim="search" list="wizards-list" :placeholder="$lang['search']" aria-label="Example text with button addon" aria-describedby="button-addon1">
             <button v-b-modal.new-swap-shift-modal class="btn  btn-outline-primary" type="button" id="button-addon1"><i class='fas fa-filter'></i> {{$lang.filter}} </button>
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </b-modal>
-        <button :class="['btn btn-primary m-2',{'d-none':!$route.query.apartments_complexes_id && !$store.state.user.apartments_complexes_id}] " @click="create" v-if="authorized.create" >
+        <button :class="['btn btn-primary m-2',{'d-none':!$route.query.apartments_complexes_id && !$store.state.user.apartments_complexes_id}] " @click="create"  >
              {{$lang['create']}}
             <i class="fas fa-plus"></i>
         </button>
@@ -43,6 +43,7 @@
                         <th >{{$lang['rooms count']}} </th>
                         <th >{{$lang['kitchens count']}} </th>
                         <th >{{$lang['toilets count']}} </th>
+                        <th>{{$lang['price']}}</th>
                         <th>{{$lang['offers']}}</th>
                         <th >{{$lang['activation']}}</th>
                         <th >#</th>
@@ -53,15 +54,10 @@
                     <tr v-for="(record,index) in records" :key="index">
                         <td v-if="check"> <input class="form-controll" type="checkbox"  id="check" v-model="record.check" ></td>
                         <td>{{record.id}}</td>
-                        <!-- <td>{{record.name_ar}}</td>
-                        <td>{{record.description_ar}}</td>
-                        <td>
-                            <button class="btn btn-success" @click='enter_manager(index)'> {{$lang['manager']}} <i class="fas fa-user"></i> </button>
-                        </td> -->
-
                         <td>{{record.rooms}}</td>
                         <td>{{record.kitchens}}</td>
                         <td>{{record.toilets}}</td>
+                        <td>{{record.price}}</td>
                         <td>
                             <button class="btn btn-primary" @click="goOffers(record.id)">
                                 <i class="fas fa-percent"></i>
@@ -78,8 +74,8 @@
                             </label>
                         </td>
                         <td>
-                            <button class="btn btn-danger" @click="deleteRecord(index)" v-if="authorized.delete"><i class="fas fa-trash "></i></button>
-                            <button class="btn btn-info" @click="update(index)" v-if="authorized.update"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger" @click="deleteRecord(index)"><i class="fas fa-trash "></i></button>
+                            <button class="btn btn-info" @click="update(index)" ><i class="fas fa-edit"></i></button>
                             <button class="btn btn-secondary" @click="show(index)"><i class="fas fa-eye "></i></button>
                         </td>
                     </tr>

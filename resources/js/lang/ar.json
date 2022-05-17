@@ -266,5 +266,6 @@
     "password is incorrect":"الرقم السري غير صحيح",
     "password is correct":"الرقم السري صحيح",
     "password must be entered correctly":"يجب إدخال الرقم السري بشكل صحيح",
-    "message sent successfully":"تم إرسال الرسالة بنجاح"
+    "message sent successfully":"تم إرسال الرسالة بنجاح",
+    "Enter Rooms Count":"إدخل عدد الغرف"
 }

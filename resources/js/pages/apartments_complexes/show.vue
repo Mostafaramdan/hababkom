@@ -1,5 +1,5 @@
 <template >
-    <div v-if="authorized.view">
+    <div    >
         <div class="row row-cols-1 row-cols-md-1 ">
             <div class="col">
                 <div class="card " >

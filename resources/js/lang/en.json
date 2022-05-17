@@ -271,7 +271,11 @@
     "open the apartments":"open the apartments",
     "Enter the apartments count":"Enter the apartments count",
     "message sent successfully":"message sent successfully",
-    "password must be entered correctly":"password must be entered correctly"
+    "password must be entered correctly":"password must be entered correctly",
+    "Enter Rooms Count":"Enter Rooms Count",
+    "rooms count":"rooms count",
+    "kitchens count":"kitchens count",
+    "toilets count":"toilets count"
 
 
 }

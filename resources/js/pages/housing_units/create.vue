@@ -6,8 +6,13 @@
         </h3>
         <hr>
         <div class="form-check ">
+            <label  > {{$lang['Enter Rooms Count']}}  </label>
+                <input type="number" v-model="record.N_Rooms" value="1" :class="['form-control' ]"  >
+            </div>
+
+        <div class="form-check ">
             <label  > {{$lang['enter the price per night (in dollars)']}}  </label>
-            <input type="number" min="0" v-model="record.price" :class="['form-control' ,{'is-valid':validatePrice },{'is-invalid':record.price&&!validatePrice}]"  >
+                <input type="number"   @input="computed_final_price" v-model="record.price" :class="['form-control' ]"  >
             <div class="valid-feedback">
                    {{$lang.correct}}
             </div>
@@ -17,7 +22,7 @@
         </div>
         <div class="form-check ">
             <label  > {{$lang['enter the final price per night (in dollars)']}} </label>
-            <input type="number" min="0" v-model="record.final_price" :class="['form-control' ,{'is-valid':validateFinalPrice },{'is-invalid':record.final_price&&!validateFinalPrice}]"  >
+            <input type="number" min="0"  v-model="record.final_price" :class="['form-control' ,{'is-valid':validateFinalPrice },{'is-invalid':record.final_price&&!validateFinalPrice}]"  >
             <div class="valid-feedback">
                    {{$lang.correct}}
             </div>
@@ -81,6 +86,7 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
             loading : false,
             images:[],
             main_image:[],
+            final_price_equation:0,
             record:{
                 price:0,
                 final_price:1,
@@ -95,11 +101,24 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
             this.loading=true;
             this.record.images= JSON.stringify( this.images.map(a => a.id));
             this.main_image.length ? this.record.main_image= this.main_image[0].id : null;
+
             let response = await this.Api('POST','housing_units',this.record);
             this.loading=false;
             this.$swal(this.$lang["Added successfully"], "", "success")
+            if(response.data.status==200){
+                this.$swal(this.$lang["Added successfully"], "", "success")
+                this.$router.push( {name:'housing_units',query:{estates_id:this.record.estates_id}});
+            }
 
-        }
+
+        },
+        computed_final_price($e){
+            this.record.price= $e.target.value
+            this.record.final_price =  
+                parseFloat(this.record.price) +
+                parseFloat((this.final_price_equation/100)*this.record.price)
+        },
+
     },
     computed: {
         validatePrice(){
@@ -118,12 +137,24 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
             return this.validatePrice && this.validateFinalPrice && this.validateAdult_nums && this.validateChildren_nums &&  !this.loading
         }
     },
-    mounted(){
+    async mounted(){
         this.$store.state.isLoading = false;
+        
+        let response3 =await  this.Api('GET','getAllAttachments',{})
+        this.attachments = response3.data.records;
+
+
+        this.attachments.map((element) => {
+            return element.label = element.name_ar;
+        });;
+
+        let response4 = await this.Api('GET','getFinal_price_equation');
+        this.final_price_equation = response4.data.record.final_price_equation
+
     },
-        metaInfo() {
+    metaInfo() {
         return {
-            title: `حبابكم -  أنشئ  غرفة جديدة `,
+            title: `${this.$lang['app name']} -  ${this.$lang['create new housing unit']} `,
         }
     }
 

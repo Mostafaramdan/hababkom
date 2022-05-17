@@ -20,10 +20,10 @@
                         </h5>
                         <hr>
 
-                        <h5 class="card-title">{{$lang['Arabic name']}} : {{ record.name_ar }}</h5>
-                        <h5 class="card-title">{{$lang['English name']}} : {{ record.name_en }}</h5>
-                        <h5 class="card-title">{{$lang['Arabic description']}} : {{ record.description_ar }}</h5>
-                        <h5 class="card-title">{{$lang['English description']}} : {{ record.description_en }}</h5>
+                        <h5 class="card-title">{{$lang['rooms count']}} : {{ record.rooms }}</h5>
+                        <h5 class="card-title">{{$lang['kitchens count']}} : {{ record.kitchens }}</h5>
+                        <h5 class="card-title">{{$lang['toilets count']}} : {{ record.toilets }}</h5>
+                        <h5 class="card-title">{{$lang['price']}} : {{ record.price }}</h5>
                         <h5 class="card-title">{{$lang['attachments']}}  :
                             <button class="btn btn-success m-1" v-for="(attachment , index) in record.attachs" :key="index"> {{ attachment.name_ar }} </button>
                         </h5>
