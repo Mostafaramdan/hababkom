@@ -13,6 +13,7 @@ class notifications extends dashboard
     {
         $this->model= model::class;
     }
+    
     public function index(Request $request)
     {
         $records= $this->model::query();

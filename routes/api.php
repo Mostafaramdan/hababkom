@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::apiResource('/image',App\Http\Controllers\dashboard\uploadImage::class);
+Route::post('/uploadimage',[App\Http\Controllers\dashboard\uploadImage::class,'storeFile']);
 
 Route::ANY('/register',[index::class, 'index']);
 Route::ANY('/forgetPassword',[index::class, 'index']);

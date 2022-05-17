@@ -1,41 +1,47 @@
 <template>
     <div class="m-3" >
     <form @submit.prevent="onSubmit" class="border border-5 border-primary rounded ">
-        <h3>
-           تسجيل الدخول
-        </h3>
-        <hr>
-        <div class="form-check ">
-            <label  > أدخل الايميل او التليفون</label>
-            <input type="text" v-model="account.username" :class="['form-control' ,{'is-valid':validationUsername && !inValidUsername},{'is-invalid':!validationUsername || inValidUsername}]"  >
-            <div class="valid-feedback">
-                     صحيح
-            </div>
-            <div class="invalid-feedback">
-                <span v-if="inValidUsername">الايميل غير موجود</span>
-                <span v-else>يجب إدخال الايميل بشكل صحيح</span>
+        <div class="row">
+            <div class="col-md-3 col-sm-1"></div>
+            <div class="col-md-6 col-sm-12">
+                <h3 class="text-center">
+                    {{$lang.login}}
+                    </h3>
+                <hr>
+
+                <div class="form-check m-4">
+                    <label  > {{$lang['Enter Email Or Phone']}}</label>
+                    <input type="text" v-model="account.username" :class="['form-control' ,{'is-valid':validationUsername && !inValidUsername},{'is-invalid':account.username&&(!validationUsername || inValidUsername)}]"  >
+                    <div class="valid-feedback">
+                            {{$lang.correct}}
+                    </div>
+                    <div class="invalid-feedback">
+                        <span v-if="inValidUsername">{{$lang['This email Or phone doesnt exists']}}</span>
+                        <span v-else>{{$lang['Email Or Phone must be entered correctly']}}</span>
+                    </div>
+                </div>
+                <div class="form-check m-4">
+                    <label  >{{$lang['enter the password']}}</label>
+                    <input type="password" v-model="account.password" :class="['form-control' ,{'is-valid':validationPassword && !inValidPassword},{'is-invalid':account.password&&(!validationPassword || inValidPassword)}]"  >
+                    <div class="valid-feedback">
+                        {{$lang['password is correct']}}
+                    </div>
+                    <div class="invalid-feedback">
+                        <span v-if="inValidPassword">{{$lang['password is incorrect']}}</span>
+                        <span v-else>{{$lang['password must be entered correctly']}}</span>
+                    </div>
+                </div>
+                <button type="submit" class=" btn btn-primary btn-lg btn-block" :disabled="allValidation == false ">
+                    <span v-if="loading">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        {{ $lang["loading..."] }}
+                    </span>
+                    <span v-else>
+                        {{$lang['login']}}
+                    </span>
+                </button>
             </div>
         </div>
-        <div class="form-check ">
-            <label  >الرقم السري</label>
-            <input type="password" v-model="account.password" :class="['form-control' ,{'is-valid':validationPassword && !inValidPassword},{'is-invalid':!validationPassword || inValidPassword}]"  >
-            <div class="valid-feedback">
-                    الرقم السري صحيح
-            </div>
-            <div class="invalid-feedback">
-                <span v-if="inValidPassword">الرقم السري غير صحيح</span>
-                <span v-else> يجب إدخال الرقم السري بشكل صحيح</span>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary btn-lg mt-2" :disabled="allValidation == false ">
-            <span v-if="loading">
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                {{ $lang["loading..."] }}
-            </span>
-            <span v-else>
-                تسجيل دخول
-            </span>
-        </button>
     </form>
   </div>
 </template>
@@ -113,16 +119,7 @@ import { mapActions, mapGetters  } from 'vuex'
     },
         metaInfo() {
         return {
-            title: `حبابكم - تسجيل الدخول`,
-            meta: [
-                // { name: 'description', content: 'Connect and follow ' + this.userData.name + ' on Epiloge - ' + this.userData.tagline},
-                // { property: 'og:title', content: this.userData.name + ' - Epiloge'},
-                { property: 'og:site_name', content: 'Epiloge'},
-                // { property: 'og:description', content: 'Connect and follow ' + this.userData.name + ' on Epiloge - ' + this.userData.tagline},
-                {property: 'og:type', content: 'profile'},
-                // {property: 'og:url', content: 'https://epiloge.com/@' + this.userData.username},
-                // {property: 'og:image', content: this.aws_url + '/users/' + this.userData.profileurl + '-main.jpg' }
-            ]
+                title: `${this.$lang['app name']} -  ${this.$lang.login} `,
         }
     }
 

@@ -10,7 +10,7 @@
                 <div class="form-group" >
                     <label   >{{$lang['order by'] }}</label>
                     <select class="custom-select" v-model="filterBy">
-                        <option value="name_ar">الاسم </option>
+                        <option :value="'name_'+$lang.currentLang">{{$lang['name']}} </option>
                         <option value="id">{{$lang['created at'] }}</option>
                     </select>
                 </div>
@@ -32,14 +32,11 @@
                 <thead >
                     <tr >
                         <th >#</th>
-                        <th >الاسم </th>
-                        <th >الوصف</th>
-                        <th > نوع الدفع </th>
-                        <th >القسم </th>
-                        <th >المنطقة </th>
-                        <th >المدير </th>
-                        <th >الغرف </th>
-                        <th>التفعيل</th>
+                        <th >{{$lang['name']}} </th>
+                        <th >{{$lang['region']}} </th>
+                        <th >{{$lang['manager']}} </th>
+                        <th >{{$lang['rooms']}} </th>
+                        <th >{{$lang['activation']}}</th>
                         <th >#</th>
                     </tr>
                 </thead>
@@ -47,13 +44,12 @@
                     
                     <tr v-for="(record,index) in records" :key="index">
                         <td>{{record.id}}</td>
-                        <td>{{record.name_ar}}</td>
-                        <td>{{record.description_ar}}</td>
-                        <td>{{record.payment}}</td>
-                        <td>{{record.category.name_ar}}</td>
-                        <td>{{record.district? record.district.name_ar : ''}}</td>
-                        <td><router-link :to="{name:'adminsShow',params:{id:record.admin ? record.admin.id: ''}}"> {{record.admin? record.admin.name : ''}} </router-link></td>
-                        <td><button class="btn btn-success" @click='enter_housing_units(record.id)'> الدخول للغرف <i class="fas fa-bed"></i> </button></td>
+                        <td>{{record['name_'+$lang.currentLang]}}</td>
+                        <td>{{record.city? record.city['name_'+$lang.currentLang] : ''}}</td>
+                        <td>
+                            <button class="btn btn-success" @click='enter_manager(index)'> {{$lang['manager']}} <i class="fas fa-user"></i> </button>
+                        </td>
+                        <td><button class="btn btn-success" @click='enter_housing_units(record.id)'> {{$lang['open the rooms']}} <i class="fas fa-bed"></i> </button></td>
                         <td>
                             <label class="switch">
                                 <input type="checkbox" @click="toggle('is_active',record.id)"  v-model="record.is_active" >
@@ -65,7 +61,7 @@
                         </td>
 
                         <td>
-                            <!-- <button class="btn btn-danger" @click="deleteRecord(index)"><i class="fas fa-trash "></i></button> -->
+                            <button class="btn btn-danger" @click="deleteRecord(index)"><i class="fas fa-trash "></i></button>
                             <button class="btn btn-info" @click="update(index)"><i class="fas fa-edit"></i></button>
                             <button class="btn btn-secondary" @click="show(index)"><i class="fas fa-eye "></i></button>
                         </td>
@@ -112,8 +108,12 @@ export default {
              this.$router.push( {name:'estatesShow' , params: { id: this.records[index].id }});
         },
         goToHousing(index){
-             this.$router.push( {name:'housing_unitsShow' , params: { id: this.records[index].id }});
+            this.$router.push( {name:'housing_unitsShow' , params: { id: this.records[index].id }});
         },
+        enter_manager(index){
+            this.$router.push( {name:'ownersShow' , params: { id: this.records[index].id } ,query:{records_id:'apartments_complexes_id'}});
+        },
+
         async paginate(currentPage){
             this.$router.push({  query: { ...this.$route.query,'page': currentPage }});
         },
@@ -145,7 +145,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم -  الوحدات السكنية `,
+            title: `${this.$lang['app name']} -  ${this.$lang.estates} `,
         }
     },
     watch :{

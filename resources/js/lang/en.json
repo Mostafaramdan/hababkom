@@ -1,5 +1,6 @@
 {
     "app name":"Hababcom",
+    "welocome":" welocome ",
     "from":"from",
     "to":"to",
     "lang":"EN",
@@ -25,7 +26,8 @@
     "cancelled" :"cancelled",
     "refused" :"rejected",    
 
-
+    "Enter Email Or Phone":"Enter Email Or Phone",
+    "Email Or Phone must be entered correctly":"Email Or Phone must be entered correctly",
     "unconfirmed orders" :"Unconfirmed Orders",
     "confirmed orders" :"Confirmed Orders",
     "finished orders" :"Finished Orders",
@@ -135,7 +137,9 @@
     "description":"Description",
     "region":"Region",
     "manager":"Manager",
+    "Enter the address from here":"Enter the address from here",
     "rooms":"Rooms",
+    "notFound":"not found",
     "Arabic name":"Arabic name",
     "English name":"English name",
     "Arabic description":"Arabic description",
@@ -213,6 +217,7 @@
     "booking date":"booking Date",
     "Booking details":"Booking Details",
     "countries/cities/districts":"countries/cities/districts",
+    "regions":"countries/cities/districts",
     "Create a new city/region":"Create a new City/Region",
     "open ?":"Open ?",
     "message":"Message",
@@ -265,6 +270,8 @@
     "apartments_complexes":"apartments complexes",
     "open the apartments":"open the apartments",
     "Enter the apartments count":"Enter the apartments count",
-    "message sent successfully":"message sent successfully"
+    "message sent successfully":"message sent successfully",
+    "password must be entered correctly":"password must be entered correctly"
+
 
 }

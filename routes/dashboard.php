@@ -15,7 +15,7 @@ Route::apiResource('users',users::class);
 Route::apiResource('housing_units',housing_units::class);
 Route::apiResource('attachments',attachments::class);
 Route::apiResource('vouchers',vouchers::class);
-Route::apiResource('offers',offers::class);
+Route::apiResource('offers',getRegions::class);
 Route::apiResource('currencies',currencies::class);
 Route::apiResource('app_settings',app_settings::class);
 Route::apiResource('admins',admins::class);

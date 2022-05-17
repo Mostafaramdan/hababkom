@@ -91,7 +91,7 @@
         let response1 = await this.Api('GET',`permissions/${this.$route.params.id}`);
         this.record = response.data.record;
         delete this.record.password
-        this.permissions = response1.data.permissions
+        this.permissions =   response1.data.permissions
     },
     metaInfo() {
         return {

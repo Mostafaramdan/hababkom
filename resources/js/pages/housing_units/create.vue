@@ -2,83 +2,59 @@
     <div class="m-3" >
     <form @submit.prevent="onSubmit" class="border border-5 border-primary rounded ">
         <h3>
-           أنشئ غرفة جديدة
+           {{$lang['create new housing unit']}}
         </h3>
         <hr>
         <div class="form-check ">
-            <label  > أدخل  سعر الليلة  </label>
-            <input type="number" v-model="record.price" :class="['form-control' ,{'is-valid':validatePrice },{'is-invalid':!validatePrice}]"  >
+            <label  > {{$lang['enter the price per night (in dollars)']}}  </label>
+            <input type="number" min="0" v-model="record.price" :class="['form-control' ,{'is-valid':validatePrice },{'is-invalid':record.price&&!validatePrice}]"  >
             <div class="valid-feedback">
-                     صحيح
+                   {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال السعر بشكل صحيح</span>
+                <span>{{$lang['The price must be entered correctly']}}</span>
             </div>
         </div>
         <div class="form-check ">
-            <label  > أدخل السعر النهائي  </label>
-            <input type="number" v-model="record.final_price" :class="['form-control' ,{'is-valid':validateFinalPrice },{'is-invalid':!validateFinalPrice}]"  >
+            <label  > {{$lang['enter the final price per night (in dollars)']}} </label>
+            <input type="number" min="0" v-model="record.final_price" :class="['form-control' ,{'is-valid':validateFinalPrice },{'is-invalid':record.final_price&&!validateFinalPrice}]"  >
             <div class="valid-feedback">
-                     صحيح
+                   {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال السعر النهائي بشكل صحيح</span>
+                <span>{{$lang['The final price must be entered correctly']}}</span>
             </div>
         </div>
          <div class="form-check ">
-            <label  > أدخل عدد البالغين  </label>
-            <input type="number" v-model="record.adult_nums" :class="['form-control' ,{'is-valid':validateAdult_nums },{'is-invalid':!validateAdult_nums}]"  >
+            <label  > {{$lang['enter adult count']}} </label>
+            <input type="number" min="0" v-model="record.adult_nums" :class="['form-control' ,{'is-valid':validateAdult_nums },{'is-invalid':record.adult_nums&&!validateAdult_nums}]"  >
             <div class="valid-feedback">
-                     صحيح
+                   {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال عدد البالغين بشكل صحيح</span>
+                <span>{{$lang['The number of children must be entered correctly']}}</span>
             </div>
         </div>
          <div class="form-check ">
-            <label  > أدخل عدد الاطفال  </label>
-            <input type="number" v-model="record.children_nums" :class="['form-control' ,{'is-valid':validateChildren_nums },{'is-invalid':!validateChildren_nums}]"  >
+            <label  > {{$lang['enter children count']}} </label>
+            <input type="number" min="0" v-model="record.children_nums" :class="['form-control' ,{'is-valid':validateChildren_nums },{'is-invalid':record.children_nums&&!validateChildren_nums}]"  >
             <div class="valid-feedback">
-                     صحيح
+                   {{$lang.correct}}
             </div>
             <div class="invalid-feedback">
-                <span>يجب إدخال عدد الاطفال بشكل صحيح</span>
+                <span>{{$lang['The number of children must be entered correctly']}}</span>
             </div>
         </div>
-
-        <div id="my-strictly-unique-vue-upload-multiple-image" style="display: flex; justify-content: center;">
-            <vue-upload-multiple-image
-            @upload-success="uploadImageSuccess1"
-            @before-remove="beforeRemove1"
-            @edit-image="editImage1"
-            :data-images="mainImage"
-            idUpload="myIdUpload1"
-            editUpload="myIdEdit1"
-            dragText='قم بوضع الصورة الرئيسية هنا'
-            dropText='اترك الصورة هنا'
-            :showPrimary='false'
-            browseText=' '
-            :maxImage='1'
-            :maxSizeImage="10"
-            ></vue-upload-multiple-image>
-        </div>
-        <hr>
-        <div id="my-strictly-unique-vue-upload-multiple-image" style="display: flex; justify-content: center;">
-            <vue-upload-multiple-image
-            @upload-success="uploadImageSuccess"
-            @before-remove="beforeRemove"
-            @edit-image="editImage"
-            :data-images="images"
-            idUpload="myIdUpload"
-            editUpload="myIdEdit"
+        <upload-image 
+            :dragText="$lang['Put the main picture here']"
+                :id="'mainImage'" :max="1"
+                :images="main_image">
+        </upload-image>
+        <upload-image 
             :dragText="$lang['Put the picture here']"
-            :dropText="$lang['Leave the picture here']"
-            :showPrimary='false'
-            browseText=' '
-            :maxImage='50'
-            :maxSizeImage="10"
-            ></vue-upload-multiple-image>
-        </div>
+                :id="'images'" :max="10"
+                :images="images">
+        </upload-image>
         <hr>
         <button type="submit" class="btn btn-primary btn-lg mt-2" :disabled="allValidation == false ">
             <span v-if="loading">
@@ -104,7 +80,7 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
         return {
             loading : false,
             images:[],
-            mainImage:[],
+            main_image:[],
             record:{
                 price:0,
                 final_price:1,
@@ -115,71 +91,10 @@ import VueUploadMultipleImage from 'vue-upload-multiple-image'
         }
     },
     methods: {
-        async uploadImageSuccess1(formData, index, fileList) {
-             let response=  await this.axios({
-                method: 'POST',
-                url: '/api/image',
-                data:{image:fileList[index].path},
-            })
-            this.mainImage.push(response.data.image)
-        },
-        async beforeRemove1 (index, done, fileList) {
-            if (confirm(this.$lang['Are you sure to delete this item'])) {
-                let response=  await this.axios({
-                method: 'DELETE',
-                url: `/api/image/${this.mainImage[index].id}`,
-            })
-            this.mainImage= []
-            }
-        },
-        async editImage1 (formData, index, fileList) {
-
-            let image = fileList[index];
-            await setTimeout(function () {
-                let response=     this.axios({
-                    method: 'POST',
-                    url: `/api/image/${fileList[index].id}`,
-                    data:{image:fileList[index].path,_method:'PUT'},
-                }).then((response)=>{
-                this.mainImage[index]= response.data.image
-                })
-             }.bind(this), 1000)
-        },
-
-        async uploadImageSuccess(formData, index, fileList) {
-             let response=  await this.axios({
-                method: 'POST',
-                url: '/api/image',
-                data:{image:fileList[index].path},
-            })
-            this.images.push(response.data.image)
-        },
-        async beforeRemove (index, done, fileList) {
-            if (confirm(this.$lang['Are you sure to delete this item'])) {
-                let response=  await this.axios({
-                method: 'DELETE',
-                url: `/api/image/${this.images[index].id}`,
-            })
-            this.images.splice(index,1)
-            }
-        },
-        async editImage (formData, index, fileList) {
-
-            let image = fileList[index];
-            await setTimeout(function () {
-                let response=     this.axios({
-                    method: 'POST',
-                    url: `/api/image/${fileList[index].id}`,
-                    data:{image:fileList[index].path,_method:'PUT'},
-                }).then((response)=>{
-                    this.images[index]= response.data.image
-                })
-             }.bind(this), 1000)
-        },
         async onSubmit() {
             this.loading=true;
             this.record.images= JSON.stringify( this.images.map(a => a.id));
-            this.mainImage.length ? this.record.main_image= this.mainImage[0].id : null;
+            this.main_image.length ? this.record.main_image= this.main_image[0].id : null;
             let response = await this.Api('POST','housing_units',this.record);
             this.loading=false;
             this.$swal(this.$lang["Added successfully"], "", "success")

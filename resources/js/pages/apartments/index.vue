@@ -2,7 +2,7 @@
     <div v-if="authorized.view">
         <div class="input-group mb-3">
             <input type="search" class="form-control" v-model.trim="search" list="wizards-list" :placeholder="$lang['search']" aria-label="Example text with button addon" aria-describedby="button-addon1">
-            <button v-b-modal.new-swap-shift-modal class="btn  btn-outline-primary" type="button" id="button-addon1"><i class='fas fa-filter'></i> {{{{ $lang['filter'] }}}} </button>
+            <button v-b-modal.new-swap-shift-modal class="btn  btn-outline-primary" type="button" id="button-addon1"><i class='fas fa-filter'></i> {{$lang.filter}} </button>
         </div>
 
         <b-modal id="new-swap-shift-modal" @ok="$router.push({  query: { ...$route.query,...features(),page:1 }})" hide-header-close :title="$lang['filter results']" ok-hide='true' :ok-title="$lang['search']"  :cancel-title="$lang['cancel']">

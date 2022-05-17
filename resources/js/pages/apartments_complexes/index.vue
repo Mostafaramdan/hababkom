@@ -1,8 +1,8 @@
 <template >
-    <div v-if="authorized.view">
+    <div >
         <div class="input-group mb-3">
             <input type="search" class="form-control" v-model.trim="search" list="wizards-list" :placeholder="$lang['search']" aria-label="Example text with button addon" aria-describedby="button-addon1">
-            <button v-b-modal.new-swap-shift-modal class="btn  btn-outline-primary" type="button" id="button-addon1"><i class='fas fa-filter'></i> {{{{ $lang['filter'] }}}} </button>
+            <button v-b-modal.new-swap-shift-modal class="btn  btn-outline-primary" type="button" id="button-addon1"><i class='fas fa-filter'></i> {{$lang.filter}} </button>
         </div>
         <b-modal id="new-swap-shift-modal" @ok="$router.push({  query: { ...$route.query,...features(),page:1 }})" hide-header-close :title="$lang['filter results']" ok-hide='true' :ok-title="$lang['search']"  :cancel-title="$lang['cancel']">
             <div class="d-block text-center">
@@ -55,8 +55,8 @@
                     <tr v-for="(record,index) in records" :key="index">
                         <td v-if="check"> <input class="form-controll" type="checkbox"  id="check" v-model="record.check" ></td>
                         <td>{{record.id}}</td>
-                        <td>{{record.name_ar}}</td>
-                        <td>{{record.city? record.city.name_ar : ''}}</td>
+                        <td>{{record['name_'+$lang.currentLang]}}</td>
+                        <td>{{record.city? record.city['name_'+$lang.currentLang] : ''}}</td>
                         <td>
                             <button class="btn btn-success" @click='enter_manager(index)'> {{$lang['manager']}} <i class="fas fa-user"></i> </button>
                         </td>
@@ -72,8 +72,8 @@
                         </td>
 
                         <td>
-                            <button class="btn btn-danger" @click="deleteRecord(index)" v-if="authorized.delete"><i class="fas fa-trash "></i></button>
-                            <button class="btn btn-info" @click="update(index)" v-if="authorized.update"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger" @click="deleteRecord(index)"><i class="fas fa-trash "></i></button>
+                            <button class="btn btn-info" @click="update(index)" ><i class="fas fa-edit"></i></button>
                             <button class="btn btn-secondary" @click="show(index)"><i class="fas fa-eye "></i></button>
                         </td>
                     </tr>

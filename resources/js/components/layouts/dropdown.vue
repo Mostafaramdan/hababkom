@@ -1,17 +1,17 @@
 <template>
     <div class="form-group">
-        <h6  > اختر {{label}} : </h6>
+        <h6  > {{$lang.choose}} {{label}} : </h6>
         <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle btn-lg custom-class" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <span v-if="records.length > 0">
-                    {{records_id? (records.find(item => item.id === records_id))[column]  : `اختر ${label} من هنا`}}
+                    {{records_id? (records.find(item => item.id === records_id))[column]  : `${$lang.choose} ${label} `}}
                 </span>
                 <span v-else >
-                    لا يوجد
+                   {{$lang.notFound}}
                 </span>
             </button>
             <div class="dropdown-menu dropdown-primary " aria-labelledby="dropdownMenuButton1">
-                <input v-if="records.length > 0" v-model="search" type='search' class="form-control"  placeholder="بحث"  >
+                <input  v-model="search" type='search' class="form-control"  :placeholder="$lang.search"  >
                 <a  :class="['dropdown-item mdb-dropdownLink-1',{'active':records_id== record.id}]" @click="active(i,$event)" v-for="(record, i) in records" :key="i" >{{record[column]}}</a>
             </div>
         </div>

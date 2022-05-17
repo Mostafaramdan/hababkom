@@ -12,24 +12,27 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueMeta from 'vue-meta'
-import VueUploadMultipleImage from 'vue-upload-multiple-image'
 import VueEasyLightbox from 'vue-easy-lightbox'
 import VueSwal from 'vue-swal'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import dropdown from '@/components/layouts/dropdown.vue';
+
 import Multiselect from 'vue-multiselect'
 import Treeselect from '@riophae/vue-treeselect'
+
+import VueUploadMultipleImage from 'vue-upload-multiple-image'
+import uploadImage from '@/components/layouts/uploadImage.vue';
 
 var Lang = require('vue-lang');
 
 var locales = {
-    "en": require("@/lang/en.json"),
+    "en": require("@/lang/en.json"), 
     "ar": require("@/lang/ar.json"),
   }
    
 Vue.use(Lang, {lang: localStorage.getItem("lang")??"ar", locales: locales})
 
-Vue.use(VueGoogleMaps, {
+Vue.use(VueGoogleMaps, {  
     load: {
       key: 'AIzaSyByYh0lGbV5SvW1Q8FhHJCU5jMdktuXI3Y',
       libraries: 'places', // This is required if you use the Autocomplete plugin
@@ -43,12 +46,14 @@ Vue.use(VueAxios, axios);
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueMeta)
-Vue.use(VueUploadMultipleImage)
 Vue.use(VueSwal)
 Vue.component('dropdown-menu', dropdown)
+
+
 Vue.component('Multiselect', Multiselect)
 Vue.component( 'tree-select', Treeselect)
 Vue.component( 'vue-upload-multiple-image', VueUploadMultipleImage)
+Vue.component( 'upload-image', uploadImage)
 
 Vue.use(VueEasyLightbox)
 Vue.component(VueEasyLightbox.name, VueEasyLightbox)
@@ -56,7 +61,7 @@ Vue.component(VueEasyLightbox.name, VueEasyLightbox)
 const store = new Vuex.Store(stores);
 const router = new VueRouter({
     mode: 'history',
-    routes
+    routes 
 });
 
 

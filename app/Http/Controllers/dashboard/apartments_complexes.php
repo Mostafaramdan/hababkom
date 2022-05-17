@@ -32,7 +32,10 @@ class apartments_complexes extends dashboard
     
     public function update(Request $request, $id)
     {
-        // locations::createUpdate(['latitude'=>$request->location['lat'],'longitude'=>$request->location['lng']]);
+        if($request->map_link){
+            $map_link = explode(',',explode('@',$request->map_link)[1] ) ;
+            $location = locations::createUpdate(['latitude'=>$map_link[0],'longitude'=>$map_link[1]]);
+        }
         $record= $this->model::where('id',$id)->update( $this->filterRequest($request));
         return response()->json(['status'=>200]);
     }

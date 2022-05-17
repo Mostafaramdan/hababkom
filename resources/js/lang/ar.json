@@ -1,5 +1,6 @@
 
  {
+    "welocome":" مرحبا ",
     "from":"من",
     "to":"الي",
     "lang":"ar",
@@ -58,6 +59,7 @@
     "offers":"العروض",
     "orders":"الحجوزات",
     "countries/cities/districts":"الدول / المدن / المناطق",
+    "regions":"الدول / المدن / المناطق",
     "contacts":"الشكاوي والاقتراحات",
     "notifications":"الاشعارات",
     "app_settings":"الاعدادات",
@@ -78,11 +80,15 @@
     "the phone must be entered correctly":"ادخل رقم التليفون بشكل صحيح",
     "enter the password":"ادخل كلمة المرور",
     "the password must be entered correctly":"ادخل كلمة المرور بشكل صحيح",
+    
     "re-enter the password":"اعد إدخال كلمة المرور",
     "loading...":"...جاري التحميل",
     "Added successfully":"تمت الاضافة بنجاح",
     "This email already exists":"هذا البريد موجود مسبقاّ",
-    "This email Or phone doesnt exists":"هذا البريداو رقم التليفون غير موجود ",
+    "This email Or phone doesnt exists":"هذا البريد او رقم التليفون غير موجود ",
+    "Enter Email Or Phone":"أدخل الايميل او التليفون",
+    "Email Or Phone must be entered correctly":"ادخل البريد الالكتروني او الايميل بشكل صحيح",
+
     "This phone already exists":"هذا الرقم موجود مسبقاّ",
     "Are you sure to delete this item":" هل أنت متأكد من مسح هذا العنصر ؟",
     "create":"إضافة",
@@ -160,7 +166,7 @@
     "online":"عبر الانترنت",
     "The payment type must be entered correctly":"يجب إدخال نوع الدفع بشكل صحيح",
     "Enter the street":"ادخل الشارع",
-    "Enter the address from here":"أدخل العنوان منهاe",
+    "Enter the address from here":"أدخل العنوان من هنا",
     "nothing":"لا شيئ",
     "Choose the city":"اختر المدينة",
     "google map":"خرائط جوجل",
@@ -195,6 +201,7 @@
     "The start date and end date must be entered correctly":"يجب إدخال تاريخ البدء وتاريخ الانتهاء بشكل صحيحy",
     "update a discount code":"تحديث كود الخصم",
     "Value for 1 dollar":"القيمة 1 دولار",
+    "notFound":"لا يوجد",
     "Create a new currency":"قم بإنشاء عملة جديدة",
     "Enter the code":"ادخل الكود",
     "The code must be entered correctly":"يجب إدخال الرمز بشكل صحيح",
@@ -257,5 +264,7 @@
     "updated successfully":"تم التعديل بنجاح",
     "enter email or phone":"ادخل البريد الالكتروني او رقم التليفون",
     "password is incorrect":"الرقم السري غير صحيح",
+    "password is correct":"الرقم السري صحيح",
+    "password must be entered correctly":"يجب إدخال الرقم السري بشكل صحيح",
     "message sent successfully":"تم إرسال الرسالة بنجاح"
 }

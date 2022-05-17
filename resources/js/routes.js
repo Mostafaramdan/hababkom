@@ -13,6 +13,8 @@ import contacts from '@/routes/contacts';
 import notifications from '@/routes/notifications';
 import statistics from '@/routes/statistics';
 import estates from '@/routes/estates';
+import apartments_complexes from '@/routes/apartments_complexes';
+import apartments from '@/routes/apartments';
 const baseDash= '/dashboard';
 
 const routes=
@@ -32,6 +34,8 @@ const routes=
     ...notifications,
     ...statistics,
     ...estates,
+    ...apartments_complexes,
+    ...apartments,
     {
         path: `${baseDash}/login`,
         name: 'login',

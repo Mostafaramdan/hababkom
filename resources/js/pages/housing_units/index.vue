@@ -10,9 +10,9 @@
                 <div class="form-group" >
                     <label   >{{$lang['order by'] }}</label>
                     <select class="custom-select" v-model="filterBy">
-                        <option value="price">السعر </option>
-                        <option value="adult_nums">عدد البالغين </option>
-                        <option value="children_nums">عدد الاطفال </option>
+                        <option value="price">{{$lang['price']}} </option>
+                        <option value="adult_nums">{{$lang['adult count']}} </option>
+                        <option value="children_nums">{{$lang['children count']}}  </option>
                         <option value="id">{{$lang['created at'] }}</option>
                     </select>
                 </div>
@@ -34,11 +34,11 @@
                 <thead >
                     <tr >
                         <th >#</th>
-                        <th >عدد البالغين </th>
-                        <th >عدد الاطفال </th>
-                        <th >السعر</th>
-                        <th >السعر النهائي</th>
-                        <th>العروض</th>
+                        <th >{{$lang['adult count']}} </th>
+                        <th >{{$lang['children count']}} </th>
+                        <th >{{$lang['price']}}</th>
+                        <th >{{$lang['final price']}}</th>
+                        <th >{{$lang['offers']}}</th>
                         <th >#</th>
                         <th ><i class="fas fa-clock"></i></th>
                     </tr>
@@ -135,7 +135,7 @@ export default {
     },
     metaInfo() {
         return {
-            title: `حبابكم -  الغرف`,
+                title: `${this.$lang['app name']} -  ${this.$lang.rooms} `,
         }
     },
     watch :{
