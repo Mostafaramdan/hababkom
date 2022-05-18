@@ -14,7 +14,7 @@ class registerBySocialTokenController extends index
     public static function api()
     {
         $request=self::$request;
-        $record= users::createUpdate([
+        $record= users::updateOrCreate(['socialToken'=>self::$request->socialToken],[
             'name'=>$request->name,
             'email'=>$request->email,
             'phone'=>$request->phone,

@@ -25,7 +25,7 @@
                 </div>
             </div>
         </b-modal>
-        <button class="btn btn-primary m-2 " @click="create" v-if="authorized.create" >
+        <button :class="['btn btn-primary m-2',{'d-none':!$route.query.estates_id && !$store.state.user.estates_id}] " @click="create" v-if="authorized.create"   >
              {{$lang.create}}
             <i class="fas fa-plus"></i>
         </button>

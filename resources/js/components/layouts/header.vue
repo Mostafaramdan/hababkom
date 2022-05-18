@@ -7,19 +7,18 @@
                 <i class="fas fa-bars"></i>
                 </b-button>
             </a>
-            <b-dropdown  :text="$lang.options" class="m-md-2" v-if="checkAuth">
+            <b-dropdown  :text="$lang.options" class="m-md-2" >
                 <b-dropdown-item>{{$lang.options}}</b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
                 <b-dropdown-item @click="changeLang($lang['oppositeChangeLang'])">{{$lang['oppositeLang']}}</b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
-                <b-dropdown-item @click="logout"> {{$lang.logout}}</b-dropdown-item>
+                <b-dropdown-item @click="logout" v-if="checkAuth"> {{$lang.logout}}</b-dropdown-item>
             </b-dropdown>
 
         </div>
     </nav>
 </template>
 <script>
-import {  mapGetters  } from 'vuex'
 
 export default {
     data(){
@@ -28,15 +27,17 @@ export default {
     },
     methods:{
         async logout(){
-            let response = await this.Api('POST','logout',{});
+           await this.Api('POST','logout',{});
             this.$store.dispatch('logoutAction')
             this.$router.push({ path: '/dashboard/login' })
 
-        }
-    } ,computed: {
-        ...mapGetters([
-            'checkAuth'
-        ])
+        },
+        
+    },
+    computed: {
+       checkAuth(){
+            return this.$store.state.user.apiToken.length > 1?true:false
+        },
     }
 }
 </script>

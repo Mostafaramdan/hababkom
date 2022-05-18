@@ -102,11 +102,11 @@ return [
             'name_ar'=>'مجمعات الشقق',
             'name_en'=>'apartments_complexes',
             'permissions'=>['create'=>false,'update'=>true,'delete'=>false, 'view'=>true]
-        ],
+        ], 
         "apartments"=>[
             'name_ar'=>'الشقق',
             'name_en'=>'apartments',
-            'permissions'=>['create'=>false,'update'=>true,'delete'=>true, 'view'=>true]
+            'permissions'=>['create'=>true,'update'=>true,'delete'=>true, 'view'=>true]
         ],
         "orders"=>[
             'name_ar'=>'الحجوزات',
@@ -122,7 +122,7 @@ return [
         ],
         "estates"=>[
             'name_ar'=>'الفنادق',
-            'name_en'=>'housing_units',
+            'name_en'=>'estates',
             'permissions'=>['create'=>false,'update'=>true,'delete'=>false, 'view'=>true]
         ],
         "housing_units"=>[

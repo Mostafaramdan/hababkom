@@ -11,7 +11,6 @@ use App\Http\Controllers\Apis\Helper\helper ;
 class loginBySocialTokenController extends index
 {
     public static function api(){
-
         helper::loginBySocialToken(self::$account);
         $token = tokens::create([
             'apiToken'=>helper::UniqueRandomXChar(69,'apiToken'),

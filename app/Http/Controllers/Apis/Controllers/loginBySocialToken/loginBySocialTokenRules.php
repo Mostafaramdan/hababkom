@@ -12,10 +12,11 @@ class loginBySocialTokenRules extends index
 {
     public static function rules ()
     {
+
         $rules=[
             "socialToken" =>"required",
-            "email" =>"required_if:phone,|exists:users,email",
-            "phone" =>"required_if:email,|exists:users,phone",
+            "email" =>"nullable|exists:users,email",
+            "phone" =>"nullable|exists:users,phone",
         ];
 
         $messages=[
@@ -51,7 +52,11 @@ class loginBySocialTokenRules extends index
         if ($Validation !== null) {    return $Validation;    }
         if(self::$request->email){
             self::$account=users::where('email',self::$request->email)->first();
+            return helper::validateAccount()??null;
         }
-        return helper::validateAccount()??null;
+
+        self::$account= users::firstOrCreate(['socialToken'=>self::$request->socialToken]);
+
+        // return helper::validateAccount()??null;
     }
 }

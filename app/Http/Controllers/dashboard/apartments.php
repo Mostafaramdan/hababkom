@@ -17,7 +17,7 @@ class apartments extends dashboard
     {
         $records= $this->model::query()->with(['category']);
         if(self::$admin->apartments_complexes_id){
-            $records->where('id',self::$admin->apartments_complexes_id);
+            $records->where('apartments_complexes_id',self::$admin->apartments_complexes_id);
         }
         if($request->apartments_complexes_id){
             $records->where('apartments_complexes_id',$request->apartments_complexes_id);

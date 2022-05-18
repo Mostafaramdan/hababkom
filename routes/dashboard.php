@@ -15,7 +15,7 @@ Route::apiResource('users',users::class);
 Route::apiResource('housing_units',housing_units::class);
 Route::apiResource('attachments',attachments::class);
 Route::apiResource('vouchers',vouchers::class);
-Route::apiResource('offers',getRegions::class);
+Route::apiResource('offers',offers::class);
 Route::apiResource('currencies',currencies::class);
 Route::apiResource('app_settings',app_settings::class);
 Route::apiResource('admins',admins::class);
@@ -35,3 +35,9 @@ Route::get('/getAllAttachments',[App\Http\Controllers\dashboard\attachments::cla
 Route::get('/permissions',[App\Http\Controllers\dashboard\dashboard::class, 'permissions']);
 Route::post('/permissions/{admin}',[App\Http\Controllers\dashboard\dashboard::class, 'setPermissions']);
 Route::get('/getFinal_price_equation',[App\Http\Controllers\dashboard\dashboard::class, 'getFinal_price_equation']);
+Route::get('permissionsByType/apartments_complexes_id',function(){
+    return config('dashboard.permissionsApartment');
+});
+Route::get('permissionsByType/estates_id',function(){
+    return config('dashboard.permissionsEstate');
+});

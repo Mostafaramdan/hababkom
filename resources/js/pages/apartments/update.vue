@@ -89,7 +89,6 @@ export default {
                 location:
                 {lat: 30.0526633, lng: 31.3738656},
                 description_en:'',
-                apartments_complexes_id: this.$route.query.apartments_complexes_id
             },
         }
     },

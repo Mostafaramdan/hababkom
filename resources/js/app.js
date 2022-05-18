@@ -46,7 +46,7 @@ Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueMeta)
 Vue.use(VueSwal)
-
+ 
 
 
 Vue.component('dropdown-menu', dropdown)
@@ -64,42 +64,45 @@ const router = new VueRouter({
     routes 
 });
 
+ 
 
+// router.beforeEach((to, from, next) => {
+//     store.state.isLoading=true
+//     let isAuthenticated =  store.getters.getUser.apiToken;
+//     if(to.name  == 'login' && isAuthenticated ){
+//         next({ name: 'statistics' })
+//     } 
+//     else if (to.name !== 'login' && !isAuthenticated)
+//         next({ name: 'login' })
+//     else if (to.name == 'welcom')
+//          next({ name: 'welcom' })
+//     else{
+//         store.state.isLoading=false
+//         // typePage=
+//         let current= (to.path.split("/dashboard/"))[1].split("/")[0];
+//         if(current== 'countries' || current == 'cities' || current== 'districts'){
+//             current = 'regions';
+//         }
 
-router.beforeEach((to, from, next) => {
-    store.state.isLoading=true
-    let isAuthenticated =  store.getters.getUser.apiToken;
-    if(to.name  == 'login' && isAuthenticated ){
-        next({ name: 'statistics' })
-    } 
-    else if (to.name !== 'login' && !isAuthenticated){
-        next({ name: 'login' })
-    }else{
+//         let permission= (to.path.split("/dashboard/"))[1].split("/")[1] ??'view'
 
-        // typePage=
-        let current= (to.path.split("/dashboard/"))[1].split("/")[0];
-        if(current== 'countries' || current == 'cities' || current== 'districts'){
-            current = 'regions';
-        }
+//         if (permission && !isNaN(permission))  permission = 'view';
+ 
+//         if(to.name == 'welcome' ||to.name == 'login' || to.name=='permissionsShow' || to.name.includes('owners')){
+//             store.state.isLoading=false
+//             return next(true);
+//         }
+//         if(!store.state.user.permissions[current]){
+//             return next(false);
+//         }
 
-        let permission= (to.path.split("/dashboard/"))[1].split("/")[1] ??'view'
-
-        if (permission && !isNaN(permission))  permission = 'view';
-
-        if(to.name == 'login' || to.name=='permissionsShow' || to.name.includes('owners')){
-            return next(true);
-        }
-        if(!store.state.user.permissions[current]){
-            return next(false);
-        }
-
-        if(store.state.user.permissions[current].permissions[permission]  ){
-            next(true);
-        }
+//         if(store.state.user.permissions[current].permissions[permission]  ){
+//             next(true);
+//         }
        
  
-    }
-})
+//     }
+// }) 
 
 Vue.mixin(helper)
 Vue.mixin(api)

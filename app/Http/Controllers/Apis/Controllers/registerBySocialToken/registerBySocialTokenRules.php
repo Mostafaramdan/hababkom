@@ -14,8 +14,8 @@ class registerBySocialTokenRules extends index
 
         $rules=[
             "name"     =>"required|min:3",
-            "email"    =>"required_if:phone,|regex:/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}/|unique:users,email",
-            "phone"    =>"required_if:email,|numeric|between:1000000000,99999999999999999999|unique:users,phone",
+            "email"    =>"nullable|regex:/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}/|unique:users,email",
+            "phone"    =>"nullable|numeric|between:1000000000,99999999999999999999|unique:users,phone",
             "lang"     =>"nullable|in:ar,en",
             "socialToken"=>"required"
         ];

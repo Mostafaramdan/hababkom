@@ -1,7 +1,7 @@
 <template>
-    <div class="m-3" >
+    <div class="m-3 "  >
     <form @submit.prevent="onSubmit" class="border border-5 border-primary rounded ">
-        <div class="row">
+        <div class="row login">
             <div class="col-md-3 col-sm-1"></div>
             <div class="col-md-6 col-sm-12">
                 <h3 class="text-center">
@@ -135,5 +135,6 @@ import { mapActions, mapGetters  } from 'vuex'
         padding: 40px;
         background-color: #fff;
     }
+
 
 </style>

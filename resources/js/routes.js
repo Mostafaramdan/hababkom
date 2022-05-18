@@ -16,10 +16,12 @@ import estates from '@/routes/estates';
 import apartments_complexes from '@/routes/apartments_complexes';
 import apartments from '@/routes/apartments';
 import owners from '@/routes/owners';
+import welcome from '@/routes/welcome';
+
 const baseDash= '/dashboard';
 
 const routes=
-[
+[ 
 
     ...users,
     ...housing_units,
@@ -38,6 +40,7 @@ const routes=
     ...apartments_complexes,
     ...apartments,
     ...owners,
+    ...welcome,
     {
         path: `${baseDash}/login`,
         name: 'login',
@@ -47,9 +50,5 @@ const routes=
         path: '*',
         redirect: { name: 'statistics' }
     }
-
-
 ];
-
-
 export default routes;

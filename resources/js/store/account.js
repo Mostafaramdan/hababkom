@@ -44,7 +44,7 @@ export default {
                 }else{
                     return false;
                 }
-                    if(user &&  user.apiToken.length > 0){
+                if(user &&  user.apiToken.length > 0){
                     state.user= user;
                     return true;
                 }else{
