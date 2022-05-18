@@ -17,7 +17,7 @@
         </div>
          <div class="form-check ">
             <label  > {{$lang['start at']}}  </label>
-            <input type="date" v-model="record.start_at" :class="['form-control' ,{'is-valid':validateStart_at },{'is-invalid':record.start_at&&!validateStart_at}]"  >
+            <input type="date" v-model="record.start_at"  :class="['form-control' ,{'is-valid':validateStart_at },{'is-invalid':record.start_at&&!validateStart_at}]"  >
             <div class="valid-feedback">
                 {{$lang.correct}}
             </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="form-check ">
             <label  > {{$lang['end at']}}  </label>
-            <input type="date" v-model="record.end_at" :class="['form-control' ,{'is-valid':validateEnd_at },{'is-invalid':record.end_at&&!validateEnd_at}]"  >
+            <input type="date" v-model="record.end_at" :min="min_end_at()" :class="['form-control' ,{'is-valid':validateEnd_at },{'is-invalid':record.end_at&&!validateEnd_at}]"  >
             <div class="valid-feedback">
                 {{$lang.correct}}
             </div>
@@ -137,6 +137,27 @@
             this.loading=false;
 
         },
+        today(){
+            let today = new Date();
+            let dd = today.getDate();
+            let mm = today.getMonth() + 1; //January is 0!
+            let yyyy = today.getFullYear();
+
+            if (dd < 10) {
+            dd = '0' + dd;
+            }
+
+            if (mm < 10) {
+            mm = '0' + mm;
+            } 
+            today = yyyy + '-' + mm + '-' + dd;
+            return today
+        },
+        min_end_at(){
+            if(this.record.start_at > this.today())
+                return this.record.start_at 
+            return this.today();
+        },
         randomString(length) {
             // $event.preventDefault;
             var result = '';
@@ -169,18 +190,18 @@
 
         this.cities = response1.data.records;
         this.cities.map((element) => {
-            return element.label = element.name_ar;
+            return element.label = element['name_'+this.$lang.currentLang];
         });;
 
         this.estates = response2.data.records;
         this.estates.map((element) => {
-            return element.label = element.name_ar;
+            return element.label = element['name_'+this.$lang.currentLang];
         });;
 
         this.$store.state.isLoading = false;
 
     },
-        metaInfo() {
+    metaInfo() {
         return {
             title: `${this.$lang['app name']} - ${this.$lang['Create a new discount code']} `,
         }

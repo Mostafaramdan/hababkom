@@ -26,6 +26,7 @@
                                 </label>
                                 <input class="form-check-input position-absolute top-0 start-50"
                                     type="checkbox" :id="moduleName+index+i"
+                                    @change="changePermission(moduleName,key)"
                                     v-model="record.permissions[moduleName].permissions[key]"
                                     >
                             </div>
@@ -78,12 +79,30 @@
                 this.loading=false;
             }
         },
+        changePermission(moduleName,key){ 
+            if(key == 'view'){ 
+                if(this.record.permissions[moduleName].permissions.view==false){
+                    this.record.permissions[moduleName].permissions.create=false;
+                    this.record.permissions[moduleName].permissions.update=false;
+                    this.record.permissions[moduleName].permissions.delete=false;
+                }else{
+                    this.record.permissions[moduleName].permissions.create=true;
+                    this.record.permissions[moduleName].permissions.update=true;
+                    this.record.permissions[moduleName].permissions.delete=true;
+                }
+            }else{
+                if(this.record.permissions[moduleName].permissions[key] == true){
+                    this.record.permissions[moduleName].permissions.view=true;
+                }
+            }
+        }
     },
     computed: {
 
         allValidation(){
             return  !this.loading
-        }
+        },
+        
     },
     async created(){
         this.$store.state.isLoading = false;

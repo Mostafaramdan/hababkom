@@ -6,7 +6,7 @@
         </div>
         <div class="col-md-4 m-2">
             <label for="to" class="form-label">  {{$lang.to}} : </label>
-            <input type="date" class="form-control"  v-model="to" id="to">
+            <input type="date" class="form-control"  :min="from" v-model="to" id="to">
         </div>
         <div class="col-md-4 m-2">
             <label for="to" class="form-label">  {{$lang['choose period']}}  : </label>
@@ -76,25 +76,29 @@
             </div>
         </div>
         <hr>
-        <div class="col-3  text-white bg-info m-3" style="max-width: 18rem;">
+        <div v-if="$store.state.user.type=='admin' || $store.state.user.estates_id"
+             class="col-3  text-white bg-info m-3" style="max-width: 18rem;">
             <div class="card-text m-2 text-wrap">{{$lang['total number of estates']}} </div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.estates}}</h5>
             </div>
         </div>
-        <div class="col-3  text-white bg-primary m-3" style="max-width: 18rem;">
+        <div v-if="$store.state.user.type=='admin' || $store.state.user.estates_id"
+            class="col-3  text-white bg-primary m-3" style="max-width: 18rem;">
             <div class="card-text m-2 text-wrap">{{$lang['total number of housing units']}} </div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.housing_units}}</h5>
             </div>
         </div>
-        <div class="col-3  text-white bg-info m-3" style="max-width: 18rem;">
+        <div v-if="$store.state.user.type=='admin'"
+            class="col-3  text-white bg-info m-3" style="max-width: 18rem;">
             <div class="card-text m-2 text-wrap">{{$lang['total number of users']}}  </div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.users}}</h5>
             </div>
         </div>
-        <div class="col-3  text-white bg-primary m-3" style="max-width: 18rem;">
+        <div v-if="$store.state.user.type=='admin'"
+            class="col-3  text-white bg-primary m-3" style="max-width: 18rem;">
             <div class="card-text m-2 text-wrap">{{$lang['technical support messages']}} </div>
             <hr><div class="card-body">
                 <h5 class="card-title">{{record.contacts}}</h5>

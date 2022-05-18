@@ -27,7 +27,7 @@
         </div>
         <div class="form-check ">
             <label  > {{$lang['end at']}}  </label>
-            <input type="date" v-model="record.end_at" :class="['form-control' ,{'is-valid':validateEnd_at },{'is-invalid':record.end_at&&!validateEnd_at}]"  >
+            <input type="date" v-model="record.end_at" :min="min_end_at()" :class="['form-control' ,{'is-valid':validateEnd_at },{'is-invalid':record.end_at&&!validateEnd_at}]"  >
             <div class="valid-feedback">
                 {{$lang.correct}}
             </div>
@@ -120,6 +120,34 @@
             }
 
             this.loading=false;
+        },
+        randomString(length) {
+            // $event.preventDefault;
+            var result = '';
+            let chars= '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+            this.record.code= result;
+        },
+         today(){
+            let today = new Date();
+            let dd = today.getDate();
+            let mm = today.getMonth() + 1; //January is 0!
+            let yyyy = today.getFullYear();
+
+            if (dd < 10) {
+            dd = '0' + dd;
+            }
+
+            if (mm < 10) {
+            mm = '0' + mm;
+            } 
+            today = yyyy + '-' + mm + '-' + dd;
+            return today
+        },
+        min_end_at(){
+            if(this.record.start_at > this.today())
+                return this.record.start_at 
+            return this.today();
         },
         randomString(length) {
             // $event.preventDefault;
