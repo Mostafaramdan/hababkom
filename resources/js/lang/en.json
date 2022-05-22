@@ -77,7 +77,7 @@
     "users":"Users",
     "user":"User",
 
-    "housing_units":"Housing Units",
+    "housing_units":"rooms",
     "estates":"Hotels",
     "create new hotel":"Create New Hotel",
     "apartments":"Apartments",
@@ -195,8 +195,10 @@
     "The end date must be entered correctly":"The End Date Must Be Entered Correctly",
     "Enter the number of times you use it":"Enter The Number of Times You Use It",
     "The number of times of use must be entered correctly":"The Number Of Times Of Use Must Be Entered Correctly",
-    "Choose cities":"CHOOSE CITIES",
+    "Choose cities":"Choose cities",
     "Choose hotels":"choose hotels",
+    "Choose apartments complexes":"choose apartments complexes",
+
     "This code already exists, please enter a different code":"This Code Already Exists, Please Enter A Different Code",
     "The start date and end date must be entered correctly":"The Start Date And End Date Must Be Entered Correctly",
     "update a discount code":"Update a Discount Code",

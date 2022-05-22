@@ -12,7 +12,7 @@ class getOffersController extends index
 {
     public static function api()
     {
-        $records= offers::all();
+        $records= offers::where('is_active',1)->orderBy('id','desc')->get();
         return [
             "status"=>$records->forPage(self::$request->page+1,self::$itemPerPage)->count()?200:204,
             "totalPages"=>ceil($records->count()/self::$itemPerPage),

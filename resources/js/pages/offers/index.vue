@@ -23,7 +23,7 @@
                 </div>
             </div>
         </b-modal>
-        <button class="btn btn-primary m-2 " @click="create" v-if="authorized.create"  v-show="$route.query.housing_units_id">
+        <button class="btn btn-primary m-2 " @click="create" v-if="authorized.create"  v-show="$route.query.housing_units_id || $route.query.apartments_id">
              {{$lang.create}}
             <i class="fas fa-plus"></i>
         </button>
@@ -34,6 +34,8 @@
                         <th >#</th>
                         <th >{{$lang.name}} </th>
                         <th >{{$lang.room}}</th>
+                        <th>{{$lang.apartment }}</th>
+
                         <th >{{$lang.discount}}</th>
                         <th >{{$lang['start at']}}</th>
                         <th >{{$lang['end at']}}</th>
@@ -45,7 +47,8 @@
                     <tr v-for="(record,index) in records" :key="index">
                         <td>{{record.id}}</td>
                         <td>{{record['name_'+$lang.currentLang]}}</td>
-                        <td><button class="btn btn-primary btn-block" @click="goToHousing(index)"><i class="fas  fa-eye"></i></button></td>
+                        <td><button v-if="record.housing_units_id" class="btn btn-primary btn-block" @click="goToHousing(index)"><i class="fas  fa-eye"></i></button></td>
+                        <td><button v-if="record.apartments_id" class="btn btn-primary btn-block" @click="goToApartment(index)"><i class="fas  fa-eye"></i></button></td>
                         <td>%{{record.discount}}</td>
                         <td>{{record.start_at}}</td>
                         <td>{{record.end_at}}</td>
@@ -104,7 +107,10 @@ export default {
              this.$router.push( {name:'offersShow' , params: { id: this.records[index].id }});
         },
         goToHousing(index){
-             this.$router.push( {name:'housing_unitsShow' , params: { id: this.records[index].id }});
+             this.$router.push( {name:'housing_unitsShow' , params: { id: this.records[index].housing_units_id }});
+        },
+        goToApartment(index){
+             this.$router.push( {name:'apartmentsShow' , params: { id: this.records[index].apartments_id }});
         },
         async paginate(currentPage){
             this.$router.push({  query: { ...this.$route.query,'page': currentPage }});

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class carts extends Model
 {
-
     public $timestamps = false , $with=['housing_unit','apartment'];
     protected $guarded=[];
 
@@ -24,5 +23,4 @@ class carts extends Model
     {
         return $this->belongsTo(orders::class,'orders_id');
     }
-    
 }

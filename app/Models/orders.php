@@ -61,14 +61,17 @@ class orders extends Model
     function GetHotelNameAttribute()
     {
         $cart= $this->carts->first();
-            $type= $cart->apartment->apartments_complex??$cart->housing_unit->estate;
-        return $type??'';
+        if( $cart->apartments_id)
+            return $cart->apartment->apartments_complex;
+        return $cart->housing_unit->estate;
     }
     function GetCityOfHotelAttribute()
     {
         $carts= $this->carts->first();
-        $city= $carts->apartment->apartments_complex->city?? $carts->housing_unit->estate->city;
-        return $city;
+        if( $carts->apartments_id)
+            return $carts->apartment->apartments_complex->city;
+        return $carts->housing_unit->estate->city;
+
     }
     function GetCodeAttribute()
     {

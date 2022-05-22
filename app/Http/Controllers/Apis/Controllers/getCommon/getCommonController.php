@@ -19,7 +19,20 @@ class getCommonController extends index
         }else{
             $groupBy='estates_id';
         }
-        $records=  helper::get( $type::where('is_active',1)->groupBy($groupBy));
+        $records=  helper::get( 
+            $type::where('is_active',1)
+            ->when(self::$request->type== 'apartment',function($q){
+                return $q->whereHas('apartments_complex',function($q){
+                    return $q->where('is_active',1);
+                });
+            })
+            ->when(self::$request->type== 'housing_unit',function($q){
+                return $q->whereHas('estate',function($q){
+                    return $q->where('is_active',1);
+                });
+            })
+            ->groupBy($groupBy)
+        );
         return [
             "status"=>$records[2],
             "totalPages"=>$records[1],

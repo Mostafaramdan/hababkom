@@ -207,6 +207,7 @@ class objects extends index
         $object['rooms'] = $record->rooms;
         $object['kitchens'] = $record->kitchens;
         $object['toilets'] = $record->toilets;
+        
         $object['apartments_complex'] = self::apartments_complex($record->apartments_complex);
         // $object['name'] = $record->{'name_'.self::$lang};
         // $object['description'] = $record->{'description_'.self::$lang};

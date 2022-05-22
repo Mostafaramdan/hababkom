@@ -55,14 +55,13 @@
         </div>
         <hr>
         <div class="form-check ">
-            <label  > {{$lang['Choose cities']}}   </label>
-            <tree-select v-model="record.regions_ids"
+            <label  > {{$lang['Choose hotels']}}   </label>
+            <tree-select v-model="record.estates_ids"
                         :multiple="true"
-                        :options="cities"
-                        :placeholder="$lang['Choose cities']"
-                        label='name_ar' >
+                        :options="estates"
+                        :placeholder="$lang['Choose hotels']"
+                        :label="'name_'+$lang.currentLang" >
             </tree-select>
-
         </div>
         <hr>
         <div class="form-check ">
@@ -71,10 +70,19 @@
                         :multiple="true"
                         :options="estates"
                         :placeholder="$lang['Choose hotels']"
-                        label='name_ar' >
+                        :label="'name_'+$lang.currentLang" >
             </tree-select>
         </div>
         <hr>
+        <div class="form-check ">
+            <label  > {{$lang['Choose apartments complexes']}}   </label>
+            <tree-select v-model="record.apartments_complexes_ids"
+                        :multiple="true"
+                        :options="apartments_complexes"
+                        :placeholder="$lang['Choose apartments complexes']"
+                        :label="'name_'+$lang.currentLang" >
+            </tree-select>
+        </div>
         <hr>
         <button type="submit" class="btn btn-primary btn-lg mt-2" :disabled="allValidation == false ">
             <span v-if="loading">
@@ -99,7 +107,11 @@
             loading : false,
             estates : [],
             cities : [],
+            apartments_complexes : [],
             record:{
+                estates_ids:[],
+                regions_ids:[],
+                apartments_complexes_ids:[],
                 discount:1,
                 start_at:'',
                 end_at:'',
@@ -182,18 +194,26 @@
 
         let response1 =await  this.Api('GET',`getAllRecords?model=regions`,{})
         let response2 =await  this.Api('GET',`getAllRecords?model=estates`,{})
+        let response3 =await  this.Api('GET',`getAllRecords?model=apartments_complexes`,{})
 
         this.cities = response1.data.records;
         this.cities.map((element) => {
             return element.label = element['name_'+this.$lang['currentLang']];
-        });;
+        });
 
         this.estates = response2.data.records;
         this.estates.map((element) => {
             return element.label = element['name_'+this.$lang['currentLang']];
-        });;
+        });
+
+        this.apartments_complexes = response3.data.records;
+        this.apartments_complexes.map((element) => {
+            return element.label = element['name_'+this.$lang['currentLang']];
+        });
+        
         this.record.estates_ids= JSON.parse(this.record.estates_ids)
         this.record.regions_ids= JSON.parse(this.record.regions_ids)
+        this.record.apartments_complexes_ids= JSON.parse(this.record.apartments_complexes_ids)
     },
     metaInfo() {
         return {

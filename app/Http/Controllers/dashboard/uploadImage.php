@@ -17,14 +17,6 @@ class uploadImage extends Controller
         ]);
         return response()->json(['image'=>$record]);
     }
-    public static function storeFile(Request $request)
-    {
-        $image = helper::uploadPhoto($request->image,'images');
-        $record= images::create([
-            'image'=>$image
-        ]);
-        return response()->json(['image'=>$record]);
-    }
     public static function destroy(images $image)
     {
         helper::deleteFile($image->path);

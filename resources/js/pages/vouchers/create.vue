@@ -56,11 +56,12 @@
         <hr>
         <div class="form-check ">
             <label  > {{$lang['Choose cities']}}   </label>
-            <tree-select v-model="record.regions_ids"
-                        :multiple="true"
-                        :options="cities"
-                        :placeholder="$lang['Choose cities']"
-                        label='name_ar' >
+            <tree-select
+                v-model="record.regions_ids"
+                :multiple="true"
+                :options="cities"
+                :placeholder="$lang['Choose cities']"
+                        :label="'name_'+$lang.currentLang" >
             </tree-select>
 
         </div>
@@ -71,7 +72,17 @@
                         :multiple="true"
                         :options="estates"
                         :placeholder="$lang['Choose hotels']"
-                        label='name_ar' >
+                        :label="'name_'+$lang.currentLang" >
+            </tree-select>
+        </div>
+        <hr>
+        <div class="form-check ">
+            <label  > {{$lang['Choose apartments complexes']}}   </label>
+            <tree-select v-model="record.apartments_complexes_ids"
+                        :multiple="true"
+                        :options="apartments_complexes"
+                        :placeholder="$lang['Choose apartments complexes']"
+                        :label="'name_'+$lang.currentLang" >
             </tree-select>
         </div>
         <hr>
@@ -98,10 +109,12 @@
             loading : false,
             estates : [],
             cities : [],
+            apartments_complexes : [],
             selected_value:[],
             record:{
                 estates_ids:[],
                 regions_ids:[],
+                apartments_complexes_ids:[],
                 discount:1,
                 start_at:'',
                 end_at:'',
@@ -127,6 +140,7 @@
             this.loading=true;
             this.record.estates_ids= JSON.stringify( this.record.estates_ids);
             this.record.regions_ids= JSON.stringify( this.record.regions_ids);
+            this.record.apartments_complexes_ids= JSON.stringify( this.record.apartments_complexes_ids);
             let response = await this.Api('POST','vouchers',this.record);
             if(response.data.status== 409){
                 this.$swal(this.$lang["This code already exists, please enter a different code"], "", "error")
@@ -187,16 +201,22 @@
     async   mounted(){
         let response1 =await  this.Api('GET',`getAllRecords?model=regions`,{})
         let response2 =await  this.Api('GET',`getAllRecords?model=estates`,{})
+        let response3 =await  this.Api('GET',`getAllRecords?model=apartments_complexes`,{})
 
         this.cities = response1.data.records;
         this.cities.map((element) => {
             return element.label = element['name_'+this.$lang.currentLang];
-        });;
+        });
 
         this.estates = response2.data.records;
         this.estates.map((element) => {
             return element.label = element['name_'+this.$lang.currentLang];
-        });;
+        });
+
+        this.apartments_complexes = response3.data.records;
+        this.apartments_complexes.map((element) => {
+            return element.label = element['name_'+this.$lang.currentLang];
+        });
 
         this.$store.state.isLoading = false;
 

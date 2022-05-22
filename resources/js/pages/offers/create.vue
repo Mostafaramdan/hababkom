@@ -112,7 +112,8 @@
                 name_en:'',
                 description_ar:'',
                 description_en:'',
-                housing_units_id: this.$route.query.housing_units_id
+                housing_units_id: this.$route.query.housing_units_id,
+                apartments_id: this.$route.query.apartments_id
             },
         }
     },
